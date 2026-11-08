@@ -221,14 +221,19 @@ class YouTube:
 
         return self.metadata
 
-    def generate_prompts(self) -> List[str]:
+    def generate_prompts(self, max_attempts: int = 3) -> List[str]:
         """
         Generates AI Image Prompts based on the provided Video Script.
+
+        Args:
+            max_attempts (int): How many times to ask the LLM before giving up.
 
         Returns:
             image_prompts (List[str]): Generated List of image prompts.
         """
-        n_prompts = len(self.script) / 3
+        # One image per sentence of the script
+        sentences = [s for s in re.split(r"(?<=[.!?])\s+", self.script.strip()) if s.strip()]
+        n_prompts = len(sentences) or get_script_sentence_length()
 
         prompt = f"""
         Generate {n_prompts} Image Prompts for AI Image Generation,
@@ -264,29 +269,42 @@ class YouTube:
 
         image_prompts = []
 
-        if "image_prompts" in completion:
-            image_prompts = json.loads(completion)["image_prompts"]
-        else:
-            try:
-                image_prompts = json.loads(completion)
-                if get_verbose():
-                    info(f" => Generated Image Prompts: {image_prompts}")
-            except Exception:
-                if get_verbose():
-                    warning(
-                        "LLM returned an unformatted response. Attempting to clean..."
-                    )
+        try:
+            parsed = json.loads(completion)
+            if isinstance(parsed, dict):
+                parsed = parsed.get("image_prompts", [])
+            image_prompts = parsed
+        except Exception:
+            if get_verbose():
+                warning(
+                    "LLM returned an unformatted response. Attempting to clean..."
+                )
 
-                # Get everything between [ and ], and turn it into a list
-                r = re.compile(r"\[.*\]")
-                image_prompts = r.findall(completion)
-                if len(image_prompts) == 0:
-                    if get_verbose():
-                        warning("Failed to generate Image Prompts. Retrying...")
-                    return self.generate_prompts()
+            # Parse the first [...] block in the response as the JSON array
+            match = re.search(r"\[.*\]", completion, re.DOTALL)
+            if match:
+                try:
+                    image_prompts = json.loads(match.group(0))
+                except Exception:
+                    image_prompts = []
+
+        image_prompts = [p.strip() for p in image_prompts if isinstance(p, str) and p.strip()] \
+            if isinstance(image_prompts, list) else []
+
+        if len(image_prompts) == 0:
+            if max_attempts > 1:
+                if get_verbose():
+                    warning("Failed to generate Image Prompts. Retrying...")
+                return self.generate_prompts(max_attempts - 1)
+            error("Failed to generate Image Prompts.")
+            self.image_prompts = []
+            return []
+
+        if get_verbose():
+            info(f" => Generated Image Prompts: {image_prompts}")
 
         if len(image_prompts) > n_prompts:
-            image_prompts = image_prompts[: int(n_prompts)]
+            image_prompts = image_prompts[:n_prompts]
 
         self.image_prompts = image_prompts
 
