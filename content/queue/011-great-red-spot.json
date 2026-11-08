@@ -1,0 +1,38 @@
+{
+  "topic": "Jupiter's Great Red Spot",
+  "script": "Jupiter has a storm that is bigger than the entire Earth. It is called the Great Red Spot, and astronomers have watched it for nearly two hundred years. Its winds whip around at hundreds of kilometers per hour. But it is shrinking, and today it is much smaller than it was a century ago. Nobody knows for sure whether it will one day disappear. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "Jupiter Has a Storm Bigger Than Earth #Jupiter #SpaceFacts #Shorts",
+  "description": "Jupiter's Great Red Spot is a storm wider than Earth that has been observed continuously since the 1830s, with winds of hundreds of kilometers per hour. It has been shrinking for over a century, and no one knows if it will eventually vanish.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Jupiter #GreatRedSpot #Space #Astronomy #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "planet",
+      "preset": "jupiter"
+    },
+    {
+      "scene": "planet",
+      "preset": "jupiter",
+      "radius": 80,
+      "y": 225
+    },
+    {
+      "scene": "planet",
+      "preset": "jupiter",
+      "radius": 50,
+      "y": 205
+    },
+    {
+      "scene": "planet",
+      "preset": "jupiter",
+      "radius": 40,
+      "y": 200
+    },
+    {
+      "scene": "planet",
+      "preset": "jupiter"
+    },
+    {
+      "scene": "starfield"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "topic": "Saturn would float in water",
+  "script": "Saturn is so light for its size that it would float in water. It is made mostly of hydrogen and helium, so its average density is lower than water's. Yet it is so huge that more than 700 Earths could fit inside it. Its rings stretch hundreds of thousands of kilometers across but are often only about ten meters thick. Of course, you would need a bathtub bigger than the planet to try it. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "Saturn Would Float in Water #Saturn #SpaceFacts #Shorts",
+  "description": "Saturn's average density is lower than water's, so in a big enough bathtub it would float. It could still hold more than 700 Earths, and its rings span hundreds of thousands of kilometers while being only about ten meters thick in many places.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Saturn #Space #Astronomy #Planets #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "planet",
+      "preset": "saturn"
+    },
+    {
+      "scene": "planet",
+      "preset": "saturn",
+      "radius": 55,
+      "y": 220
+    },
+    {
+      "scene": "planet",
+      "preset": "saturn",
+      "radius": 34,
+      "y": 200
+    },
+    {
+      "scene": "planet",
+      "preset": "saturn",
+      "radius": 48,
+      "y": 210
+    },
+    {
+      "scene": "planet",
+      "preset": "saturn"
+    },
+    {
+      "scene": "starfield"
+    }
+  ]
+}

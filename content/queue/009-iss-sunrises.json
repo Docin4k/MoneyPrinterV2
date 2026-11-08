@@ -1,0 +1,28 @@
+{
+  "topic": "16 sunrises a day on the space station",
+  "script": "Astronauts on the International Space Station see about 16 sunrises every day. The station circles the whole Earth roughly every 90 minutes. To do that, it travels at about 28000 kilometers per hour. That is fast enough to cross the entire United States in about ten minutes. And people have lived on board without a break since the year 2000. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "Astronauts See 16 Sunrises Every Day #ISS #SpaceFacts #Shorts",
+  "description": "The International Space Station orbits Earth about every 90 minutes at roughly 28,000 km/h, so astronauts see about 16 sunrises and sunsets a day. That speed would cross the United States in about ten minutes, and the station has been continuously crewed since November 2000.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#ISS #Space #Astronauts #NASA #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "orbit"
+    },
+    {
+      "scene": "orbit"
+    },
+    {
+      "scene": "orbit"
+    },
+    {
+      "scene": "planet",
+      "preset": "earth"
+    },
+    {
+      "scene": "orbit"
+    },
+    {
+      "scene": "starfield"
+    }
+  ]
+}

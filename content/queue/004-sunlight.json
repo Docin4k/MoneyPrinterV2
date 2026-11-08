@@ -1,0 +1,30 @@
+{
+  "topic": "The Sun",
+  "script": "The sunlight on your face right now left the Sun about 8 minutes ago. But the energy carrying it spent thousands of years working its way out from the core. The Sun is so big that more than a million Earths could fit inside it. Its core burns at around 15 million degrees Celsius. Every second, it turns about 4 million tons of matter into pure energy. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "The Sunlight on Your Face Is Thousands of Years Old #Sun #SpaceFacts #Shorts",
+  "description": "Sunlight takes about 8 minutes to reach Earth, but the energy behind it spent thousands of years working its way out from the Sun's core. The Sun could hold more than a million Earths, its core reaches about 15 million degrees Celsius, and every second it converts about 4 million tons of matter into energy.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Sun #Space #Astronomy #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "orbit"
+    },
+    {
+      "scene": "sun"
+    },
+    {
+      "scene": "planet",
+      "preset": "earth",
+      "radius": 30,
+      "y": 210
+    },
+    {
+      "scene": "sun"
+    },
+    {
+      "scene": "sun"
+    },
+    {
+      "scene": "starfield"
+    }
+  ]
+}
