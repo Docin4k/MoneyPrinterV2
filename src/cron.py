@@ -113,7 +113,7 @@ def main():
                 )
                 youtube.generate_video(tts, script_spec=queued[1] if queued else None)
                 if no_upload:
-                    youtube.browser.quit()
+                    youtube.close_browser()
                     success(f"Generated (not uploaded): {youtube.video_path}")
                     break
                 upload_success = youtube.upload_video()

@@ -128,13 +128,33 @@ class YouTube:
         self.options.add_argument("-profile")
         self.options.add_argument(self._fp_profile_path)
 
-        # Set the service
-        self.service: Service = Service(GeckoDriverManager().install())
+        # Firefox is started on first use (the upload), not while the video
+        # is being made, so it isn't left holding the profile for minutes
+        self._browser = None
 
-        # Initialize the browser
-        self.browser: webdriver.Firefox = webdriver.Firefox(
-            service=self.service, options=self.options
-        )
+    @property
+    def browser(self) -> webdriver.Firefox:
+        """The Firefox session for uploading, started on first use."""
+        if self._browser is None:
+            service = Service(GeckoDriverManager().install())
+            try:
+                self._browser = webdriver.Firefox(service=service, options=self.options)
+            except Exception as e:
+                raise RuntimeError(
+                    "Firefox closed as soon as it started. This usually means the "
+                    f"profile is already open in another Firefox window ({self._fp_profile_path}). "
+                    "Quit Firefox completely (Cmd+Q / close all windows) and try again. "
+                    f"Details: {e}"
+                ) from e
+        return self._browser
+
+    def close_browser(self) -> None:
+        """Quit Firefox if it was started."""
+        if self._browser is not None:
+            try:
+                self._browser.quit()
+            finally:
+                self._browser = None
 
     @property
     def niche(self) -> str:
@@ -1059,11 +1079,12 @@ class YouTube:
             )
 
             # Close the browser
-            driver.quit()
+            self.close_browser()
 
             return True
-        except:
-            self.browser.quit()
+        except Exception as e:
+            error(f"YouTube upload failed: {e}")
+            self.close_browser()
             return False
 
     def get_videos(self) -> List[dict]:
