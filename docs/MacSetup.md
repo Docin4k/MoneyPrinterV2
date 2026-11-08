@@ -74,34 +74,22 @@ copy there would fail when it runs on its own.
 
 ## 4. Configure
 
-```bash
-cp config.example.json config.json
-```
+Run this from the project folder. It creates `config.json`, finds the
+`wonderbytes` Firefox profile from step 3, and fills in every setting:
 
 ```bash
-open -e config.json
+python scripts/mac/configure_wonderbytes.py
 ```
 
-Change these values in TextEdit and save (leave the rest as they are):
+It prints the settings it wrote. If it can't find the profile, it says so;
+you can also give the path yourself:
 
-```json
-"firefox_profile": "/Users/you/Library/Application Support/Firefox/Profiles/abcd1234.wonderbytes",
-"headless": false,
-"ollama_model": "llama3.2:3b",
-"tts_voice": "Bella",
-"visual_style": "pixel_art",
-"music_source": "chiptune",
-"music_volume": 0.15,
-"subtitle_replacements": {"wonder\\s*bites": "WonderBytes"},
-"script_queue": {"enabled": true, "dir": "content/queue", "when_empty": "skip"},
+```bash
+python scripts/mac/configure_wonderbytes.py --profile "/Users/you/Library/Application Support/Firefox/Profiles/abcd1234.wonderbytes"
 ```
 
-TextEdit may turn straight quotes into curly ones, which breaks the file. If it
-does, go to **Edit → Substitutions** and turn off **Smart Quotes**, then retype
-them.
-
-Keep `"headless": false` until the first real upload has worked, so you can
-watch it. Set it to `true` afterwards.
+It leaves `"headless": false` so you can watch the first upload. Once uploads
+work, run it again with `--headless` to hide Firefox.
 
 ## 5. Create the account in the app
 
@@ -205,6 +193,7 @@ schedule.
 |---|---|
 | `python3.12: command not found` | Install Python 3.12 from python.org (step 1), then open a new Terminal window. |
 | `SSL: CERTIFICATE_VERIFY_FAILED` | Run **Applications → Python 3.12 → Install Certificates.command**. |
+| `config.json has a mistake` | Run `cp config.example.json config.json`, then `python scripts/mac/configure_wonderbytes.py` again. |
 | `Firefox profile path does not exist` | Check the path in the account (step 5) and in `config.json`. |
 | Firefox says the profile is already in use | Quit the WonderBytes Firefox window, then run again. |
 | `Operation not permitted` in `logs/launchd.log` | The project is in Documents, Desktop or Downloads. Move it to `~/MoneyPrinterV2` and run the schedule command again. |
