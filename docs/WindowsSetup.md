@@ -51,7 +51,8 @@ If `venv\Scripts\activate` says running scripts is disabled, run
 5. Go back to `about:profiles` and copy the **Root Directory** of the
    `wonderbytes` profile. It looks like
    `C:\Users\you\AppData\Roaming\Mozilla\Firefox\Profiles\abcd1234.wonderbytes`.
-6. Close that Firefox window.
+6. Close that Firefox window. Firefox can't open a profile that is already open,
+   so keep the WonderBytes window closed whenever an upload is due.
 
 ## 4. Configure
 
@@ -164,5 +165,6 @@ powershell -ExecutionPolicy Bypass -File scripts\windows\schedule_youtube.ps1 -R
 | `py -3.12` not found | Reinstall Python 3.12 and tick "Add python.exe to PATH". |
 | Upload fails or stops partway | Run with `"headless": false` and watch. YouTube sometimes changes its upload page, and the app's selectors may need updating. Make sure the profile is still signed in. |
 | `Firefox profile path does not exist` | Check the path in the account (step 5) and in `config.json`. |
+| Firefox says the profile is already in use | Close the WonderBytes Firefox window, then run again. |
 | Nothing happens at the scheduled time | Check Task Scheduler → the task → **History**, and `logs\youtube.log`. Make sure you were logged in and the PC was awake. |
 | `Script queue is empty` in the log | Add more scripts to `content\queue\`. |
