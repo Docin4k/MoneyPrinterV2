@@ -12,6 +12,8 @@ export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
 export PYTHONUTF8=1
 # Two native libraries bundle OpenMP on Intel Macs; without this the run aborts (OMP: Error #15)
 export KMP_DUPLICATE_LIB_OK=TRUE
+# If anything crashes, log the Python line it happened on
+export PYTHONFAULTHANDLER=1
 
 {
   echo "===== $(date '+%Y-%m-%d %H:%M:%S') ====="
