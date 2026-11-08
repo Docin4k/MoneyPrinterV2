@@ -8,3 +8,6 @@ niche.txt
 *.exe
 auto.sh
 .DS_Store
+logs/
+geckodriver.log
+*TEMP_MPY_*
