@@ -47,11 +47,24 @@ python3.12 -m venv venv
 source venv/bin/activate
 ```
 
+Then install the packages. Check your Mac's chip first: Apple menu →
+**About This Mac**. It says **Chip: Apple M1/M2/M3/M4** or **Processor: Intel**.
+
+On an **Apple Silicon** Mac (M1–M4) with macOS 14 or newer:
+
 ```bash
 pip install -r requirements.txt
 ```
 
-The last step downloads a few GB and can take 10–20 minutes.
+On an **Intel** Mac, or any Mac on macOS 13 or older:
+
+```bash
+pip install -r requirements-mac-intel.txt
+```
+
+This downloads 1–3 GB and can take 10–20 minutes. If you see
+`Building wheel for ...` sit there for minutes, press Control+C: that package
+is being compiled because your Mac needs the other list.
 
 Keep the project in your home folder (`~/MoneyPrinterV2`) as above. macOS
 blocks scheduled jobs from reading `Documents`, `Desktop` and `Downloads`, so a
@@ -191,6 +204,7 @@ schedule.
 
 | Problem | Fix |
 |---|---|
+| Install stuck on `Building wheel for opencv-python-headless` (or torch, onnxruntime) | Press Control+C and use `pip install -r requirements-mac-intel.txt` (see step 2). |
 | `python3.12: command not found` | Install Python 3.12 from python.org (step 1), then open a new Terminal window. |
 | `SSL: CERTIFICATE_VERIFY_FAILED` | Run **Applications → Python 3.12 → Install Certificates.command**. |
 | `config.json has a mistake` | Run `cp config.example.json config.json`, then `python scripts/mac/configure_wonderbytes.py` again. |

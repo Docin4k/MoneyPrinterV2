@@ -1,0 +1,7 @@
+# Intel Macs (x86_64) on macOS 11+, Python 3.12.
+# Newer builds of these packages only exist for Apple Silicon or newer macOS.
+# torch is only a dependency of a dependency (the pipeline never imports it),
+# and MoviePy falls back cleanly if OpenCV cannot load.
+torch==2.2.2
+onnxruntime==1.19.2
+opencv-python-headless==4.9.0.80
