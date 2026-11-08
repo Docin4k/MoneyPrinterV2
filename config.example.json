@@ -32,6 +32,16 @@
   "font": "bold_font.ttf",
   "imagemagick_path": "Path to magick.exe or on linux/macOS just /usr/bin/convert",
   "script_sentence_length": 4,
+  "visual_style": "ai_images",
+  "caption_renderer": "imagemagick",
+  "music_source": "songs_folder",
+  "music_volume": 0.1,
+  "subtitle_replacements": {},
+  "script_queue": {
+    "enabled": false,
+    "dir": "content/queue",
+    "when_empty": "llm"
+  },
   "post_bridge": {
     "enabled": false,
     "api_key": "",

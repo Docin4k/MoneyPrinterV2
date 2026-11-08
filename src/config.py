@@ -403,3 +403,72 @@ def get_post_bridge_config() -> dict:
             raw_config.get("auto_crosspost", defaults["auto_crosspost"])
         ),
     }
+
+
+def _get_optional(key: str, default):
+    """Reads an optional key from config.json, falling back to a default."""
+    with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
+        return json.load(file).get(key, default)
+
+
+def get_visual_style() -> str:
+    """
+    Gets the visual style for YouTube Shorts.
+
+    Returns:
+        style (str): "ai_images" (Nano Banana 2), "text_cards" or "pixel_art"
+    """
+    return _get_optional("visual_style", "ai_images")
+
+
+def get_caption_renderer() -> str:
+    """
+    Gets how subtitle captions are drawn.
+
+    Returns:
+        renderer (str): "imagemagick" (MoviePy TextClip), "pillow" or "pixel"
+    """
+    return _get_optional("caption_renderer", "imagemagick")
+
+
+def get_music_source() -> str:
+    """
+    Gets where background music comes from.
+
+    Returns:
+        source (str): "songs_folder" (random file from Songs/) or "chiptune" (generated per video)
+    """
+    return _get_optional("music_source", "songs_folder")
+
+
+def get_music_volume() -> float:
+    """
+    Gets the background music volume relative to the voice-over.
+
+    Returns:
+        volume (float): Multiplier, e.g. 0.1
+    """
+    return float(_get_optional("music_volume", 0.1))
+
+
+def get_subtitle_replacements() -> dict:
+    """
+    Gets regex replacements applied to generated subtitles, e.g. to fix how
+    speech-to-text spells a channel name: {"wonder\\\\s*bites": "WonderBytes"}.
+
+    Returns:
+        replacements (dict): pattern -> replacement
+    """
+    return _get_optional("subtitle_replacements", {})
+
+
+def get_script_queue() -> dict:
+    """
+    Gets the script queue settings.
+
+    Returns:
+        settings (dict): {"enabled": bool, "dir": str, "when_empty": "llm" | "skip"}
+    """
+    settings = {"enabled": False, "dir": "content/queue", "when_empty": "llm"}
+    settings.update(_get_optional("script_queue", {}))
+    return settings

@@ -15,6 +15,9 @@ from status import *
 from uuid import uuid4
 from constants import *
 from typing import List
+import pixel_art
+import text_cards
+from chiptune import generate_track, seed_from_text, describe
 from moviepy.editor import *
 from termcolor import colored
 from selenium_firefox import *
@@ -30,6 +33,40 @@ from datetime import datetime
 
 # Set ImageMagick Path
 change_settings({"IMAGEMAGICK_BINARY": get_imagemagick_path()})
+
+
+
+_ONES = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
+         "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen",
+         "eighteen", "nineteen"]
+_TENS = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"]
+
+
+def _two_digits(n: int) -> str:
+    if n < 20:
+        return _ONES[n]
+    return _TENS[n // 10] + ("-" + _ONES[n % 10] if n % 10 else "")
+
+
+def speakable_years(text: str) -> str:
+    """Spell years 1100-1999 the way people say them, e.g. 1969 -> "nineteen
+    sixty-nine", 1905 -> "nineteen oh five", 1800 -> "eighteen hundred".
+    The TTS engine otherwise reads 1969 as "one thousand nine hundred sixty-nine".
+    """
+    def say(match):
+        year = int(match.group(1))
+        first, last = divmod(year, 100)
+        if last == 0:
+            words = f"{_two_digits(first)} hundred"
+        elif last < 10:
+            words = f"{_two_digits(first)} oh {_ONES[last]}"
+        else:
+            words = f"{_two_digits(first)} {_two_digits(last)}"
+        if match.group(2):  # decades: 1830s -> eighteen thirties
+            words = words[:-1] + "ies" if words.endswith("y") else words + "s"
+        return words
+
+    return re.sub(r"(?<![\d.,])(1[1-9]\d\d)(?!\d)(?![.,]\d)(s\b)?", say, text)
 
 
 class YouTube:
@@ -422,7 +459,7 @@ class YouTube:
         # Clean script, remove every character that is not a word character, a space, a period, a question mark, or an exclamation mark.
         self.script = re.sub(r"[^\w\s.?!]", "", self.script)
 
-        tts_instance.synthesize(self.script, path)
+        tts_instance.synthesize(speakable_years(self.script), path)
 
         self.tts_path = path
 
@@ -578,79 +615,84 @@ class YouTube:
         threads = get_threads()
         tts_clip = AudioFileClip(self.tts_path)
         max_duration = tts_clip.duration
-        req_dur = max_duration / len(self.images)
+        style = get_visual_style()
+        sentences = getattr(self, "sentences", [])
+        seed = seed_from_text(self.metadata.get("title", "") or getattr(self, "subject", ""))
 
-        # Make a generator that returns a TextClip when called with consecutive
-        generator = lambda txt: TextClip(
-            txt,
-            font=os.path.join(get_fonts_dir(), get_font()),
-            fontsize=100,
-            color="#FFFF00",
-            stroke_color="black",
-            stroke_width=5,
-            size=(1080, 1920),
-            method="caption",
-        )
+        # Caption renderer: pixel font for pixel art, otherwise the configured one
+        renderer = "pixel" if style == "pixel_art" else get_caption_renderer()
+        if renderer == "pixel":
+            generator = pixel_art.render_caption
+        elif renderer == "pillow":
+            generator = text_cards.render_caption
+        else:
+            generator = lambda txt: TextClip(
+                txt,
+                font=os.path.join(get_fonts_dir(), get_font()),
+                fontsize=100,
+                color="#FFFF00",
+                stroke_color="black",
+                stroke_width=5,
+                size=(1080, 1920),
+                method="caption",
+            )
 
-        print(colored("[+] Combining images...", "blue"))
-
-        clips = []
-        tot_dur = 0
-        # Add downloaded clips over and over until the duration of the audio (max_duration) has been reached
-        while tot_dur < max_duration:
-            for image_path in self.images:
-                clip = ImageClip(image_path)
-                clip.duration = req_dur
-                clip = clip.set_fps(30)
-
-                # Not all images are same size,
-                # so we need to resize them
-                if round((clip.w / clip.h), 4) < 0.5625:
-                    if get_verbose():
-                        info(f" => Resizing Image: {image_path} to 1080x1920")
-                    clip = crop(
-                        clip,
-                        width=clip.w,
-                        height=round(clip.w / 0.5625),
-                        x_center=clip.w / 2,
-                        y_center=clip.h / 2,
-                    )
-                else:
-                    if get_verbose():
-                        info(f" => Resizing Image: {image_path} to 1920x1080")
-                    clip = crop(
-                        clip,
-                        width=round(0.5625 * clip.h),
-                        height=clip.h,
-                        x_center=clip.w / 2,
-                        y_center=clip.h / 2,
-                    )
-                clip = clip.resize((1080, 1920))
-
-                # FX (Fade In)
-                # clip = clip.fadein(2)
-
-                clips.append(clip)
-                tot_dur += clip.duration
+        if style == "pixel_art" and getattr(self, "scenes", None):
+            print(colored("[+] Animating pixel-art scenes...", "blue"))
+            durations = self._segment_durations(max_duration, len(self.scenes))
+            clips = [
+                pixel_art.scene_clip(
+                    scene,
+                    duration,
+                    seed + index,
+                    headline=sentences[index] if index < len(sentences) else "",
+                    channel=self._account_nickname,
+                    footer=self._card_label(index),
+                )
+                for index, (scene, duration) in enumerate(zip(self.scenes, durations))
+            ]
+        else:
+            print(colored("[+] Combining images...", "blue"))
+            weights = getattr(self, "segment_weights", None)
+            if weights and len(weights) == len(self.images):
+                # One clip per image, timed to its sentence
+                durations = self._segment_durations(max_duration, len(self.images))
+                clips = [self._image_clip(path, d) for path, d in zip(self.images, durations)]
+            else:
+                # Add clips over and over until the duration of the audio has been reached
+                req_dur = max_duration / len(self.images)
+                clips, tot_dur = [], 0
+                while tot_dur < max_duration:
+                    for image_path in self.images:
+                        clips.append(self._image_clip(image_path, req_dur))
+                        tot_dur += req_dur
 
         final_clip = concatenate_videoclips(clips)
         final_clip = final_clip.set_fps(30)
-        random_song = choose_random_song()
+
+        if get_music_source() == "chiptune":
+            song = os.path.join(ROOT_DIR, ".mp", str(uuid4()) + ".wav")
+            generate_track(song, max_duration + 1, seed)
+            if get_verbose():
+                info(f" => Generated chiptune: {describe(seed)}")
+        else:
+            song = choose_random_song()
 
         subtitles = None
         try:
             subtitles_path = self.generate_subtitles(self.tts_path)
+            self._fix_subtitles(subtitles_path)
             equalize_subtitles(subtitles_path, 10)
             subtitles = SubtitlesClip(subtitles_path, generator)
             subtitles.set_pos(("center", "center"))
         except Exception as e:
             warning(f"Failed to generate subtitles, continuing without subtitles: {e}")
 
-        random_song_clip = AudioFileClip(random_song).set_fps(44100)
+        song_clip = AudioFileClip(song).set_fps(44100)
 
         # Turn down volume
-        random_song_clip = random_song_clip.fx(afx.volumex, 0.1)
-        comp_audio = CompositeAudioClip([tts_clip.set_fps(44100), random_song_clip])
+        song_clip = song_clip.fx(afx.volumex, get_music_volume())
+        comp_audio = CompositeAudioClip([tts_clip.set_fps(44100), song_clip])
 
         final_clip = final_clip.set_audio(comp_audio)
         final_clip = final_clip.set_duration(tts_clip.duration)
@@ -663,6 +705,77 @@ class YouTube:
         success(f'Wrote Video to "{combined_image_path}"')
 
         return combined_image_path
+
+    def _image_clip(self, image_path: str, duration: float):
+        """A 1080x1920 still clip of an image, centre-cropped to 9:16."""
+        clip = ImageClip(image_path)
+        clip.duration = duration
+        clip = clip.set_fps(30)
+
+        # Not all images are same size, so we need to resize them
+        if round((clip.w / clip.h), 4) < 0.5625:
+            if get_verbose():
+                info(f" => Resizing Image: {image_path} to 1080x1920")
+            clip = crop(
+                clip,
+                width=clip.w,
+                height=round(clip.w / 0.5625),
+                x_center=clip.w / 2,
+                y_center=clip.h / 2,
+            )
+        else:
+            if get_verbose():
+                info(f" => Resizing Image: {image_path} to 1920x1080")
+            clip = crop(
+                clip,
+                width=round(0.5625 * clip.h),
+                height=clip.h,
+                x_center=clip.w / 2,
+                y_center=clip.h / 2,
+            )
+        return clip.resize((1080, 1920))
+
+    def _vary_scenes(self, scenes: List[dict]) -> List[dict]:
+        """Change framing between consecutive uses of the same scene, so a
+        video about one subject still moves between shots."""
+        framings = [(1.0, 205), (0.75, 215), (1.25, 230), (0.9, 195), (1.1, 210)]
+        varied = []
+        for index, scene in enumerate(scenes):
+            scene = dict(scene)
+            if scene.get("scene") == "planet" and "radius" not in scene:
+                base = 42 if scene.get("preset") == "saturn" else 58
+                zoom, y = framings[index % len(framings)]
+                scene["radius"] = int(base * zoom)
+                scene.setdefault("y", y)
+            varied.append(scene)
+        return varied
+
+    def _segment_durations(self, total: float, count: int) -> List[float]:
+        """Split the voice-over duration across segments by sentence length."""
+        weights = getattr(self, "segment_weights", None)
+        if not weights or len(weights) != count:
+            weights = [1] * count
+        return [total * w / sum(weights) for w in weights]
+
+    def _card_label(self, index: int) -> str:
+        """Footer for a card or scene: "FACT n / total", or a call to action."""
+        total = len(getattr(self, "sentences", [])) - (1 if getattr(self, "has_cta", False) else 0)
+        if getattr(self, "has_cta", False) and index >= total:
+            return "FOLLOW FOR MORE"
+        return f"FACT {index + 1} / {max(total, 1)}"
+
+    def _fix_subtitles(self, srt_path: str) -> None:
+        """Apply regex replacements (config + script) to a subtitle file."""
+        fixes = dict(get_subtitle_replacements())
+        fixes.update(getattr(self, "subtitle_fixes", {}) or {})
+        if not fixes:
+            return
+        with open(srt_path, "r", encoding="utf-8") as file:
+            text = file.read()
+        for pattern, replacement in fixes.items():
+            text = re.sub(pattern, replacement, text, flags=re.IGNORECASE)
+        with open(srt_path, "w", encoding="utf-8") as file:
+            file.write(text)
 
     def set_topic(self, topic: str) -> str:
         """
@@ -686,7 +799,12 @@ class YouTube:
 
         return cleaned
 
-    def generate_video(self, tts_instance: TTS, topic: str | None = None) -> str:
+    def generate_video(
+        self,
+        tts_instance: TTS,
+        topic: str | None = None,
+        script_spec: dict | None = None,
+    ) -> str:
         """
         Generates a YouTube Short based on the provided niche and language.
 
@@ -695,31 +813,69 @@ class YouTube:
             topic (str | None): Optional user-provided topic. When given, the
                 LLM topic generation step is skipped and this topic is used
                 as the subject of the video instead.
+            script_spec (dict | None): Optional ready-made script (see
+                content/README.md). When given, the LLM writing steps are
+                skipped and its script, title and description are used.
 
         Returns:
             path (str): The path to the generated MP4 File.
         """
-        # Use the custom topic if one was supplied, otherwise generate one
-        if topic is not None and topic.strip():
-            self.set_topic(topic)
+        self.images = []
+        self.scenes = []
+        self.has_cta = False
+        self.subtitle_fixes = {}
 
+        if script_spec is not None:
+            self.subject = script_spec.get("topic") or script_spec["title"]
+            self.script = script_spec["script"]
+            self.metadata = {
+                "title": script_spec["title"],
+                "description": script_spec.get("description", ""),
+            }
+            self.has_cta = bool(script_spec.get("last_sentence_is_cta", False))
+            self.subtitle_fixes = script_spec.get("subtitle_fixes", {})
             if get_verbose():
-                info(f" => Using custom topic: {self.subject}")
+                info(f" => Using ready-made script: {self.metadata['title']}")
         else:
-            self.generate_topic()
+            # Use the custom topic if one was supplied, otherwise generate one
+            if topic is not None and topic.strip():
+                self.set_topic(topic)
 
-        # Generate the Script
-        self.generate_script()
+                if get_verbose():
+                    info(f" => Using custom topic: {self.subject}")
+            else:
+                self.generate_topic()
 
-        # Generate the Metadata
-        self.generate_metadata()
+            # Generate the Script
+            self.generate_script()
 
-        # Generate the Image Prompts
-        self.generate_prompts()
+            # Generate the Metadata
+            self.generate_metadata()
 
-        # Generate the Images
-        for prompt in self.image_prompts:
-            self.generate_image(prompt)
+        # One visual segment per sentence, timed by its length
+        self.sentences = [s for s in re.split(r"(?<=[.!?])\s+", self.script.strip()) if s.strip()]
+        self.segment_weights = [len(s.split()) for s in self.sentences]
+        style = get_visual_style()
+
+        if style == "pixel_art":
+            scenes = (script_spec or {}).get("scenes")
+            if not scenes or len(scenes) != len(self.sentences):
+                scenes = pixel_art.scenes_for_script(self.sentences, self.subject)
+            self.scenes = self._vary_scenes(scenes)
+        elif style == "text_cards":
+            for index, sentence in enumerate(self.sentences):
+                path = os.path.join(ROOT_DIR, ".mp", str(uuid4()) + ".png")
+                total = len(self.sentences) - (1 if self.has_cta else 0)
+                text_cards.render_card(path, index, total, sentence, self._account_nickname,
+                                       label=self._card_label(index))
+                self.images.append(path)
+        else:
+            # Generate the Image Prompts
+            self.generate_prompts()
+
+            # Generate the Images
+            for prompt in self.image_prompts:
+                self.generate_image(prompt)
 
         # Generate the TTS
         self.generate_script_to_speech(tts_instance)

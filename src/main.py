@@ -1,3 +1,5 @@
+import sys
+import time
 import schedule
 import subprocess
 
@@ -17,6 +19,26 @@ from classes.Outreach import Outreach
 from classes.AFM import AffiliateMarketing
 from llm_provider import list_models, select_model, get_active_model
 from post_bridge_integration import maybe_crosspost_youtube_short
+
+
+
+def run_scheduler() -> None:
+    """Keeps this process alive and runs scheduled jobs until Ctrl+C.
+
+    The schedule library only runs jobs when run_pending() is called, so the
+    window must stay open. For runs that survive restarts on Windows, use
+    scripts/windows/schedule_youtube.ps1 (Task Scheduler) instead.
+    """
+    info("Scheduler running. Keep this window open; press Ctrl+C to stop.", False)
+    for job in schedule.get_jobs():
+        info(f" => Next run: {job.next_run}", False)
+    try:
+        while True:
+            schedule.run_pending()
+            time.sleep(30)
+    except KeyboardInterrupt:
+        schedule.clear()
+        warning("Scheduler stopped.")
 
 
 def generate_and_upload_short(youtube: YouTube, tts: TTS, topic: str | None = None) -> None:
@@ -226,7 +248,7 @@ def main():
                         user_input = int(question("Select an Option: "))
 
                         cron_script_path = os.path.join(ROOT_DIR, "src", "cron.py")
-                        command = ["python", cron_script_path, "youtube", selected_account['id'], get_active_model()]
+                        command = [sys.executable, cron_script_path, "youtube", selected_account['id'], get_active_model()]
 
                         def job():
                             subprocess.run(command)
@@ -234,14 +256,19 @@ def main():
                         if user_input == 1:
                             # Upload Once
                             schedule.every(1).day.do(job)
-                            success("Set up CRON Job.")
                         elif user_input == 2:
                             # Upload Twice a day
                             schedule.every().day.at("10:00").do(job)
                             schedule.every().day.at("16:00").do(job)
-                            success("Set up CRON Job.")
+                        elif user_input == 3:
+                            # Upload Thrice a day
+                            schedule.every().day.at("08:00").do(job)
+                            schedule.every().day.at("12:00").do(job)
+                            schedule.every().day.at("18:00").do(job)
                         else:
                             break
+                        success("Set up CRON Job.")
+                        run_scheduler()
                     elif user_input == 5:
                         if get_verbose():
                             info(" => Climbing Options Ladder...", False)
@@ -357,7 +384,7 @@ def main():
                         user_input = int(question("Select an Option: "))
 
                         cron_script_path = os.path.join(ROOT_DIR, "src", "cron.py")
-                        command = ["python", cron_script_path, "twitter", selected_account['id'], get_active_model()]
+                        command = [sys.executable, cron_script_path, "twitter", selected_account['id'], get_active_model()]
 
                         def job():
                             subprocess.run(command)
@@ -379,6 +406,7 @@ def main():
                             success("Set up CRON Job.")
                         else:
                             break
+                        run_scheduler()
                     elif user_input == 4:
                         if get_verbose():
                             info(" => Climbing Options Ladder...", False)

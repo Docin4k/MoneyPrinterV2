@@ -69,6 +69,10 @@ def fetch_songs() -> None:
     Returns:
         None
     """
+    if get_music_source() == "chiptune":
+        # Music is generated per video; no song files needed
+        return
+
     try:
         info(f" => Fetching songs...")
 

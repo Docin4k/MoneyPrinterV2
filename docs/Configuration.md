@@ -38,6 +38,18 @@ All your configurations will be in a file in the root directory, called `config.
 - `font`: `string` - The font that will be used to generate images. This should be a `.ttf` file in the `fonts/` directory.
 - `imagemagick_path`: `string` - The path to the ImageMagick binary. This is used by MoviePy to manipulate images. Install ImageMagick from [here](https://imagemagick.org/script/download.php) and set the path to the `magick.exe` on Windows, or on Linux/MacOS the path to `convert` (usually /usr/bin/convert).
 - `script_sentence_length`: `number` - The number of sentences in the generated video script (default: `4`).
+- `visual_style`: `string` - How YouTube Shorts look. Default `ai_images`. Options:
+    * `ai_images` - images from Nano Banana 2 (needs `nanobanana2_api_key`)
+    * `text_cards` - locally drawn cards with each sentence as a headline (no API key)
+    * `pixel_art` - animated 8-bit scenes, one per sentence, with pixel-font text (no API key). See [content/README.md](../content/README.md) for the scenes.
+- `caption_renderer`: `string` - How subtitles are drawn. `imagemagick` (default, MoviePy TextClip) or `pillow` (no ImageMagick needed). `pixel_art` always uses its pixel font.
+- `music_source`: `string` - `songs_folder` (default, a random file from `Songs/`) or `chiptune` (an original 8-bit track generated for each video, different every time).
+- `music_volume`: `number` - Background music volume relative to the voice-over (default `0.1`).
+- `subtitle_replacements`: `object` - Regex replacements for generated subtitles, e.g. `{"wonder\\s*bites": "WonderBytes"}` when speech-to-text misspells a name.
+- `script_queue`: `object` - Post ready-made scripts instead of LLM-written ones. See [content/README.md](../content/README.md).
+    - `enabled`: `boolean` - Use the queue for scheduled (CRON) runs.
+    - `dir`: `string` - Folder of script JSON files (default `content/queue`).
+    - `when_empty`: `string` - `llm` (let the LLM write one) or `skip` (post nothing).
 - `post_bridge`: `object`:
     - `enabled`: `boolean` - Enables Post Bridge cross-posting after successful YouTube uploads.
     - `api_key`: `string` - Your Post Bridge API key. If empty, MPV2 falls back to `POST_BRIDGE_API_KEY`.

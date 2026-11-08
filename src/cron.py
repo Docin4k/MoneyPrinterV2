@@ -7,8 +7,10 @@ from config import get_verbose
 from classes.Tts import TTS
 from classes.Twitter import Twitter
 from classes.YouTube import YouTube
+from config import get_script_queue
 from llm_provider import select_model
 from post_bridge_integration import maybe_crosspost_youtube_short
+import script_queue
 
 def main():
     """Main function to post content to Twitter or upload videos to YouTube.
@@ -20,6 +22,9 @@ def main():
     Command-line arguments:
         sys.argv[1]: A string indicating the purpose, either "twitter" or "youtube".
         sys.argv[2]: A string representing the account UUID.
+        sys.argv[3]: The Ollama model name (needed when the LLM writes the script).
+        --no-upload: Optional flag (YouTube only). Generate the video and stop,
+            without uploading or marking a queued script as posted.
 
     The function also handles verbose output based on user settings and reports success or errors as appropriate.
 
@@ -28,19 +33,22 @@ def main():
 
     Returns:
         None. The function performs operations based on the purpose and account UUID and does not return any value."""
-    purpose = str(sys.argv[1])
-    account_id = str(sys.argv[2])
-    model = str(sys.argv[3]) if len(sys.argv) > 3 else None
+    flags = {arg for arg in sys.argv[1:] if arg.startswith("--")}
+    args = [arg for arg in sys.argv[1:] if not arg.startswith("--")]
+    purpose = str(args[0])
+    account_id = str(args[1])
+    model = str(args[2]) if len(args) > 2 else None
+    no_upload = "--no-upload" in flags
 
     if model:
         select_model(model)
-    else:
-        error("No Ollama model specified. Pass model name as third argument.")
-        sys.exit(1)
 
     verbose = get_verbose()
 
     if purpose == "twitter":
+        if not model:
+            error("No Ollama model specified. Pass model name as third argument.")
+            sys.exit(1)
         accounts = get_accounts("twitter")
 
         if not account_id:
@@ -61,6 +69,23 @@ def main():
                     success("Done posting.")
                 break
     elif purpose == "youtube":
+        # Ready-made script from the queue, if enabled
+        queued = None
+        queue = get_script_queue()
+        if queue["enabled"]:
+            queued = script_queue.next_script()
+            if queued is None:
+                if queue["when_empty"] == "skip":
+                    warning("Script queue is empty. Nothing to post; add scripts to the queue folder.")
+                    return
+                info("Script queue is empty. Letting the LLM write this one.")
+            elif verbose:
+                info(f"Using queued script: {queued[0]}")
+
+        if queued is None and not model:
+            error("No Ollama model specified. Pass model name as third argument.")
+            sys.exit(1)
+
         tts = TTS()
 
         accounts = get_accounts("youtube")
@@ -79,11 +104,18 @@ def main():
                     acc["niche"],
                     acc["language"]
                 )
-                youtube.generate_video(tts)
+                youtube.generate_video(tts, script_spec=queued[1] if queued else None)
+                if no_upload:
+                    youtube.browser.quit()
+                    success(f"Generated (not uploaded): {youtube.video_path}")
+                    break
                 upload_success = youtube.upload_video()
                 if upload_success:
                     if verbose:
                         success("Uploaded Short.")
+                    if queued:
+                        script_queue.mark_posted(queued[0], youtube.metadata.get("title", ""),
+                                                 youtube.video_path)
                     maybe_crosspost_youtube_short(
                         video_path=youtube.video_path,
                         title=youtube.metadata.get("title", ""),
@@ -92,6 +124,9 @@ def main():
                 else:
                     warning("YouTube upload failed. Skipping Post Bridge cross-post.")
                 break
+        else:
+            error(f"No YouTube account with ID {account_id}.")
+            sys.exit(1)
     else:
         error("Invalid Purpose, exiting...")
         sys.exit(1)
