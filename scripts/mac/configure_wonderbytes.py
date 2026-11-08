@@ -46,7 +46,10 @@ except json.JSONDecodeError as e:
 
 profile = args.profile
 if not profile:
-    matches = sorted(glob.glob(os.path.join(PROFILES, f"*.{args.profile_name}")))
+    # Profile folders are "<random>.<name>"; match the name ignoring capitals
+    wanted = args.profile_name.lower()
+    matches = sorted(p for p in glob.glob(os.path.join(PROFILES, "*"))
+                     if os.path.isdir(p) and os.path.basename(p).split(".", 1)[-1].lower() == wanted)
     if not matches:
         found = [os.path.basename(p) for p in glob.glob(os.path.join(PROFILES, "*"))]
         sys.exit(
