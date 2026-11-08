@@ -1,5 +1,12 @@
 # RUN THIS N AMOUNT OF TIMES
+import os
 import sys
+
+# On Intel Macs, ctranslate2 (subtitles) and another native library each bundle
+# an OpenMP runtime; loading both aborts with "OMP: Error #15". Allow it, before
+# any of those libraries load.
+if sys.platform == "darwin":
+    os.environ.setdefault("KMP_DUPLICATE_LIB_OK", "TRUE")
 
 from status import *
 from cache import get_accounts

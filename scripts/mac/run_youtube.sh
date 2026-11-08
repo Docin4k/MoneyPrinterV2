@@ -10,6 +10,8 @@ mkdir -p logs
 # launchd starts jobs with a minimal PATH; ffmpeg from Homebrew lives here
 export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
 export PYTHONUTF8=1
+# Two native libraries bundle OpenMP on Intel Macs; without this the run aborts (OMP: Error #15)
+export KMP_DUPLICATE_LIB_OK=TRUE
 
 {
   echo "===== $(date '+%Y-%m-%d %H:%M:%S') ====="

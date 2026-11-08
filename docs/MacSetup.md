@@ -213,4 +213,5 @@ schedule.
 | `Operation not permitted` in `logs/launchd.log` | The project is in Documents, Desktop or Downloads. Move it to `~/MoneyPrinterV2` and run the schedule command again. |
 | Upload fails or stops partway | Run with `"headless": false` and watch. YouTube sometimes changes its upload page, and the app's selectors may need updating. Make sure the profile is still signed in. |
 | Nothing happens at the scheduled time | Check `logs/launchd.log` and `logs/youtube.log`, and that the Mac was awake and you were logged in. `launchctl print gui/$(id -u)/com.moneyprinterv2.youtube` shows the job's state. |
+| `OMP: Error #15` and `Abort trap: 6` in the log | Two libraries load their own OpenMP runtime on Intel Macs. Run `git pull` to get the fix (it sets `KMP_DUPLICATE_LIB_OK=TRUE` on macOS). |
 | `Script queue is empty` in the log | Add more scripts to `content/queue/`. |
