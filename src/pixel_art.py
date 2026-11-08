@@ -287,12 +287,99 @@ def _draw_rings(frame, cx, cy, r, front, t):
     frame[sel] = cols
 
 
+# ------------------------------------------------------------ details ----
+_NEBULA_CACHE = {}
+NEBULA_HUES = [((60, 20, 90), (20, 40, 110)), ((90, 20, 50), (40, 20, 90)), ((20, 60, 90), (10, 30, 70)),
+               ((80, 40, 20), (50, 20, 60)), ((20, 70, 60), (20, 30, 80))]
+
+
+def nebula(frame, seed):
+    """Soft, dithered nebula clouds behind a space scene (colours vary by seed)."""
+    if seed not in _NEBULA_CACHE:
+        rng = random.Random(seed * 7 + 3)
+        u, v = XX / LW * 2 * np.pi, YY / LH * 2 * np.pi
+        field = np.zeros((LH, LW))
+        for k in range(6):
+            a, b = rng.uniform(0.5, 2.5), rng.uniform(0.5, 3.0)
+            field += np.sin(u * a + rng.uniform(0, 6.3) + np.sin(v * b + rng.uniform(0, 6.3)) * 1.5) / (k + 1)
+        field = (field - field.min()) / (np.ptp(field) + 1e-9)
+        density = np.clip((field - 0.55) / 0.45, 0, 1) ** 1.3
+        c1, c2 = NEBULA_HUES[seed % len(NEBULA_HUES)]
+        colors = dither_ramp(density, [(4, 4, 16), c2, c1])
+        _NEBULA_CACHE[seed] = (density > 0.02, colors)
+    mask, colors = _NEBULA_CACHE[seed]
+    frame[mask] = colors[mask]
+
+
+def shooting_star(frame, t, seed):
+    """A short streak every few seconds, at a different place each time."""
+    period = 4.5
+    n = int(t // period)
+    phase = (t % period) / 0.6
+    if phase > 1:
+        return
+    rng = random.Random(seed * 131 + n)
+    x0, y0 = rng.uniform(20, LW), rng.uniform(40, LH * 0.55)
+    dx, dy = -rng.uniform(60, 110), rng.uniform(20, 50)
+    for i in range(14):
+        f = phase - i * 0.012
+        if f < 0:
+            break
+        x, y = int(x0 + dx * f), int(y0 + dy * f)
+        if 0 <= x < LW and 0 <= y < LH:
+            b = 255 - i * 16
+            frame[y, x] = (b, b, min(255, b + 30))
+
+
+# Moons: (orbit radius in planet radii, size in pixels, speed, colour, phase)
+PLANET_MOONS = {
+    "jupiter": [(1.35, 2, 1.6, (220, 210, 170), 0.0), (1.6, 2, 1.1, (200, 180, 150), 2.0),
+                (1.95, 3, 0.75, (180, 170, 160), 4.0), (2.3, 3, 0.5, (140, 130, 120), 1.0)],
+    "saturn": [(2.6, 3, 0.45, (220, 180, 110), 1.0)],
+    "mars": [(1.4, 1, 2.0, (150, 130, 120), 0.0), (1.9, 1, 1.0, (170, 150, 140), 3.0)],
+    "earth": [(2.1, 4, 0.4, (200, 200, 205), 2.5)],
+    "neptune": [(1.8, 2, -0.7, (210, 200, 200), 1.5)],
+}
+
+
+def draw_moons(frame, t, preset, cx, cy, r, front):
+    for orbit, size, speed, color, phase in PLANET_MOONS.get(preset, []):
+        a = phase + t * speed
+        is_front = math.sin(a) > 0
+        if is_front != front:
+            continue
+        x = cx + orbit * r * math.cos(a)
+        y = cy + orbit * r * 0.22 * math.sin(a)
+        d = (XX - x) ** 2 + (YY - y) ** 2 <= size * size
+        if not front:
+            d &= (XX - cx) ** 2 + (YY - cy) ** 2 > r * r
+        lit = d & ((XX - x) < size * 0.3)
+        frame[d] = tuple(c // 2 for c in color)
+        frame[lit] = color
+
+
+def halo(frame, cx, cy, r, color, width=6):
+    """Faint dithered glow just outside a planet's edge."""
+    d = np.sqrt((XX - cx) ** 2 + (YY - cy) ** 2)
+    ring = (d > r + 1) & (d < r + width)
+    strength = 1 - (d[ring] - r - 1) / (width - 1)
+    keep = BAYER_FULL[ring] < strength * 0.5
+    ys, xs = YY[ring][keep], XX[ring][keep]
+    frame[ys, xs] = (frame[ys, xs] * 0.5 + np.array(color) * 0.5).astype(np.uint8)
+
+
 # ------------------------------------------------------------- scenes ----
 def scene_planet(frame, t, spec, seed):
     Stars(seed).draw(frame, t)
     preset = spec.get("preset", "venus")
     r = spec.get("radius", 58 if preset != "saturn" else 42)
-    draw_planet(frame, t, preset, LW // 2, spec.get("y", 205), r, seed=seed)
+    cx, cy = LW // 2, spec.get("y", 205)
+    atmo = PLANET_PRESETS[preset].get("atmo")
+    if atmo:
+        halo(frame, cx, cy, r, atmo)
+    draw_moons(frame, t, preset, cx, cy, r, front=False)
+    draw_planet(frame, t, preset, cx, cy, r, seed=seed)
+    draw_moons(frame, t, preset, cx, cy, r, front=True)
 
 
 def scene_sun(frame, t, spec, seed):
@@ -479,7 +566,8 @@ def scene_diamond_rain(frame, t, spec, seed):
 
 
 def scene_starfield(frame, t, spec, seed):
-    sky((2, 2, 12), (12, 8, 40), frame)
+    nebula(frame, seed)
+    shooting_star(frame, t, seed)
     Stars(seed, 220).draw(frame, t, drift=4)
 
 
@@ -488,6 +576,8 @@ SCENES = {
     "galaxy": scene_galaxy, "surface": scene_surface, "orbit": scene_orbit,
     "diamond_rain": scene_diamond_rain, "starfield": scene_starfield,
 }
+# Scenes set in space (dark background) that get a nebula and shooting stars
+SPACE_SCENES = {"planet", "sun", "black_hole", "pulsar", "galaxy", "orbit"}
 
 
 def render_frame(spec: dict, t: float, seed: int, headline: str = "", channel: str = "",
@@ -495,7 +585,11 @@ def render_frame(spec: dict, t: float, seed: int, headline: str = "", channel: s
     """Draw one low-resolution frame of a scene with its text overlay."""
     frame = np.zeros((LH, LW, 3), dtype=np.uint8)
     frame[:] = (4, 4, 16)
-    SCENES.get(spec.get("scene", "starfield"), scene_starfield)(frame, tq(t), spec, seed)
+    scene = spec.get("scene", "starfield")
+    if scene in SPACE_SCENES:
+        nebula(frame, seed)
+        shooting_star(frame, tq(t), seed)
+    SCENES.get(scene, scene_starfield)(frame, tq(t), spec, seed)
 
     # Darkened band behind the top text and footer for readability
     if channel or headline:

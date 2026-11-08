@@ -700,7 +700,16 @@ class YouTube:
         if subtitles is not None:
             final_clip = CompositeVideoClip([final_clip, subtitles])
 
-        final_clip.write_videofile(combined_image_path, threads=threads)
+        # H.264 + AAC, yuv420p and fast-start: plays on phones, browsers and
+        # YouTube (MoviePy's default MP3-in-MP4 audio doesn't play everywhere)
+        final_clip.write_videofile(
+            combined_image_path,
+            threads=threads,
+            codec="libx264",
+            audio_codec="aac",
+            audio_bitrate="160k",
+            ffmpeg_params=["-pix_fmt", "yuv420p", "-movflags", "+faststart"],
+        )
 
         success(f'Wrote Video to "{combined_image_path}"')
 
