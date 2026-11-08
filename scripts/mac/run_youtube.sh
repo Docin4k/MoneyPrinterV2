@@ -12,6 +12,8 @@ export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
 export PYTHONUTF8=1
 # Two native libraries bundle OpenMP on Intel Macs; without this the run aborts (OMP: Error #15)
 export KMP_DUPLICATE_LIB_OK=TRUE
+# On Intel Macs the two runtimes still crash Whisper unless OpenMP uses one thread
+if [ "$(uname -m)" = "x86_64" ]; then export OMP_NUM_THREADS=1; fi
 # If anything crashes, log the Python line it happened on
 export PYTHONFAULTHANDLER=1
 

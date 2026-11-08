@@ -6,6 +6,11 @@ import sys
 # any of those libraries load.
 if sys.platform == "darwin":
     os.environ.setdefault("KMP_DUPLICATE_LIB_OK", "TRUE")
+    import platform
+    if platform.machine() == "x86_64":
+        # With both runtimes loaded, Whisper segfaults while starting up after
+        # the voice model has run; one OpenMP thread avoids the clash.
+        os.environ.setdefault("OMP_NUM_THREADS", "1")
 import time
 import schedule
 import subprocess

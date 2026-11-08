@@ -59,7 +59,8 @@ def run(code, env_extra):
 
 
 print(f"macOS {platform.mac_ver()[0]} {platform.machine()}, Python {platform.python_version()}")
-print(f"KMP_DUPLICATE_LIB_OK={os.environ.get('KMP_DUPLICATE_LIB_OK', '(not set)')}\n")
+print(f"KMP_DUPLICATE_LIB_OK={os.environ.get('KMP_DUPLICATE_LIB_OK', '(not set)')}")
+print("(The app itself also sets OMP_NUM_THREADS=1 on Intel Macs; the last check shows that setting.)\n")
 for name, code in CHECKS:
     print(f"{name:34} ", end="", flush=True)
     print(run(code, {"KMP_DUPLICATE_LIB_OK": "TRUE"}))
