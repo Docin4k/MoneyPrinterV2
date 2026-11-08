@@ -7,9 +7,9 @@ soundfile
 prettytable
 webdriver_manager
 selenium_firefox
-selenium
+selenium==4.9.1
 ollama
-moviepy
+moviepy==1.0.3
 Pillow>=10.0.0
 yagmail
 assemblyai
@@ -17,3 +17,4 @@ faster-whisper
 srt_equalizer
 undetected_chromedriver
 platformdirs
+opencv-python-headless
