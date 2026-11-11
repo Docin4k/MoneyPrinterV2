@@ -25,6 +25,7 @@ from selenium import webdriver
 from moviepy.video.fx.all import crop
 from moviepy.config import change_settings
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
 from moviepy.video.tools.subtitles import SubtitlesClip
@@ -928,11 +929,49 @@ class YouTube:
         """
         driver = self.browser
         driver.get("https://studio.youtube.com")
-        time.sleep(2)
-        channel_id = driver.current_url.split("/")[-1]
+        self._require_signed_in(driver)
+
+        # Studio redirects to /channel/<id>; slower machines need more than a moment
+        try:
+            WebDriverWait(driver, 60).until(
+                lambda d: "/channel/" in d.current_url or self._on_sign_in_page(d)
+            )
+        except Exception:
+            pass
+        self._require_signed_in(driver)
+
+        channel_id = driver.current_url.rstrip("/").split("/channel/")[-1].split("/")[0]
         self.channel_id = channel_id
 
         return channel_id
+
+    @staticmethod
+    def _on_sign_in_page(driver) -> bool:
+        url = driver.current_url
+        return "accounts.google.com" in url or "ServiceLogin" in url or "/signin" in url
+
+    def _require_signed_in(self, driver) -> None:
+        """Stop with a clear message if YouTube sent Firefox to Google's sign-in page."""
+        if self._on_sign_in_page(driver):
+            raise RuntimeError(
+                "This Firefox profile isn't signed in to YouTube. Open Firefox, go to "
+                "about:profiles, launch the channel's profile, sign in at youtube.com, "
+                f"quit Firefox and run again. (Profile: {self._fp_profile_path})"
+            )
+
+    def _save_failure_screenshot(self) -> None:
+        """Save what Firefox showed when an upload failed, for troubleshooting."""
+        if self._browser is None:
+            return
+        try:
+            logs = os.path.join(ROOT_DIR, "logs")
+            os.makedirs(logs, exist_ok=True)
+            path = os.path.join(logs, "upload-failure.png")
+            self._browser.save_screenshot(path)
+            info(f" => Page at failure: {self._browser.current_url}")
+            info(f" => Screenshot saved: {path}")
+        except Exception:
+            pass
 
     def upload_video(self) -> bool:
         """
@@ -950,8 +989,12 @@ class YouTube:
             # Go to youtube.com/upload
             driver.get("https://www.youtube.com/upload")
 
-            # Set video file
+            # Set video file (wait for the upload dialog; it can take a while to load)
             FILE_PICKER_TAG = "ytcp-uploads-file-picker"
+            WebDriverWait(driver, 60).until(
+                lambda d: self._on_sign_in_page(d) or d.find_elements(By.TAG_NAME, FILE_PICKER_TAG)
+            )
+            self._require_signed_in(driver)
             file_picker = driver.find_element(By.TAG_NAME, FILE_PICKER_TAG)
             INPUT_TAG = "input"
             file_input = file_picker.find_element(By.TAG_NAME, INPUT_TAG)
@@ -1083,7 +1126,8 @@ class YouTube:
 
             return True
         except Exception as e:
-            error(f"YouTube upload failed: {e}")
+            error(f"YouTube upload failed: {str(e).splitlines()[0] if str(e) else type(e).__name__}")
+            self._save_failure_screenshot()
             self.close_browser()
             return False
 
