@@ -6,8 +6,8 @@ Run from the project folder:
 - Creates config.json from config.example.json if it doesn't exist yet.
 - Finds the Firefox profile named "wonderbytes" (or uses the path you give
   with --profile "/Users/you/Library/.../abcd1234.wonderbytes").
-- Sets the pixel-art style, chiptune music, Bella voice, script queue and
-  the other WonderBytes settings. Everything else in config.json is kept.
+- Sets the pixel-art style, chiptune music with no voice-over, the script
+  queue and the other WonderBytes settings. Everything else in config.json is kept.
 - Keeps headless off so you can watch the first upload; use --headless
   once uploads work.
 """
@@ -68,7 +68,9 @@ config.update({
     "tts_voice": "Bella",
     "visual_style": "pixel_art",
     "music_source": "chiptune",
-    "music_volume": 0.15,
+    # No voice-over: captions from the script with music as the only audio
+    "voiceover": False,
+    "music_volume": 0.7,
     "subtitle_replacements": {"wonder\\s*bites": "WonderBytes"},
     "script_queue": {"enabled": True, "dir": "content/queue", "when_empty": "skip"},
 })
@@ -78,5 +80,5 @@ with open(CONFIG, "w", encoding="utf-8") as f:
     f.write("\n")
 
 print("config.json is ready:")
-for key in ("firefox_profile", "headless", "tts_voice", "visual_style", "music_source", "script_queue"):
+for key in ("firefox_profile", "headless", "voiceover", "visual_style", "music_source", "music_volume", "script_queue"):
     print(f"  {key}: {json.dumps(config[key])}")

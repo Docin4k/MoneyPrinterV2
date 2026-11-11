@@ -32,7 +32,8 @@ from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
 from moviepy.video.tools.subtitles import SubtitlesClip
 from webdriver_manager.firefox import GeckoDriverManager
-from datetime import datetime
+from datetime import datetime, timedelta
+import srt
 
 # Set ImageMagick Path
 change_settings({"IMAGEMAGICK_BINARY": get_imagemagick_path()})
@@ -636,9 +637,16 @@ class YouTube:
         """
         combined_image_path = os.path.join(ROOT_DIR, ".mp", str(uuid4()) + ".mp4")
         threads = get_threads()
-        tts_clip = AudioFileClip(self.tts_path)
-        max_duration = tts_clip.duration
+        voiceover = getattr(self, "tts_path", None) is not None
+        if voiceover:
+            tts_clip = AudioFileClip(self.tts_path)
+            max_duration = tts_clip.duration
+        else:
+            tts_clip = None
+            max_duration = sum(self.reading_durations)
         style = get_visual_style()
+        # Without a voice-over the captions carry the words, at the top
+        pixel_art.CAPTION_POSITION = "center" if voiceover else "top"
         sentences = getattr(self, "sentences", [])
         seed = seed_from_text(self.metadata.get("title", "") or getattr(self, "subject", ""))
 
@@ -668,7 +676,7 @@ class YouTube:
                     scene,
                     duration,
                     seed + index,
-                    headline=sentences[index] if index < len(sentences) else "",
+                    headline=(sentences[index] if voiceover and index < len(sentences) else ""),
                     channel=self._account_nickname,
                     footer=self._card_label(index),
                 )
@@ -703,9 +711,12 @@ class YouTube:
 
         subtitles = None
         try:
-            subtitles_path = self.generate_subtitles(self.tts_path)
-            self._fix_subtitles(subtitles_path)
-            equalize_subtitles(subtitles_path, 10)
+            if voiceover:
+                subtitles_path = self.generate_subtitles(self.tts_path)
+                self._fix_subtitles(subtitles_path)
+                equalize_subtitles(subtitles_path, 10)
+            else:
+                subtitles_path = self._script_subtitles()
             subtitles = SubtitlesClip(subtitles_path, generator)
             subtitles.set_pos(("center", "center"))
         except Exception as e:
@@ -715,10 +726,13 @@ class YouTube:
 
         # Turn down volume
         song_clip = song_clip.fx(afx.volumex, get_music_volume())
-        comp_audio = CompositeAudioClip([tts_clip.set_fps(44100), song_clip])
+        if voiceover:
+            comp_audio = CompositeAudioClip([tts_clip.set_fps(44100), song_clip])
+        else:
+            comp_audio = song_clip.subclip(0, min(max_duration, song_clip.duration)).audio_fadeout(1.5)
 
         final_clip = final_clip.set_audio(comp_audio)
-        final_clip = final_clip.set_duration(tts_clip.duration)
+        final_clip = final_clip.set_duration(max_duration)
 
         if subtitles is not None:
             final_clip = CompositeVideoClip([final_clip, subtitles])
@@ -782,8 +796,49 @@ class YouTube:
             varied.append(scene)
         return varied
 
+    @staticmethod
+    def _reading_seconds(sentence: str) -> float:
+        """How long to keep a sentence on screen when there is no voice-over."""
+        return max(3.0, 0.45 * len(sentence.split()) + 1.2)
+
+    @staticmethod
+    def _caption_chunks(sentence: str, max_words: int = 4, max_chars: int = 22) -> List[str]:
+        """Split a sentence into short caption chunks."""
+        chunks, current = [], []
+        for word in sentence.split():
+            if current and (len(current) >= max_words or len(" ".join(current + [word])) > max_chars):
+                chunks.append(" ".join(current))
+                current = []
+            current.append(word)
+        if current:
+            chunks.append(" ".join(current))
+        return chunks
+
+    def _script_subtitles(self) -> str:
+        """Write an SRT straight from the script, timed to reading speed."""
+        entries, start = [], 0.0
+        for sentence, duration in zip(self.sentences, self.reading_durations):
+            chunks = self._caption_chunks(sentence)
+            words = [len(c.split()) for c in chunks]
+            for chunk, n in zip(chunks, words):
+                length = duration * n / sum(words)
+                entries.append(srt.Subtitle(
+                    index=len(entries) + 1,
+                    start=timedelta(seconds=start),
+                    end=timedelta(seconds=start + length),
+                    content=chunk,
+                ))
+                start += length
+        path = os.path.join(ROOT_DIR, ".mp", str(uuid4()) + ".srt")
+        with open(path, "w", encoding="utf-8") as file:
+            file.write(srt.compose(entries))
+        self._fix_subtitles(path)
+        return path
+
     def _segment_durations(self, total: float, count: int) -> List[float]:
-        """Split the voice-over duration across segments by sentence length."""
+        """Split the video's duration across segments by sentence length."""
+        if getattr(self, "tts_path", None) is None and len(getattr(self, "reading_durations", [])) == count:
+            return list(self.reading_durations)
         weights = getattr(self, "segment_weights", None)
         if not weights or len(weights) != count:
             weights = [1] * count
@@ -833,7 +888,7 @@ class YouTube:
 
     def generate_video(
         self,
-        tts_instance: TTS,
+        tts_instance: TTS | None,
         topic: str | None = None,
         script_spec: dict | None = None,
     ) -> str:
@@ -841,7 +896,8 @@ class YouTube:
         Generates a YouTube Short based on the provided niche and language.
 
         Args:
-            tts_instance (TTS): Instance of TTS Class.
+            tts_instance (TTS | None): Instance of TTS Class, or None (created
+                when needed; unused when the voice-over is off).
             topic (str | None): Optional user-provided topic. When given, the
                 LLM topic generation step is skipped and this topic is used
                 as the subject of the video instead.
@@ -909,8 +965,16 @@ class YouTube:
             for prompt in self.image_prompts:
                 self.generate_image(prompt)
 
-        # Generate the TTS
-        self.generate_script_to_speech(tts_instance)
+        # Generate the TTS (or, with the voice-over off, time sentences for reading)
+        if get_voiceover():
+            if tts_instance is None:
+                tts_instance = TTS()
+            self.generate_script_to_speech(tts_instance)
+        else:
+            self.tts_path = None
+            self.reading_durations = [self._reading_seconds(sentence) for sentence in self.sentences]
+            if get_verbose():
+                info(f" => No voice-over: {sum(self.reading_durations):.0f}s of captions and music")
 
         # Combine everything
         path = self.combine()

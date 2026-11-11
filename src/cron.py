@@ -19,7 +19,7 @@ from config import get_verbose
 from classes.Tts import TTS
 from classes.Twitter import Twitter
 from classes.YouTube import YouTube
-from config import get_script_queue
+from config import get_script_queue, get_voiceover
 from llm_provider import select_model
 from post_bridge_integration import maybe_crosspost_youtube_short
 import script_queue
@@ -98,7 +98,7 @@ def main():
             error("No Ollama model specified. Pass model name as third argument.")
             sys.exit(1)
 
-        tts = TTS()
+        tts = TTS() if get_voiceover() else None  # the voice model is only loaded when used
 
         accounts = get_accounts("youtube")
 

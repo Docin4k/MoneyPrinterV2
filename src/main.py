@@ -219,7 +219,7 @@ def main():
 
                     # Get user input
                     user_input = int(question("Select an option: "))
-                    tts = TTS()
+                    tts = TTS() if get_voiceover() else None
 
                     if user_input == 1:
                         generate_and_upload_short(youtube, tts)

@@ -472,3 +472,15 @@ def get_script_queue() -> dict:
     settings = {"enabled": False, "dir": "content/queue", "when_empty": "llm"}
     settings.update(_get_optional("script_queue", {}))
     return settings
+
+
+def get_voiceover() -> bool:
+    """
+    Gets whether YouTube Shorts get a spoken voice-over.
+
+    Returns:
+        voiceover (bool): True (default) for KittenTTS narration with subtitles
+            from speech-to-text; False for music and captions taken straight
+            from the script, timed to reading speed.
+    """
+    return bool(_get_optional("voiceover", True))

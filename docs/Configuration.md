@@ -38,6 +38,7 @@ All your configurations will be in a file in the root directory, called `config.
 - `font`: `string` - The font that will be used to generate images. This should be a `.ttf` file in the `fonts/` directory.
 - `imagemagick_path`: `string` - The path to the ImageMagick binary. This is used by MoviePy to manipulate images. Install ImageMagick from [here](https://imagemagick.org/script/download.php) and set the path to the `magick.exe` on Windows, or on Linux/MacOS the path to `convert` (usually /usr/bin/convert).
 - `script_sentence_length`: `number` - The number of sentences in the generated video script (default: `4`).
+- `voiceover`: `boolean` - `true` (default): KittenTTS narrates the script and subtitles come from speech-to-text. `false`: no narration; captions are taken straight from the script and timed to reading speed, and the music is the only audio (raise `music_volume`, e.g. to `0.7`).
 - `visual_style`: `string` - How YouTube Shorts look. Default `ai_images`. Options:
     * `ai_images` - images from Nano Banana 2 (needs `nanobanana2_api_key`)
     * `text_cards` - locally drawn cards with each sentence as a headline (no API key)

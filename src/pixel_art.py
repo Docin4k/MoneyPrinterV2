@@ -1,8 +1,9 @@
 """8-bit style animated scenes for YouTube Shorts.
 
-Every frame is drawn on a small 180x320 canvas with a limited palette and
-ordered (Bayer) dithering, then scaled up 6x with hard pixel edges to
-1080x1920. Animation is stepped at 12 frames per second for a retro feel.
+Scenes are laid out on a 180x320 design grid but drawn at DETAIL x that
+resolution (360x640 by default) with a limited palette and ordered (Bayer)
+dithering, then scaled up with hard pixel edges to 1080x1920. Animation is
+stepped at 12 frames per second for a retro feel.
 
 A scene is described by a dict, for example {"scene": "planet", "preset": "venus"}.
 Available scenes: planet, sun, black_hole, pulsar, galaxy, surface, orbit,
@@ -17,14 +18,30 @@ import random
 import numpy as np
 from moviepy.editor import ImageClip, VideoClip
 
-LW, LH = 180, 320          # low-resolution canvas
-SCALE = 6                  # 180x320 -> 1080x1920
+LW, LH = 180, 320          # design grid: all scene coordinates use these units
+DETAIL = 2                 # pixels per design unit: 2 -> drawn at 360x640
+PW, PH = LW * DETAIL, LH * DETAIL
+SCALE = 1080 // PW         # 360x640 -> 1080x1920
 ANIM_FPS = 12              # animation steps per second
 
 BAYER = (np.array([[0, 8, 2, 10], [12, 4, 14, 6], [3, 11, 1, 9], [15, 7, 13, 5]]) + 0.5) / 16.0
-BAYER_FULL = np.tile(BAYER, (LH // 4 + 1, LW // 4 + 1))[:LH, :LW]
+BAYER_FULL = np.tile(BAYER, (PH // 4 + 1, PW // 4 + 1))[:PH, :PW]
 
-YY, XX = np.mgrid[0:LH, 0:LW]
+# Pixel indices, and the same positions in design units (for scene geometry)
+PY, PX = np.mgrid[0:PH, 0:PW]
+YY, XX = (PY + 0.5) / DETAIL, (PX + 0.5) / DETAIL
+
+
+def px(v) -> int:
+    """Design-unit coordinate -> pixel index."""
+    return int(v * DETAIL)
+
+
+def put(frame, x, y, color, size=1):
+    """Set a size x size block of pixels at a design-unit position."""
+    x0, y0 = px(x), px(y)
+    if 0 <= y0 < PH and 0 <= x0 < PW:
+        frame[y0:y0 + size, x0:x0 + size] = color
 
 # ---------------------------------------------------------------- font ----
 _GLYPHS = {
@@ -89,21 +106,28 @@ def text_mask(text: str, scale: int, max_width: int, align_center: bool = True) 
     return mask
 
 
+def _outline(region: np.ndarray, width: int) -> np.ndarray:
+    grown = region.copy()
+    for dy in range(-width, width + 1):
+        for dx in range(-width, width + 1):
+            if dy or dx:
+                grown |= np.roll(np.roll(region, dy, 0), dx, 1)
+    return grown
+
+
 def stamp_text(frame, text, y, scale, color, outline=(0, 0, 0), max_width=LW - 12):
-    """Draw outlined pixel text centred horizontally at row y; returns the bottom row."""
-    mask = text_mask(text, scale, max_width)
+    """Draw outlined pixel text centred horizontally at design row y (sizes in
+    design units); returns the bottom row in design units."""
+    mask = text_mask(text, scale * DETAIL, max_width * DETAIL)
     h, w = mask.shape
-    x0 = (LW - w) // 2
-    region = np.zeros((LH, LW), dtype=bool)
-    y1, y2 = max(0, y), min(LH, y + h)
-    region[y1:y2, x0:x0 + w] = mask[y1 - y:y2 - y]
+    x0, y0 = (PW - w) // 2, px(y)
+    region = np.zeros((PH, PW), dtype=bool)
+    y1, y2 = max(0, y0), min(PH, y0 + h)
+    region[y1:y2, x0:x0 + w] = mask[y1 - y0:y2 - y0]
     if outline is not None:
-        grown = region.copy()
-        for dy, dx in ((-1, 0), (1, 0), (0, -1), (0, 1), (-1, -1), (1, 1), (-1, 1), (1, -1)):
-            grown |= np.roll(np.roll(region, dy, 0), dx, 1)
-        frame[grown & ~region] = outline
+        frame[_outline(region, DETAIL) & ~region] = outline
     frame[region] = color
-    return y + h
+    return y + h / DETAIL
 
 
 # ----------------------------------------------------------- helpers ----
@@ -135,26 +159,28 @@ class Stars:
     """Parallax starfield with twinkling."""
 
     def __init__(self, seed: int, count: int = 140):
+        count = int(count * 1.6)  # finer grid: more, smaller stars
         rng = np.random.default_rng(seed)
         self.x = rng.uniform(0, LW, count)
-        self.y = rng.integers(0, LH, count)
+        self.y = rng.uniform(0, LH, count)
         self.layer = rng.choice([1, 2, 3], count, p=[0.6, 0.3, 0.1])
         self.phase = rng.uniform(0, 2 * np.pi, count)
         self.speed = rng.uniform(0.6, 1.6, count)
 
     def draw(self, frame, t, drift=2.0, mask=None):
-        x = ((self.x + t * drift * self.layer) % LW).astype(int)
-        y = self.y
+        x = (((self.x + t * drift * self.layer) % LW) * DETAIL).astype(int)
+        y = (self.y * DETAIL).astype(int)
         tw = np.sin(self.phase + t * 3 * self.speed) > -0.6
         bright = np.where(self.layer == 3, 255, np.where(self.layer == 2, 200, 140))
         for xi, yi, b, on, layer in zip(x, y, bright, tw, self.layer):
             if not on or (mask is not None and mask[yi, xi]):
                 continue
-            frame[yi, xi] = (b, b, min(255, b + 20))
+            size = 2 if layer == 3 else 1
+            frame[yi:yi + size, xi:xi + size] = (b, b, min(255, b + 20))
             if layer == 3 and math.sin(t * 4 + xi) > 0.3:  # sparkle cross on big stars
-                for dy, dx in ((-1, 0), (1, 0), (0, -1), (0, 1)):
-                    yy, xx = yi + dy, (xi + dx) % LW
-                    if 0 <= yy < LH and (mask is None or not mask[yy, xx]):
+                for dy, dx in ((-2, 0), (2, 0), (0, -2), (0, 2), (-3, 0), (3, 0), (0, -3), (0, 3)):
+                    yy, xx = yi + dy, (xi + dx) % PW
+                    if 0 <= yy < PH and (mask is None or not mask[yy, xx]):
                         frame[yy, xx] = (b // 2, b // 2, b // 2 + 30)
 
 
@@ -185,15 +211,16 @@ SPRITES = {
 
 
 def draw_sprite(frame, name, x, y, color, scale=1):
+    """Draw a sprite at a design-unit position; `scale` is in design units."""
     rows = SPRITES[name]
+    block = scale * DETAIL
+    x0, y0 = px(x), px(y)
     for r, row in enumerate(rows):
         for c, ch in enumerate(row):
             if ch == "#":
-                for sy in range(scale):
-                    for sx in range(scale):
-                        yy, xx = int(y) + r * scale + sy, int(x) + c * scale + sx
-                        if 0 <= yy < LH and 0 <= xx < LW:
-                            frame[yy, xx] = color
+                yy, xx = y0 + r * block, x0 + c * block
+                if 0 <= yy < PH and 0 <= xx < PW:
+                    frame[yy:yy + block, xx:xx + block] = color
 
 
 # ------------------------------------------------------------ planets ----
@@ -258,10 +285,10 @@ def draw_planet(frame, t, preset, cx, cy, r, seed=1, light=(-0.6, -0.4)):
     lz = math.sqrt(max(0.0, 1 - lx ** 2 - ly ** 2))
     shade = np.clip(nx * lx + ny * ly + nz * lz, 0, 1)
     v = np.clip(val, 0, 1) * (0.25 + 0.75 * shade)
-    colors = dither_ramp(v, p["ramp"], YY[inside], XX[inside])
+    colors = dither_ramp(v, p["ramp"], PY[inside], PX[inside])
     if p.get("spot"):
         spot_col = dither_ramp(0.4 + 0.6 * shade[spot], [(90, 20, 10), (180, 60, 30), (230, 110, 70)],
-                               YY[inside][spot], XX[inside][spot])
+                               PY[inside][spot], PX[inside][spot])
         colors[spot] = spot_col
     frame[inside] = colors
 
@@ -283,7 +310,7 @@ def _draw_rings(frame, cx, cy, r, front, t):
     planet = ((XX - cx) ** 2 + (YY - cy) ** 2) <= r * r
     sel = band & half & (~planet if not front else np.ones_like(planet))
     shimmer = 0.5 + 0.35 * np.sin(rr * 30 + t * 0.5) + 0.15 * np.sin(rr * 90)
-    cols = dither_ramp(shimmer[sel], [(120, 100, 70), (190, 170, 130), (235, 220, 180)], YY[sel], XX[sel])
+    cols = dither_ramp(shimmer[sel], [(120, 100, 70), (190, 170, 130), (235, 220, 180)], PY[sel], PX[sel])
     frame[sel] = cols
 
 
@@ -298,7 +325,7 @@ def nebula(frame, seed):
     if seed not in _NEBULA_CACHE:
         rng = random.Random(seed * 7 + 3)
         u, v = XX / LW * 2 * np.pi, YY / LH * 2 * np.pi
-        field = np.zeros((LH, LW))
+        field = np.zeros(XX.shape)
         for k in range(6):
             a, b = rng.uniform(0.5, 2.5), rng.uniform(0.5, 3.0)
             field += np.sin(u * a + rng.uniform(0, 6.3) + np.sin(v * b + rng.uniform(0, 6.3)) * 1.5) / (k + 1)
@@ -321,14 +348,12 @@ def shooting_star(frame, t, seed):
     rng = random.Random(seed * 131 + n)
     x0, y0 = rng.uniform(20, LW), rng.uniform(40, LH * 0.55)
     dx, dy = -rng.uniform(60, 110), rng.uniform(20, 50)
-    for i in range(14):
-        f = phase - i * 0.012
+    for i in range(28):
+        f = phase - i * 0.006
         if f < 0:
             break
-        x, y = int(x0 + dx * f), int(y0 + dy * f)
-        if 0 <= x < LW and 0 <= y < LH:
-            b = 255 - i * 16
-            frame[y, x] = (b, b, min(255, b + 30))
+        b = 255 - i * 8
+        put(frame, x0 + dx * f, y0 + dy * f, (b, b, min(255, b + 30)))
 
 
 # Moons: (orbit radius in planet radii, size in pixels, speed, colour, phase)
@@ -363,9 +388,9 @@ def halo(frame, cx, cy, r, color, width=6):
     d = np.sqrt((XX - cx) ** 2 + (YY - cy) ** 2)
     ring = (d > r + 1) & (d < r + width)
     strength = 1 - (d[ring] - r - 1) / (width - 1)
-    keep = BAYER_FULL[ring] < strength * 0.5
-    ys, xs = YY[ring][keep], XX[ring][keep]
-    frame[ys, xs] = (frame[ys, xs] * 0.5 + np.array(color) * 0.5).astype(np.uint8)
+    sel = ring.copy()
+    sel[ring] = BAYER_FULL[ring] < strength * 0.5
+    frame[sel] = (frame[sel] * 0.5 + np.array(color) * 0.5).astype(np.uint8)
 
 
 # ------------------------------------------------------------- scenes ----
@@ -390,29 +415,27 @@ def scene_sun(frame, t, spec, seed):
     corona_len = 10 + 6 * np.sin(ang * 7 + t * 2) + 4 * np.sin(ang * 13 - t * 3)
     corona = (d > r) & (d < r + corona_len)
     cv = 1 - (d[corona] - r) / corona_len[corona]
-    frame[corona] = dither_ramp(cv, [(60, 10, 10), (180, 50, 10), (250, 140, 30)], YY[corona], XX[corona])
+    frame[corona] = dither_ramp(cv, [(60, 10, 10), (180, 50, 10), (250, 140, 30)], PY[corona], PX[corona])
     disc = d <= r
     nx, ny = (XX[disc] - cx) / r, (YY[disc] - cy) / r
     gran = periodic_noise(np.arctan2(nx, 0.3) * 3 + t * 0.4, ny * 3 + 0.2 * math.sin(t), seed, 3)
     limb = 1 - (nx ** 2 + ny ** 2) * 0.6
     frame[disc] = dither_ramp(gran * 0.35 + limb * 0.65,
                               [(200, 60, 10), (245, 130, 20), (255, 200, 60), (255, 245, 180)],
-                              YY[disc], XX[disc])
+                              PY[disc], PX[disc])
     # Prominence loop
     a0 = (t * 0.3) % (2 * math.pi)
-    for k in range(40):
-        a = a0 + k * 0.012
-        h = 14 * math.sin(k / 39 * math.pi)
-        x, y = cx + (r + h) * math.cos(a), cy + (r + h) * math.sin(a)
-        if 0 <= int(y) < LH and 0 <= int(x) < LW:
-            frame[int(y), int(x)] = (255, 120, 40)
+    for k in range(90):
+        a = a0 + k * 0.0054
+        h = 14 * math.sin(k / 89 * math.pi)
+        put(frame, cx + (r + h) * math.cos(a), cy + (r + h) * math.sin(a), (255, 120, 40), size=2)
 
 
 def scene_black_hole(frame, t, spec, seed):
     Stars(seed).draw(frame, t, drift=0.5)
     cx, cy, rh = LW // 2, 200, 20
     rng = np.random.default_rng(seed)
-    n = 900
+    n = 900 * DETAIL * DETAIL
     rad = rng.uniform(rh * 1.6, rh * 4.2, n)
     a0 = rng.uniform(0, 2 * np.pi, n)
     ang = a0 + t * 3.0 * (rh * 1.6 / rad) ** 1.5
@@ -424,17 +447,17 @@ def scene_black_hole(frame, t, spec, seed):
     hole = (XX - cx) ** 2 + (YY - cy) ** 2 <= rh ** 2
 
     def plot(sel):
-        xi, yi = x[sel].astype(int), y[sel].astype(int)
-        ok = (xi >= 0) & (xi < LW) & (yi >= 0) & (yi < LH)
+        xi, yi = (x[sel] * DETAIL).astype(int), (y[sel] * DETAIL).astype(int)
+        ok = (xi >= 0) & (xi < PW) & (yi >= 0) & (yi < PH)
         cols = dither_ramp(heat[sel][ok], ramp, yi[ok], xi[ok])
         frame[yi[ok], xi[ok]] = cols
 
     plot(back)
     # Lensed image of the far side of the disk, arching over the hole
     lens_r = rad[back] * 0.62 + rh * 0.5
-    lx = (cx + lens_r * np.cos(ang[back])).astype(int)
-    ly = (cy - np.abs(lens_r * np.sin(ang[back])) * 0.9 - rh * 0.2).astype(int)
-    ok = (lx >= 0) & (lx < LW) & (ly >= 0) & (ly < LH)
+    lx = ((cx + lens_r * np.cos(ang[back])) * DETAIL).astype(int)
+    ly = ((cy - np.abs(lens_r * np.sin(ang[back])) * 0.9 - rh * 0.2) * DETAIL).astype(int)
+    ok = (lx >= 0) & (lx < PW) & (ly >= 0) & (ly < PH)
     frame[ly[ok], lx[ok]] = dither_ramp(heat[back][ok] * 0.8, ramp, ly[ok], lx[ok])
     ring = ((XX - cx) ** 2 + (YY - cy) ** 2 <= (rh + 1.5) ** 2) & ~hole
     frame[ring] = (255, 230, 170)
@@ -454,33 +477,31 @@ def scene_pulsar(frame, t, spec, seed):
         beam = (np.abs(diff) < width) & (d > 6) & (d < 150)
         bv = (1 - np.abs(diff[beam]) / width[beam]) * (1 - d[beam] / 160)
         frame[beam] = dither_ramp(bv, [(20, 30, 80), (60, 120, 220), (170, 220, 255), (255, 255, 255)],
-                                  YY[beam], XX[beam])
+                                  PY[beam], PX[beam])
     # Magnetic field loops
     for side in (-1, 1):
         for k in range(3):
             loop_r = 14 + k * 9
-            for s in range(60):
-                a = s / 59 * math.pi
-                x = cx + side * loop_r * math.sin(a)
-                y = cy - loop_r * 1.4 * math.cos(a)
-                if (s + int(t * 12)) % 4 and 0 <= int(y) < LH:
-                    frame[int(y), int(x)] = (70, 90, 170)
+            for s in range(120):
+                a = s / 119 * math.pi
+                if (s // 2 + int(t * 12)) % 4:
+                    put(frame, cx + side * loop_r * math.sin(a), cy - loop_r * 1.4 * math.cos(a), (70, 90, 170))
     glow = d <= 9
     frame[glow] = dither_ramp(1 - d[glow] / 9, [(80, 120, 255), (200, 230, 255), (255, 255, 255)],
-                              YY[glow], XX[glow])
+                              PY[glow], PX[glow])
 
 
 def scene_galaxy(frame, t, spec, seed):
     Stars(seed).draw(frame, t, drift=0.5)
     cx, cy = LW // 2, 205
     rng = np.random.default_rng(seed)
-    n = 2600
+    n = 2600 * DETAIL * DETAIL
     arm = rng.integers(0, 2, n)
     rad = rng.exponential(22, n).clip(2, 85)
     ang = arm * math.pi + np.log(rad) * 2.2 + rng.normal(0, 0.35, n) - t * 0.25 * (30 / (rad + 10))
-    x = (cx + rad * np.cos(ang)).astype(int)
-    y = (cy + rad * np.sin(ang) * 0.55).astype(int)
-    ok = (x >= 0) & (x < LW) & (y >= 0) & (y < LH)
+    x = ((cx + rad * np.cos(ang)) * DETAIL).astype(int)
+    y = ((cy + rad * np.sin(ang) * 0.55) * DETAIL).astype(int)
+    ok = (x >= 0) & (x < PW) & (y >= 0) & (y < PH)
     v = 1 - rad / 85
     frame[y[ok], x[ok]] = dither_ramp(v[ok], [(60, 70, 160), (130, 150, 230), (240, 220, 200), (255, 250, 230)],
                                       y[ok], x[ok])
@@ -517,7 +538,7 @@ def scene_surface(frame, t, spec, seed):
         d = np.sqrt((XX - sun_x) ** 2 + ((YY - sun_y) * 1.3) ** 2)
         glow = d < 60
         frame[glow] = dither_ramp(1 - d[glow] / 60, [p["sky"][1], p.get("glow_mid", (60, 110, 170)), p["sun_glow"]],
-                                  YY[glow], XX[glow])
+                                  PY[glow], PX[glow])
     sun = (XX - sun_x) ** 2 + (YY - sun_y) ** 2 <= 16
     frame[sun] = (255, 250, 230) if p.get("sun_glow") else (255, 240, 200)
 
@@ -525,14 +546,14 @@ def scene_surface(frame, t, spec, seed):
     horizon = 210
     for layer, col in enumerate(p["ground"]):
         h = horizon + layer * 22
-        xs = np.arange(LW)
+        xs = (np.arange(PW) + 0.5) / DETAIL
         prof = h + 8 * np.sin(xs / (25 + layer * 7) + rng.uniform(0, 6)) + 4 * np.sin(xs / 9 + rng.uniform(0, 6))
         if spec.get("volcano") and layer == 0:
             # Broad shield volcano with gentle slopes and a flat caldera on top
             u = np.clip(np.abs(xs - LW / 2) / 85, 0, 1)
             shield = horizon - 75 * (1 - u ** 1.6) + np.where(np.abs(xs - LW / 2) < 10, 3, 0)
             prof = np.minimum(prof, shield)
-        frame[YY >= prof[None, :].repeat(LH, 0)] = col
+        frame[YY >= prof[None, :]] = col
     if spec.get("rover"):
         draw_sprite(frame, "rover", (t * 6) % (LW + 20) - 10, 252, (220, 220, 230))
     if spec.get("footprints"):
@@ -562,7 +583,7 @@ def scene_diamond_rain(frame, t, spec, seed):
         y = (o + t * s) % (LH + 10) - 10
         draw_sprite(frame, "diamond", x, y, (200, 240, 255), scale=2)
         if math.sin(t * 9 + x) > 0.7:
-            frame[int(np.clip(y + 2, 0, LH - 1)), min(LW - 1, int(x) + 4)] = (255, 255, 255)
+            put(frame, min(LW - 1, x + 4), float(np.clip(y + 2, 0, LH - 1)), (255, 255, 255), size=DETAIL)
 
 
 def scene_starfield(frame, t, spec, seed):
@@ -583,7 +604,7 @@ SPACE_SCENES = {"planet", "sun", "black_hole", "pulsar", "galaxy", "orbit"}
 def render_frame(spec: dict, t: float, seed: int, headline: str = "", channel: str = "",
                  footer: str = "") -> np.ndarray:
     """Draw one low-resolution frame of a scene with its text overlay."""
-    frame = np.zeros((LH, LW, 3), dtype=np.uint8)
+    frame = np.zeros((PH, PW, 3), dtype=np.uint8)
     frame[:] = (4, 4, 16)
     scene = spec.get("scene", "starfield")
     if scene in SPACE_SCENES:
@@ -594,12 +615,12 @@ def render_frame(spec: dict, t: float, seed: int, headline: str = "", channel: s
     # Darkened band behind the top text and footer for readability
     if channel or headline:
         bottom = 26 + text_mask(headline, 1, LW - 16).shape[0] + 4 if headline else 22
-        frame[:bottom] = (frame[:bottom] * 0.35).astype(np.uint8)
+        frame[:px(bottom)] = (frame[:px(bottom)] * 0.35).astype(np.uint8)
     if footer:
-        frame[LH - 20:] = (frame[LH - 20:] * 0.35).astype(np.uint8)
+        frame[px(LH - 20):] = (frame[px(LH - 20):] * 0.35).astype(np.uint8)
     if channel:
         stamp_text(frame, channel, 8, 1, (255, 255, 255))
-        frame[18, LW // 2 - 22:LW // 2 + 22] = (255, 210, 60)
+        frame[px(18):px(19), px(LW / 2 - 22):px(LW / 2 + 22)] = (255, 210, 60)
     if headline:
         stamp_text(frame, headline, 26, 1, (255, 255, 255), max_width=LW - 16)
     if footer:
@@ -626,18 +647,21 @@ def scene_clip(spec: dict, duration: float, seed: int, headline: str = "", chann
     return VideoClip(make_frame, duration=duration)
 
 
+# Where captions sit: "center" (over the scene) or "top" (in the band under the
+# channel name, used when there is no voice-over and no headline)
+CAPTION_POSITION = "center"
+
+
 def render_caption(txt: str, **_) -> ImageClip:
-    """Pixel-font caption for SubtitlesClip: yellow with a black outline, centred."""
-    frame = np.zeros((LH, LW, 3), dtype=np.uint8)
-    mask = text_mask(txt, 2, LW - 12)
+    """Pixel-font caption for SubtitlesClip: yellow with a black outline."""
+    frame = np.zeros((PH, PW, 3), dtype=np.uint8)
+    mask = text_mask(txt, 2 * DETAIL, (LW - 12) * DETAIL)
     h, w = mask.shape
-    y0, x0 = (LH - h) // 2 + 20, (LW - w) // 2
-    region = np.zeros((LH, LW), dtype=bool)
+    x0 = (PW - w) // 2
+    y0 = px(34) if CAPTION_POSITION == "top" else (PH - h) // 2 + px(20)
+    region = np.zeros((PH, PW), dtype=bool)
     region[y0:y0 + h, x0:x0 + w] = mask
-    outline = region.copy()
-    for dy in (-1, 0, 1):
-        for dx in (-1, 0, 1):
-            outline |= np.roll(np.roll(region, dy, 0), dx, 1)
+    outline = _outline(region, DETAIL)
     frame[outline] = (0, 0, 0)
     frame[region] = (255, 230, 40)
     alpha = (outline.astype(np.uint8) * 255)[..., None]
