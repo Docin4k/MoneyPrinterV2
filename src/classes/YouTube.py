@@ -3,6 +3,7 @@ import base64
 import json
 import time
 import os
+import sys
 import requests
 import assemblyai as aai
 
@@ -25,6 +26,7 @@ from selenium import webdriver
 from moviepy.video.fx.all import crop
 from moviepy.config import change_settings
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
@@ -959,6 +961,22 @@ class YouTube:
                 f"quit Firefox and run again. (Profile: {self._fp_profile_path})"
             )
 
+    @staticmethod
+    def _replace_text(element, text: str) -> None:
+        """Replace the text of a YouTube Studio text box the way a person would.
+
+        Selenium's clear() empties rich text boxes by setting innerHTML, which
+        YouTube Studio's Trusted Types CSP now blocks ("Sink type mismatch
+        violation blocked by CSP"). Select all and delete with the keyboard instead.
+        """
+        select_all = Keys.COMMAND if sys.platform == "darwin" else Keys.CONTROL
+        element.click()
+        time.sleep(0.5)
+        element.send_keys(select_all, "a")
+        element.send_keys(Keys.BACKSPACE)
+        time.sleep(0.3)
+        element.send_keys(text)
+
     def _save_failure_screenshot(self) -> None:
         """Save what Firefox showed when an upload failed, for troubleshooting."""
         if self._browser is None:
@@ -1012,20 +1030,15 @@ class YouTube:
             if verbose:
                 info("\t=> Setting title...")
 
-            title_el.click()
             time.sleep(1)
-            title_el.clear()
-            title_el.send_keys(self.metadata["title"])
+            self._replace_text(title_el, self.metadata["title"])
 
             if verbose:
                 info("\t=> Setting description...")
 
             # Set description
             time.sleep(10)
-            description_el.click()
-            time.sleep(0.5)
-            description_el.clear()
-            description_el.send_keys(self.metadata["description"])
+            self._replace_text(description_el, self.metadata["description"])
 
             time.sleep(0.5)
 
