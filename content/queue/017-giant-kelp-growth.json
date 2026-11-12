@@ -1,0 +1,28 @@
+{
+  "topic": "Giant kelp grows incredibly fast",
+  "script": "Giant kelp can grow up to about 60 centimeters in a single day. It can reach more than 30 meters tall, forming underwater forests. Kelp is not actually a plant, but a type of brown algae. Small gas-filled bulbs keep its blades floating up toward the sunlight. Sea otters help protect kelp forests by eating the sea urchins that feed on kelp. Follow Pixel Abyss for more strange facts from the deep.",
+  "title": "Giant Kelp Can Grow 60 cm in a Day #Kelp #Ocean #Shorts",
+  "description": "Giant kelp is one of the fastest-growing living things, forming tall underwater forests.\n\nFollow Pixel Abyss for more strange facts from the deep.\n\n#Kelp #KelpForest #Ocean #OceanFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "kelp_forest"
+    },
+    {
+      "scene": "kelp_forest"
+    },
+    {
+      "scene": "kelp_forest"
+    },
+    {
+      "scene": "kelp_forest"
+    },
+    {
+      "scene": "kelp_forest"
+    },
+    {
+      "scene": "jellyfish"
+    }
+  ],
+  "music_style": "adventure"
+}

@@ -1,0 +1,28 @@
+{
+  "topic": "Most of the ocean is in total darkness",
+  "script": "Most of the ocean is in complete darkness. The ocean covers about 71 percent of Earth's surface and holds about 97 percent of its water. Its average depth is around 3,700 meters. Sunlight fades quickly, and below about 200 meters there is too little for plants to grow. Below 1,000 meters, no sunlight reaches at all, a region called the midnight zone. Follow Pixel Abyss for more strange facts from the deep.",
+  "title": "Most of the Ocean Is in Total Darkness #Ocean #DeepSea #Shorts",
+  "description": "Below 1,000 meters no sunlight reaches the ocean at all, and that is where most of the ocean's water is.\n\nFollow Pixel Abyss for more strange facts from the deep.\n\n#Ocean #DeepSea #MidnightZone #OceanFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "trench"
+    },
+    {
+      "scene": "ocean_surface"
+    },
+    {
+      "scene": "trench"
+    },
+    {
+      "scene": "deep_sea"
+    },
+    {
+      "scene": "anglerfish"
+    },
+    {
+      "scene": "fish_school"
+    }
+  ],
+  "music_style": "space ambient"
+}

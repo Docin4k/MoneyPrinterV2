@@ -1,0 +1,28 @@
+{
+  "topic": "Most deep sea animals make their own light",
+  "script": "About three quarters of the animals in the deep ocean can make their own light. This glow is called bioluminescence, and it comes from chemical reactions inside their bodies. Most of it is blue, because blue light travels farthest through seawater. Some animals glow on their bellies to hide their shadow from predators below. The dragonfish can even make red light, which most deep sea animals cannot see. Follow Pixel Abyss for more strange facts from the deep.",
+  "title": "Most Deep Sea Animals Make Their Own Light #DeepSea #Ocean #Shorts",
+  "description": "About three quarters of deep sea animals are bioluminescent, using light to hunt, hide and communicate.\n\nFollow Pixel Abyss for more strange facts from the deep.\n\n#Bioluminescence #DeepSea #Ocean #OceanFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "deep_sea"
+    },
+    {
+      "scene": "jellyfish"
+    },
+    {
+      "scene": "deep_sea"
+    },
+    {
+      "scene": "deep_sea"
+    },
+    {
+      "scene": "anglerfish"
+    },
+    {
+      "scene": "kelp_forest"
+    }
+  ],
+  "music_style": "funk"
+}

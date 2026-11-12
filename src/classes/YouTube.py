@@ -677,7 +677,7 @@ class YouTube:
                     duration,
                     seed + index,
                     headline=(sentences[index] if voiceover and index < len(sentences) else ""),
-                    channel=self._account_nickname,
+                    channel=self._channel_name(),
                     footer=self._card_label(index),
                 )
                 for index, (scene, duration) in enumerate(zip(self.scenes, durations))
@@ -786,6 +786,15 @@ class YouTube:
                 y_center=clip.h / 2,
             )
         return clip.resize((1080, 1920))
+
+    def _channel_name(self) -> str:
+        """Name shown on the videos: content/channel.json's "name" (which may
+        contain spaces), else the account nickname."""
+        try:
+            with open(os.path.join(ROOT_DIR, "content", "channel.json"), encoding="utf-8") as f:
+                return json.load(f).get("name") or self._account_nickname
+        except (OSError, ValueError):
+            return self._account_nickname
 
     def _vary_scenes(self, scenes: List[dict]) -> List[dict]:
         """Change framing between consecutive uses of the same scene, so a
@@ -962,7 +971,7 @@ class YouTube:
             for index, sentence in enumerate(self.sentences):
                 path = os.path.join(ROOT_DIR, ".mp", str(uuid4()) + ".png")
                 total = len(self.sentences) - (1 if self.has_cta else 0)
-                text_cards.render_card(path, index, total, sentence, self._account_nickname,
+                text_cards.render_card(path, index, total, sentence, self._channel_name(),
                                        label=self._card_label(index))
                 self.images.append(path)
         else:

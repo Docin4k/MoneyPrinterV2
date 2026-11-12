@@ -1,0 +1,28 @@
+{
+  "topic": "The ocean makes about half of Earth's oxygen",
+  "script": "Roughly half of the oxygen made on Earth comes from the ocean. Most of it is made by plankton too small to see, drifting near the surface. One tiny bacterium, Prochlorococcus, may make up to 20 percent of all the oxygen in the living world. It is the smallest known living thing that makes food from sunlight. Much of the oxygen made in the sea is used up by ocean life itself. Follow Pixel Abyss for more strange facts from the deep.",
+  "title": "Half of Earth's Oxygen Comes From the Ocean #Ocean #Science #Shorts",
+  "description": "Tiny plankton in the sunlit ocean make roughly half of the oxygen produced on Earth.\n\nFollow Pixel Abyss for more strange facts from the deep.\n\n#Ocean #Plankton #Oxygen #OceanFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "ocean_surface"
+    },
+    {
+      "scene": "ocean_surface"
+    },
+    {
+      "scene": "kelp_forest"
+    },
+    {
+      "scene": "ocean_surface"
+    },
+    {
+      "scene": "fish_school"
+    },
+    {
+      "scene": "deep_sea"
+    }
+  ],
+  "music_style": "march"
+}

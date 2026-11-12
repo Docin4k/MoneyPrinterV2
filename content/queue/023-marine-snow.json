@@ -1,0 +1,28 @@
+{
+  "topic": "It snows in the deep ocean",
+  "script": "It snows in the deep ocean. Marine snow is made of dead plankton, poop and other bits drifting down from above. Some flakes take weeks to sink all the way to the sea floor. It is one of the main sources of food for animals in the deep. Over millions of years, it builds up thick layers of mud on the seabed. Follow Pixel Abyss for more strange facts from the deep.",
+  "title": "It Snows at the Bottom of the Ocean #DeepSea #Ocean #Shorts",
+  "description": "Marine snow, made of dead plankton and other debris, drifts down and feeds much of the deep sea.\n\nFollow Pixel Abyss for more strange facts from the deep.\n\n#MarineSnow #DeepSea #Ocean #OceanFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "deep_sea"
+    },
+    {
+      "scene": "deep_sea"
+    },
+    {
+      "scene": "trench"
+    },
+    {
+      "scene": "anglerfish"
+    },
+    {
+      "scene": "deep_sea"
+    },
+    {
+      "scene": "fish_school"
+    }
+  ],
+  "music_style": "boss battle"
+}

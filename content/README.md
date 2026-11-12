@@ -23,7 +23,7 @@ posted, e.g. `013-pluto.json`.
 ```json
 {
   "topic": "A day on Venus is longer than its year",
-  "script": "On Venus, a single day lasts longer than an entire year. Venus spins so slowly that one full turn takes about 243 Earth days. ... Follow WonderBytes for more facts that sound fake but are true.",
+  "script": "On Venus, a single day lasts longer than an entire year. Venus spins so slowly that one full turn takes about 243 Earth days. ... Follow the channel for more.",
   "title": "A Day on Venus Is Longer Than Its Year #Venus #SpaceFacts #Shorts",
   "description": "Text for the YouTube description, including hashtags.",
   "last_sentence_is_cta": true,
@@ -79,3 +79,8 @@ posted, e.g. `013-pluto.json`.
 | `nebula` | A colourful star-forming cloud with bright young stars. |
 | `telescope` | A space telescope with a gold segmented mirror and sunshield. |
 | `binary_suns` | Two suns circling above desert dunes. |
+
+Underwater scenes (from `src/pixel_ocean.py`): `deep_sea`, `anglerfish`,
+`jellyfish`, `whale`, `octopus`, `coral_reef`, `shark`, `shipwreck`, `vent`,
+`submarine`, `squid`, `ocean_surface`, `trench`, `fish_school`, `sea_turtle`,
+`kelp_forest`. See `content/WRITING_GUIDE.md` for what each shows.

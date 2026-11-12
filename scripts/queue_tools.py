@@ -35,7 +35,8 @@ from chiptune import STYLES  # noqa: E402
 # Channel details (name, call to action) live in content/channel.json
 CHANNEL = json.load(open(os.path.join(ROOT, "content", "channel.json")))
 CTA = CHANNEL["cta"]
-CTA_SCENES = ["starfield", "nebula", "galaxy", "comet"]
+# Scenes for the closing call to action, rotating (set "cta_scenes" in channel.json)
+CTA_SCENES = CHANNEL.get("cta_scenes", ["starfield", "nebula", "galaxy", "comet"])
 
 
 def split_sentences(script: str) -> list:

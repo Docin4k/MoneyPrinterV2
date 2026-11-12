@@ -1,0 +1,28 @@
+{
+  "topic": "Humpback whale songs",
+  "script": "Male humpback whales sing songs that often last 10 to 20 minutes, then repeat them for hours. All the males in one region sing roughly the same song. The song slowly changes over time, and every male changes with it. New songs have even spread across an ocean, from one group of whales to the next. Scientists think the songs are linked to mating, but no one knows exactly why they sing. Follow Pixel Abyss for more strange facts from the deep.",
+  "title": "Humpback Whales Sing Songs That Spread Across Oceans #Whales #Ocean #Shorts",
+  "description": "Male humpback whales sing long, changing songs, and new songs can spread from population to population across an ocean.\n\nFollow Pixel Abyss for more strange facts from the deep.\n\n#HumpbackWhale #Whales #Ocean #OceanFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "whale"
+    },
+    {
+      "scene": "ocean_surface"
+    },
+    {
+      "scene": "whale"
+    },
+    {
+      "scene": "ocean_surface"
+    },
+    {
+      "scene": "whale"
+    },
+    {
+      "scene": "fish_school"
+    }
+  ],
+  "music_style": "boss battle"
+}

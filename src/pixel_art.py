@@ -7,7 +7,8 @@ stepped at 12 frames per second for a retro feel.
 
 A scene is described by a dict, for example {"scene": "planet", "preset": "venus"}.
 Available scenes: planet, sun, black_hole, pulsar, galaxy, surface, orbit,
-diamond_rain, starfield. See SCENES and PLANET_PRESETS below.
+diamond_rain, starfield and more; underwater scenes live in pixel_ocean.py.
+See SCENES and PLANET_PRESETS below.
 
 Text uses a built-in 5x7 bitmap font, so no font files are needed.
 """
@@ -1011,3 +1012,7 @@ def scenes_for_script(sentences: list[str], topic: str = "") -> list[dict]:
         scenes.append(scene)
         previous = scene
     return scenes
+
+
+# Underwater scenes (deep_sea, whale, anglerfish, ...) register themselves here
+import pixel_ocean  # noqa: E402,F401

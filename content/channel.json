@@ -1,6 +1,12 @@
 {
-  "name": "WonderBytes",
-  "niche": "surprising science and space facts",
-  "cta": "Follow WonderBytes for more facts that sound fake but are true.",
-  "tagline": "Space facts that sound fake but are true"
+  "name": "Pixel Abyss",
+  "niche": "strange deep sea and ocean facts",
+  "cta": "Follow Pixel Abyss for more strange facts from the deep.",
+  "tagline": "Weird true facts from the deep",
+  "cta_scenes": [
+    "deep_sea",
+    "jellyfish",
+    "kelp_forest",
+    "fish_school"
+  ]
 }

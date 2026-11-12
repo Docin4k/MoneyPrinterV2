@@ -1,0 +1,28 @@
+{
+  "topic": "The vampire squid",
+  "script": "The vampire squid is neither a vampire nor a true squid. It lives deep in the ocean, in water with very little oxygen. Instead of hunting, it eats marine snow, bits of dead material drifting down from above. When threatened, it can pull its webbed arms over its body like a cloak. It can also release a cloud of glowing mucus to confuse predators. Follow Pixel Abyss for more strange facts from the deep.",
+  "title": "The Vampire Squid Is Not a Vampire or a Squid #DeepSea #Ocean #Shorts",
+  "description": "The vampire squid lives in low-oxygen deep water and feeds on drifting marine snow.\n\nFollow Pixel Abyss for more strange facts from the deep.\n\n#VampireSquid #DeepSea #Ocean #OceanFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "squid"
+    },
+    {
+      "scene": "deep_sea"
+    },
+    {
+      "scene": "deep_sea"
+    },
+    {
+      "scene": "squid"
+    },
+    {
+      "scene": "jellyfish"
+    },
+    {
+      "scene": "kelp_forest"
+    }
+  ],
+  "music_style": "chill"
+}
