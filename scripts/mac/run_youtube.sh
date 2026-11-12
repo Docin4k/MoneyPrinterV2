@@ -19,6 +19,9 @@ export PYTHONFAULTHANDLER=1
 
 {
   echo "===== $(date '+%Y-%m-%d %H:%M:%S') ====="
+  # Pick up new scripts added to the queue (e.g. by the weekly writing session).
+  # Fast-forward only, so local changes are never overwritten; carry on either way.
+  git pull --ff-only --quiet 2>&1 && echo "Updated from GitHub." || echo "Could not update from GitHub; using local scripts."
   "$ROOT/venv/bin/python" src/cron.py youtube "$@"
   echo "Exit code: $?"
 } >> logs/youtube.log 2>&1

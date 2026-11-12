@@ -11,5 +11,7 @@ set PYTHONUTF8=1
 set PYTHONIOENCODING=utf-8
 
 echo ===== %date% %time% ===== >> logs\youtube.log
+REM Pick up new scripts added to the queue; fast-forward only, carry on either way
+git pull --ff-only --quiet >> logs\youtube.log 2>&1 || echo Could not update from GitHub; using local scripts. >> logs\youtube.log
 "venv\Scripts\python.exe" src\cron.py youtube %* >> logs\youtube.log 2>&1
 echo Exit code: %errorlevel% >> logs\youtube.log
