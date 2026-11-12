@@ -698,6 +698,11 @@ class YouTube:
                         clips.append(self._image_clip(image_path, req_dur))
                         tot_dur += req_dur
 
+        # Give the last segment a little slack: summed segment times can round
+        # to a hair over the joined length, and MoviePy then fails on the final
+        # frame (IndexError in concatenate). The video is trimmed to max_duration.
+        clips[-1] = clips[-1].set_duration(clips[-1].duration + 0.5)
+
         final_clip = concatenate_videoclips(clips)
         final_clip = final_clip.set_fps(30)
 
