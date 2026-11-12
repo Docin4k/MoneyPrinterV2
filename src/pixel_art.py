@@ -891,6 +891,8 @@ def render_frame(spec: dict, t: float, seed: int, headline: str = "", channel: s
 
     if OVERLAY:
         import pixel_hud
+        if OVERLAY.get("cinematic", True):
+            frame = pixel_hud.lighting(pixel_hud.camera(frame, t, seed))
         tag = footer.replace(" / ", " OF ") if footer else ""
         pixel_hud.draw_overlay(frame, tq(t), OVERLAY, tag)
         return frame

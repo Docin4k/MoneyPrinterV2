@@ -112,6 +112,56 @@ def gauge(frame, t, spec, cx, cy, r=34):
         text(frame, label, cx, cy - r - 12, 1, CYAN, center=True)
 
 
+# ------------------------------------------------- camera and lighting ----
+def _blur(img, k):
+    """Cheap box blur (float image), k pixels each way."""
+    out = img.copy()
+    for axis in (0, 1):
+        c = np.cumsum(np.pad(out, [(k + 1, k) if a == axis else (0, 0) for a in range(3)], mode="edge"), axis=axis)
+        hi = np.take(c, np.arange(2 * k + 1, c.shape[axis]), axis=axis)
+        lo = np.take(c, np.arange(0, c.shape[axis] - 2 * k - 1), axis=axis)
+        out = (hi - lo) / (2 * k + 1)
+    return out
+
+
+_VIGNETTE = None
+_SCREEN = None
+
+
+def camera(frame, t, seed, focus_y=370, target_y=450):
+    """Zoom in a little and frame the scene so its subject (around focus_y in
+    the drawing) lands in the clear area under the text boxes (target_y),
+    with a slow push-in and gentle drift, so shots feel filmed."""
+    rng = np.random.default_rng(seed)
+    zoom = 1.12 + 0.05 * rng.random() + 0.01 * t
+    dx = 5 * math.sin(t * 0.35 + seed)
+    dy = 3 * math.sin(t * 0.27 + seed * 2)
+    h, w = pa.PH / zoom, pa.PW / zoom
+    y0 = min(max(0.0, focus_y + dy - target_y / zoom), pa.PH - h)
+    x0 = min(max(0.0, pa.PW / 2 + dx - w / 2), pa.PW - w)
+    ys = np.clip((np.arange(pa.PH) / zoom + y0).astype(int), 0, pa.PH - 1)
+    xs = np.clip((np.arange(pa.PW) / zoom + x0).astype(int), 0, pa.PW - 1)
+    return frame[ys][:, xs]
+
+
+def lighting(frame):
+    """Bloom on bright parts, a vignette and a fine screen-dot texture."""
+    global _VIGNETTE, _SCREEN
+    f = frame.astype(np.float32)
+    lum = f.max(axis=2)
+    bright = np.clip((lum - 150) / 105, 0, 1)[..., None] * f
+    small = bright[::4, ::4]
+    glow = _blur(_blur(small, 3), 3)
+    glow = np.repeat(np.repeat(glow, 4, 0), 4, 1)[:pa.PH, :pa.PW]
+    f = f + glow * 0.9
+    if _VIGNETTE is None:
+        yy, xx = (pa.PY / pa.PH - 0.55) * 1.1, (pa.PX / pa.PW - 0.5) * 1.3
+        _VIGNETTE = (1 - 0.45 * np.clip(xx ** 2 + yy ** 2, 0, 1))[..., None]
+        _SCREEN = np.where((pa.PY % 2 == 1) & (pa.PX % 2 == 1), 0.86, 1.0)[..., None]
+    f = f * _VIGNETTE * _SCREEN
+    return np.clip(f, 0, 255).astype(np.uint8)
+
+
 def draw_overlay(frame, t, info, tag=""):
     """All HUD boxes for one frame. `info` keys: title, stat, handle, gauge."""
     y = 10
