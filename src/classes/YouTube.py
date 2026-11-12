@@ -709,6 +709,9 @@ class YouTube:
         if get_music_source() == "chiptune":
             song = os.path.join(ROOT_DIR, ".mp", str(uuid4()) + ".wav")
             music_style = getattr(self, "music_style", None)
+            channel_styles = self._channel_info().get("music_styles")
+            if not music_style and channel_styles:
+                music_style = channel_styles[seed % len(channel_styles)]
             generate_track(song, max_duration + 1, seed, style=music_style)
             if get_verbose():
                 info(f" => Generated chiptune: {describe(seed, music_style)}")
@@ -787,14 +790,19 @@ class YouTube:
             )
         return clip.resize((1080, 1920))
 
+    @staticmethod
+    def _channel_info() -> dict:
+        """content/channel.json, or {} if it's missing."""
+        try:
+            with open(os.path.join(ROOT_DIR, "content", "channel.json"), encoding="utf-8") as f:
+                return json.load(f)
+        except (OSError, ValueError):
+            return {}
+
     def _channel_name(self) -> str:
         """Name shown on the videos: content/channel.json's "name" (which may
         contain spaces), else the account nickname."""
-        try:
-            with open(os.path.join(ROOT_DIR, "content", "channel.json"), encoding="utf-8") as f:
-                return json.load(f).get("name") or self._account_nickname
-        except (OSError, ValueError):
-            return self._account_nickname
+        return self._channel_info().get("name") or self._account_nickname
 
     def _vary_scenes(self, scenes: List[dict]) -> List[dict]:
         """Change framing between consecutive uses of the same scene, so a

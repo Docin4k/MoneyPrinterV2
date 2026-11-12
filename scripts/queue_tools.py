@@ -32,7 +32,7 @@ sys.path.insert(0, os.path.join(ROOT, "src"))
 import pixel_art as pa  # noqa: E402
 from chiptune import STYLES  # noqa: E402
 
-# Channel details (name, call to action) live in content/channel.json
+# Channel details (name, call to action, scenes and music styles) live in content/channel.json
 CHANNEL = json.load(open(os.path.join(ROOT, "content", "channel.json")))
 CTA = CHANNEL["cta"]
 # Scenes for the closing call to action, rotating (set "cta_scenes" in channel.json)
@@ -120,7 +120,7 @@ def cmd_add(path: str) -> int:
     used_slugs = {f.split("-", 1)[1][:-5] for f in files}
     used_titles = {json.load(open(os.path.join(QUEUE, f)))["title"].split("#")[0].strip().lower() for f in files}
     last_style = json.load(open(os.path.join(QUEUE, files[-1]))).get("music_style") if files else None
-    styles = list(STYLES)
+    styles = CHANNEL.get("music_styles") or list(STYLES)   # the channel's own styles, if it lists them
 
     out, problems = [], []
     for i, item in enumerate(new):

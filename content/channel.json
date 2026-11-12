@@ -8,5 +8,15 @@
     "jellyfish",
     "kelp_forest",
     "fish_school"
+  ],
+  "music_styles": [
+    "deep current",
+    "sonar",
+    "bioluminescence",
+    "tide pool",
+    "kelp drift",
+    "explorer",
+    "midnight zone",
+    "sunken treasure"
   ]
 }
