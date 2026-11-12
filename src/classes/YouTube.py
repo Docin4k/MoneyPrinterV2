@@ -668,6 +668,21 @@ class YouTube:
                 method="caption",
             )
 
+        # HUD layout (content/channel.json "video_layout": "hud"): bordered title,
+        # stat, handle and gauge boxes, like an instrument panel
+        channel_info = self._channel_info()
+        if style == "pixel_art" and channel_info.get("video_layout") == "hud":
+            extras = getattr(self, "script_extras", {}) or {}
+            name = channel_info.get("name") or self._account_nickname
+            pixel_art.OVERLAY = {
+                "title": re.sub(r"\s*#\w+", "", self.metadata.get("title", "")).strip(),
+                "stat": extras.get("stat", ""),
+                "gauge": extras.get("gauge"),
+                "handle": channel_info.get("handle") or "@" + re.sub(r"\W", "", name).upper(),
+            }
+        else:
+            pixel_art.OVERLAY = None
+
         if style == "pixel_art" and getattr(self, "scenes", None):
             print(colored("[+] Animating pixel-art scenes...", "blue"))
             durations = self._segment_durations(max_duration, len(self.scenes))
@@ -946,6 +961,7 @@ class YouTube:
             }
             self.has_cta = bool(script_spec.get("last_sentence_is_cta", False))
             self.music_style = script_spec.get("music_style")
+            self.script_extras = {"stat": script_spec.get("stat", ""), "gauge": script_spec.get("gauge")}
             self.subtitle_fixes = script_spec.get("subtitle_fixes", {})
             if get_verbose():
                 info(f" => Using ready-made script: {self.metadata['title']}")
