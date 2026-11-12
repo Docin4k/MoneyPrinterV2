@@ -105,8 +105,9 @@ def gauge(frame, t, spec, cx, cy, r=34):
     unit = str(spec.get("unit", ""))
     readout = f"{number} {unit}".strip()
     w = len(readout) * 12 + 12
-    box(frame, cx - w // 2, cy + r + 4, cx + w // 2 + 1, cy + r + 26, ORANGE, 0.85)
-    text(frame, readout, cx, cy + r + 9, 2, ORANGE, center=True, shadow=False)
+    bx = int(min(cx - w // 2, pa.PW - MARGIN - w))
+    box(frame, bx, cy + r + 4, bx + w + 1, cy + r + 26, ORANGE, 0.85)
+    text(frame, readout, bx + w // 2, cy + r + 9, 2, ORANGE, center=True, shadow=False)
     label = str(spec.get("label", "")).strip().upper()
     if label:
         w = len(label) * 12
@@ -151,11 +152,11 @@ def lighting(frame):
     global _VIGNETTE, _SCREEN
     f = frame.astype(np.float32)
     lum = f.max(axis=2)
-    bright = np.clip((lum - 150) / 105, 0, 1)[..., None] * f
+    bright = np.clip((lum - 205) / 50, 0, 1)[..., None] * f
     small = bright[::4, ::4]
     glow = _blur(_blur(small, 3), 3)
     glow = np.repeat(np.repeat(glow, 4, 0), 4, 1)[:pa.PH, :pa.PW]
-    f = f + glow * 0.9
+    f = f + glow * 1.1
     if _VIGNETTE is None:
         yy, xx = (pa.PY / pa.PH - 0.55) * 1.1, (pa.PX / pa.PW - 0.5) * 1.3
         _VIGNETTE = (1 - 0.45 * np.clip(xx ** 2 + yy ** 2, 0, 1))[..., None]
