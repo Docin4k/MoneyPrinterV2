@@ -56,6 +56,13 @@ def summarize(text, channel):
         msg = video_title or "New Short"
         if url:
             msg += f"\n{url.group(1)}"
+        if "Cross-posted via Post Bridge" in text:
+            msg += "\nAlso posted to Instagram via Post Bridge."
+        else:
+            cross = re.search(r"(Post Bridge cross-post failed: .+|No Post Bridge accounts were resolved.*|"
+                              r"Post Bridge is enabled but no API key.*)", text)
+            if cross:
+                msg += f"\nInstagram: {cross.group(1)[:200]}"
         return f"{channel} posted a Short", msg, "white_check_mark", "default", url.group(1) if url else None
     if "Generated (not uploaded)" in text:
         return f"{channel} test video made", video_title or "Test video ready (not uploaded).", "test_tube", "low", None

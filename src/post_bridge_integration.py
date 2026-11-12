@@ -1,4 +1,5 @@
 import os
+import re
 from typing import Callable
 from typing import Optional
 
@@ -123,11 +124,23 @@ def build_platform_configurations(title: str) -> dict:
     }
 
 
+def build_caption(title: str, description: str = "") -> str:
+    """
+    Caption for Instagram/TikTok: the YouTube description (facts, call to
+    action and hashtags) with the YouTube-only #Shorts tag swapped for #reels,
+    falling back to the title.
+    """
+    text = (description or "").strip() or (title or "").strip()
+    text = re.sub(r"#shorts\b", "#reels", text, flags=re.IGNORECASE)
+    return text[:2000]
+
+
 def maybe_crosspost_youtube_short(
     video_path: str,
     title: str,
     interactive: bool,
     prompt_fn: Optional[Callable[[str], str]] = None,
+    description: str = "",
 ) -> Optional[bool]:
     """
     Cross-post a successfully uploaded YouTube Short via Post Bridge.
@@ -187,7 +200,7 @@ def maybe_crosspost_youtube_short(
     if not should_crosspost:
         return None
 
-    post_caption = title.strip()
+    post_caption = build_caption(title, description)
     if not post_caption:
         post_caption = os.path.splitext(os.path.basename(video_path))[0]
 
@@ -210,7 +223,7 @@ def maybe_crosspost_youtube_short(
             caption=post_caption,
             social_account_ids=account_ids,
             media_ids=[media_id],
-            platform_configurations=build_platform_configurations(title),
+            platform_configurations=build_platform_configurations(re.sub(r"\s*#\w+", "", title).strip() or title),
         )
 
         success(f"Cross-posted via Post Bridge (post ID: {result.get('id', 'unknown')}).")
