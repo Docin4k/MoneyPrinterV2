@@ -24,5 +24,12 @@
       "scene": "jellyfish"
     }
   ],
-  "music_style": "deep current"
+  "music_style": "deep current",
+  "stat": "AGED USING THEIR EYE LENSES",
+  "gauge": {
+    "label": "AGE",
+    "value": 400,
+    "max": 500,
+    "unit": "YRS"
+  }
 }

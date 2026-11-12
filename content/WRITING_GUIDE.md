@@ -33,6 +33,20 @@ which validates and numbers them; never hand-number files.
 - **Scenes:** one per sentence, from the underwater list below. Prefer the
   scene that shows what the sentence is about; neighbouring sentences can
   repeat a scene (each one animates differently over time).
+- **Stat and gauge (shown on screen the whole video).** Pixel Abyss uses the
+  "HUD" layout: a short `stat` bar under the title and an animated `gauge` in
+  the corner.
+  - `stat`: the key number or claim in a few words, at most 52 characters,
+    e.g. `"NEARLY 11,000 METERS DOWN"`. It should add something the title
+    doesn't already say.
+  - `gauge`: `{"label": "DEPTH", "value": 10935, "max": 11000, "unit": "M"}`.
+    The needle sweeps up to `value` out of `max`. Pick something the video
+    is about (depth, temperature, speed, size, age, a percentage), keep the
+    unit short (`M`, `C`, `KM/H`, `%`, `YRS`) and the label at most 11
+    characters (`DEPTH`, `WATER TEMP`, `HEART RATE`).
+  - **Both must use numbers already stated in the script's facts.** Never add
+    a number just for the gauge. If no fact has a good number, leave `gauge`
+    out (the stat alone is fine).
 - **Not a repeat.** Check `python scripts/queue_tools.py topics` first; don't
   reuse a topic or a fact that is the main point of an existing video.
 
@@ -78,7 +92,9 @@ currents, and the ocean's role in Earth's climate and oxygen.
    "title": "Octopuses Have Three Hearts and Blue Blood #Octopus #Ocean #Shorts",
    "description": "One or two sentences.",
    "hashtags": "#Octopus #Ocean #MarineBiology #OceanFacts #Shorts",
-   "scenes": ["octopus", "octopus", "octopus", "octopus", "octopus"]}
+   "scenes": ["octopus", "octopus", "octopus", "octopus", "octopus"],
+   "stat": "3 HEARTS. BLUE BLOOD.",
+   "gauge": {"label": "HEARTS", "value": 3, "max": 4, "unit": ""}}
 ]
 ```
 

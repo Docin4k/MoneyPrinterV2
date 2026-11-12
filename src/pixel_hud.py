@@ -107,9 +107,11 @@ def gauge(frame, t, spec, cx, cy, r=34):
     w = len(readout) * 12 + 12
     box(frame, cx - w // 2, cy + r + 4, cx + w // 2 + 1, cy + r + 26, ORANGE, 0.85)
     text(frame, readout, cx, cy + r + 9, 2, ORANGE, center=True, shadow=False)
-    label = str(spec.get("label", "")).strip()
+    label = str(spec.get("label", "")).strip().upper()
     if label:
-        text(frame, label, cx, cy - r - 12, 1, CYAN, center=True)
+        w = len(label) * 12
+        x = int(min(cx - w / 2, pa.PW - MARGIN - w))
+        text(frame, label, x, cy - r - 20, 2, CYAN)
 
 
 # ------------------------------------------------- camera and lighting ----

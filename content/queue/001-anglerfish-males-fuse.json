@@ -24,5 +24,12 @@
       "scene": "jellyfish"
     }
   ],
-  "music_style": "deep current"
+  "music_style": "deep current",
+  "stat": "TINY MALES JOIN HER FOR LIFE",
+  "gauge": {
+    "label": "DEPTH",
+    "value": 1500,
+    "max": 4000,
+    "unit": "M"
+  }
 }

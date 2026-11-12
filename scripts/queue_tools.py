@@ -14,7 +14,9 @@ Run from the project folder:
      "title": "Pluto Has a Giant Heart #Pluto #SpaceFacts #Shorts",
      "description": "One or two sentences for YouTube.",
      "hashtags": "#Pluto #Space #ScienceFacts #Shorts",
-     "scenes": ["planet:pluto", "planet:pluto:75:215", "rocket", "sun", "planet:moon"]}
+     "scenes": ["planet:pluto", "planet:pluto:75:215", "rocket", "sun", "planet:moon"],
+     "stat": "A HEART 1,000 KM WIDE",                          (optional, HUD layout)
+     "gauge": {"label": "DISTANCE", "value": 5.9, "max": 7, "unit": "BN KM"}}   (optional)
 
 Scene shorthand: "planet:<preset>[:radius[:y]]", "surface:<preset>[:rover|:volcano|:footprints]",
 or a scene name (see content/README.md). The call to action sentence, its scene and
@@ -87,7 +89,16 @@ def validate(name: str, spec: dict) -> list:
             problems.append(f"unknown planet '{scene.get('preset')}'")
         elif kind == "surface" and scene.get("preset") not in pa.SURFACE_PRESETS:
             problems.append(f"unknown surface '{scene.get('preset')}'")
-    missing = sorted({c for c in spec.get("script", "").upper() if c not in pa.GLYPHS})
+    gauge = spec.get("gauge")
+    overlay_text = spec.get("stat", "") + " " + (" ".join(str(gauge.get(k, "")) for k in ("label", "unit")) if gauge else "")
+    if gauge is not None and not (isinstance(gauge, dict) and isinstance(gauge.get("value"), (int, float))
+                                  and isinstance(gauge.get("max"), (int, float)) and 0 <= gauge["value"] <= gauge["max"]):
+        problems.append("gauge needs a numeric value between 0 and max")
+    if gauge and len(str(gauge.get("label", ""))) > 11:
+        problems.append("gauge label is longer than 11 characters")
+    if len(spec.get("stat", "")) > 52:
+        problems.append(f"stat is {len(spec['stat'])} characters (max 52)")
+    missing = sorted({c for c in (spec.get("script", "") + overlay_text).upper() if c not in pa.GLYPHS})
     if missing:
         problems.append(f"characters the pixel font lacks: {missing}")
     if spec.get("music_style") and spec["music_style"] not in STYLES:
@@ -147,6 +158,10 @@ def cmd_add(path: str) -> int:
             "scenes": scenes + [{"scene": CTA_SCENES[(next_num + i) % len(CTA_SCENES)]}],
             "music_style": style,
         }
+        if item.get("stat"):
+            spec["stat"] = item["stat"]
+        if item.get("gauge"):
+            spec["gauge"] = item["gauge"]
         problems += validate(name, spec)
         used_slugs.add(slug)
         out.append((name, spec))

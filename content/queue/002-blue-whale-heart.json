@@ -24,5 +24,12 @@
       "scene": "kelp_forest"
     }
   ],
-  "music_style": "tide pool"
+  "music_style": "tide pool",
+  "stat": "UP TO ABOUT 30 METERS LONG",
+  "gauge": {
+    "label": "HEART RATE",
+    "value": 2,
+    "max": 40,
+    "unit": "BPM"
+  }
 }

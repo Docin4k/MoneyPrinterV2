@@ -24,5 +24,12 @@
       "scene": "kelp_forest"
     }
   ],
-  "music_style": "sunken treasure"
+  "music_style": "sunken treasure",
+  "stat": "DIVES OVER 2,000 M DEEP",
+  "gauge": {
+    "label": "DIVE DEPTH",
+    "value": 2000,
+    "max": 3000,
+    "unit": "M"
+  }
 }

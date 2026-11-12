@@ -24,5 +24,12 @@
       "scene": "kelp_forest"
     }
   ],
-  "music_style": "tide pool"
+  "music_style": "tide pool",
+  "stat": "EYES ABOUT 27 CM ACROSS",
+  "gauge": {
+    "label": "EYE SIZE",
+    "value": 27,
+    "max": 30,
+    "unit": "CM"
+  }
 }

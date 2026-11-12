@@ -24,5 +24,12 @@
       "scene": "deep_sea"
     }
   ],
-  "music_style": "explorer"
+  "music_style": "explorer",
+  "stat": "SHARKS: 400+ MILLION YEARS",
+  "gauge": {
+    "label": "MILLION YRS",
+    "value": 400,
+    "max": 500,
+    "unit": ""
+  }
 }

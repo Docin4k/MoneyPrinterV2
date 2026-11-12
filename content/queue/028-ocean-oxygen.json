@@ -24,5 +24,12 @@
       "scene": "deep_sea"
     }
   ],
-  "music_style": "sonar"
+  "music_style": "sonar",
+  "stat": "MADE BY TINY PLANKTON",
+  "gauge": {
+    "label": "FROM OCEAN",
+    "value": 50,
+    "max": 100,
+    "unit": "%"
+  }
 }

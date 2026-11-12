@@ -24,5 +24,12 @@
       "scene": "fish_school"
     }
   ],
-  "music_style": "midnight zone"
+  "music_style": "midnight zone",
+  "stat": "NO SUNLIGHT BELOW 1,000 M",
+  "gauge": {
+    "label": "AVG DEPTH",
+    "value": 3700,
+    "max": 11000,
+    "unit": "M"
+  }
 }

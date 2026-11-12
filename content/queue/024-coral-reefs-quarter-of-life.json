@@ -24,5 +24,12 @@
       "scene": "deep_sea"
     }
   ],
-  "music_style": "explorer"
+  "music_style": "explorer",
+  "stat": "UNDER 1% OF THE SEAFLOOR",
+  "gauge": {
+    "label": "SPECIES",
+    "value": 25,
+    "max": 100,
+    "unit": "%"
+  }
 }

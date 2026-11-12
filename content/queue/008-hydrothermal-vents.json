@@ -24,5 +24,12 @@
       "scene": "deep_sea"
     }
   ],
-  "music_style": "explorer"
+  "music_style": "explorer",
+  "stat": "FOUND IN 1977",
+  "gauge": {
+    "label": "WATER TEMP",
+    "value": 400,
+    "max": 450,
+    "unit": "C"
+  }
 }

@@ -24,5 +24,12 @@
       "scene": "deep_sea"
     }
   ],
-  "music_style": "sonar"
+  "music_style": "sonar",
+  "stat": "ONE EYE CAN STAY OPEN",
+  "gauge": {
+    "label": "BRAIN AWAKE",
+    "value": 50,
+    "max": 100,
+    "unit": "%"
+  }
 }

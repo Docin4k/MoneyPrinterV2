@@ -24,5 +24,12 @@
       "scene": "fish_school"
     }
   ],
-  "music_style": "midnight zone"
+  "music_style": "midnight zone",
+  "stat": "HE CARRIES THE EGGS IN A POUCH",
+  "gauge": {
+    "label": "BABIES",
+    "value": 1000,
+    "max": 2000,
+    "unit": ""
+  }
 }

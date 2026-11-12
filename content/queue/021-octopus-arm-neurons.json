@@ -24,5 +24,12 @@
       "scene": "jellyfish"
     }
   ],
-  "music_style": "kelp drift"
+  "music_style": "kelp drift",
+  "stat": "2/3 OF ITS NEURONS ARE IN ITS ARMS",
+  "gauge": {
+    "label": "IN ARMS",
+    "value": 67,
+    "max": 100,
+    "unit": "%"
+  }
 }

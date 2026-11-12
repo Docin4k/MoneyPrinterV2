@@ -24,5 +24,12 @@
       "scene": "fish_school"
     }
   ],
-  "music_style": "midnight zone"
+  "music_style": "midnight zone",
+  "stat": "IT CAN START ITS LIFE OVER",
+  "gauge": {
+    "label": "SIZE",
+    "value": 4.5,
+    "max": 10,
+    "unit": "MM"
+  }
 }

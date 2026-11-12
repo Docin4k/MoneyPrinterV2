@@ -24,5 +24,12 @@
       "scene": "jellyfish"
     }
   ],
-  "music_style": "kelp drift"
+  "music_style": "kelp drift",
+  "stat": "NEARLY 11,000 METERS DOWN",
+  "gauge": {
+    "label": "DEPTH",
+    "value": 10935,
+    "max": 11000,
+    "unit": "M"
+  }
 }

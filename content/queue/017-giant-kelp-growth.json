@@ -24,5 +24,12 @@
       "scene": "jellyfish"
     }
   ],
-  "music_style": "deep current"
+  "music_style": "deep current",
+  "stat": "OVER 30 METERS TALL",
+  "gauge": {
+    "label": "GROWTH",
+    "value": 60,
+    "max": 70,
+    "unit": "CM/DAY"
+  }
 }

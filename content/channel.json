@@ -18,5 +18,7 @@
     "explorer",
     "midnight zone",
     "sunken treasure"
-  ]
+  ],
+  "video_layout": "hud",
+  "handle": "@PIXELABYSS"
 }

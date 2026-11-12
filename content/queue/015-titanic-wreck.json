@@ -24,5 +24,12 @@
       "scene": "fish_school"
     }
   ],
-  "music_style": "bioluminescence"
+  "music_style": "bioluminescence",
+  "stat": "WRECK: ABOUT 3,800 M DOWN",
+  "gauge": {
+    "label": "DEPTH",
+    "value": 3800,
+    "max": 4000,
+    "unit": "M"
+  }
 }
