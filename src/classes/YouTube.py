@@ -1031,6 +1031,50 @@ class YouTube:
             )
 
     @staticmethod
+    def _wait_for(driver, find, timeout: int, what: str, minimum: int = 1):
+        """Wait until find(driver) returns at least `minimum` items; return them."""
+        found = []
+
+        def ready(d):
+            nonlocal found
+            try:
+                found = list(find(d) or [])
+            except Exception:
+                found = []
+            return len(found) >= minimum
+
+        try:
+            WebDriverWait(driver, timeout, poll_frequency=1).until(ready)
+        except Exception:
+            raise RuntimeError(f"Timed out after {timeout}s waiting for {what} on YouTube's upload page")
+        return found
+
+    @staticmethod
+    def _click(driver, element) -> None:
+        """Click an element, falling back to a script click if something covers it."""
+        try:
+            driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
+            element.click()
+        except Exception:
+            driver.execute_script("arguments[0].click();", element)
+
+    @staticmethod
+    def _wait_for_upload_complete(driver, timeout: int = 900) -> None:
+        """Wait while the dialog's progress label still says the file is uploading."""
+        deadline = time.time() + timeout
+        while time.time() < deadline:
+            labels = driver.find_elements(By.CSS_SELECTOR, "ytcp-video-upload-progress .progress-label")
+            text = " ".join(label.text for label in labels if label.text).lower()
+            if text and "uploading" not in text:
+                return
+            if not labels:
+                # Label not found (layout changed): give a typical Short time to upload
+                time.sleep(15)
+                return
+            time.sleep(3)
+        raise RuntimeError(f"The video was still uploading after {timeout // 60} minutes")
+
+    @staticmethod
     def _replace_text(element, text: str) -> None:
         """Replace the text of a YouTube Studio text box the way a person would.
 
@@ -1087,86 +1131,73 @@ class YouTube:
             file_input = file_picker.find_element(By.TAG_NAME, INPUT_TAG)
             file_input.send_keys(self.video_path)
 
-            # Wait for upload to finish
-            time.sleep(5)
-
-            # Set title
-            textboxes = driver.find_elements(By.ID, YOUTUBE_TEXTBOX_ID)
-
-            title_el = textboxes[0]
-            description_el = textboxes[-1]
+            # Wait for the details form (title and description boxes)
+            textboxes = self._wait_for(
+                driver, lambda d: [t for t in d.find_elements(By.ID, YOUTUBE_TEXTBOX_ID) if t.is_displayed()],
+                120, "the title and description boxes", minimum=2,
+            )
+            title_el, description_el = textboxes[0], textboxes[-1]
 
             if verbose:
                 info("\t=> Setting title...")
-
-            time.sleep(1)
             self._replace_text(title_el, self.metadata["title"])
 
             if verbose:
                 info("\t=> Setting description...")
-
-            # Set description
-            time.sleep(10)
+            time.sleep(1)
             self._replace_text(description_el, self.metadata["description"])
-
-            time.sleep(0.5)
+            time.sleep(1)
 
             # Set `made for kids` option
             if verbose:
                 info("\t=> Setting `made for kids` option...")
+            kids_name = YOUTUBE_MADE_FOR_KIDS_NAME if get_is_for_kids() else YOUTUBE_NOT_MADE_FOR_KIDS_NAME
+            kids_choice = self._wait_for(driver, lambda d: d.find_elements(By.NAME, kids_name),
+                                         60, "the 'made for kids' choice")[0]
+            self._click(driver, kids_choice)
+            time.sleep(1)
 
-            is_for_kids_checkbox = driver.find_element(
-                By.NAME, YOUTUBE_MADE_FOR_KIDS_NAME
-            )
-            is_not_for_kids_checkbox = driver.find_element(
-                By.NAME, YOUTUBE_NOT_MADE_FOR_KIDS_NAME
-            )
+            # Three "Next" clicks: Details -> Video elements -> Checks -> Visibility
+            for step in range(3):
+                if verbose:
+                    info(f"\t=> Clicking next ({step + 1}/3)...")
+                next_button = self._wait_for(
+                    driver,
+                    lambda d: [b for b in d.find_elements(By.ID, YOUTUBE_NEXT_BUTTON_ID)
+                               if b.is_displayed() and b.get_attribute("aria-disabled") != "true"],
+                    60, "the Next button",
+                )[0]
+                self._click(driver, next_button)
+                time.sleep(2)
 
-            if not get_is_for_kids():
-                is_not_for_kids_checkbox.click()
-            else:
-                is_for_kids_checkbox.click()
-
-            time.sleep(0.5)
-
-            # Click next
+            # Visibility, chosen by name (PUBLIC / UNLISTED / PRIVATE)
+            visibility = get_youtube_visibility()
             if verbose:
-                info("\t=> Clicking next...")
+                info(f"\t=> Setting visibility: {visibility.lower()}...")
+            radio = self._wait_for(
+                driver,
+                lambda d: [r for r in d.find_elements(By.NAME, visibility) if r.is_displayed()]
+                or d.find_elements(By.XPATH, YOUTUBE_RADIO_BUTTON_XPATH)[2:3],
+                60, f"the {visibility.lower()} visibility option",
+            )[0]
+            self._click(driver, radio)
+            time.sleep(1)
 
-            next_button = driver.find_element(By.ID, YOUTUBE_NEXT_BUTTON_ID)
-            next_button.click()
-
-            # Click next again
+            # Closing the browser mid-upload would cancel it: wait for the file to finish
             if verbose:
-                info("\t=> Clicking next again...")
-            next_button = driver.find_element(By.ID, YOUTUBE_NEXT_BUTTON_ID)
-            next_button.click()
-
-            # Wait for 2 seconds
-            time.sleep(2)
-
-            # Click next again
-            if verbose:
-                info("\t=> Clicking next again...")
-            next_button = driver.find_element(By.ID, YOUTUBE_NEXT_BUTTON_ID)
-            next_button.click()
-
-            # Set as unlisted
-            if verbose:
-                info("\t=> Setting as unlisted...")
-
-            radio_button = driver.find_elements(By.XPATH, YOUTUBE_RADIO_BUTTON_XPATH)
-            radio_button[2].click()
+                info("\t=> Waiting for the upload to finish...")
+            self._wait_for_upload_complete(driver)
 
             if verbose:
                 info("\t=> Clicking done button...")
-
-            # Click done button
-            done_button = driver.find_element(By.ID, YOUTUBE_DONE_BUTTON_ID)
-            done_button.click()
-
-            # Wait for 2 seconds
-            time.sleep(2)
+            done_button = self._wait_for(
+                driver,
+                lambda d: [b for b in d.find_elements(By.ID, YOUTUBE_DONE_BUTTON_ID)
+                           if b.is_displayed() and b.get_attribute("aria-disabled") != "true"],
+                120, "the Publish/Done button",
+            )[0]
+            self._click(driver, done_button)
+            time.sleep(5)
 
             # Get latest video
             if verbose:
@@ -1176,8 +1207,8 @@ class YouTube:
             driver.get(
                 f"https://studio.youtube.com/channel/{self.channel_id}/videos/short"
             )
-            time.sleep(2)
-            videos = driver.find_elements(By.TAG_NAME, "ytcp-video-row")
+            videos = self._wait_for(driver, lambda d: d.find_elements(By.TAG_NAME, "ytcp-video-row"),
+                                    60, "the list of Shorts")
             first_video = videos[0]
             anchor_tag = first_video.find_element(By.TAG_NAME, "a")
             href = anchor_tag.get_attribute("href")

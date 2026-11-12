@@ -484,3 +484,14 @@ def get_voiceover() -> bool:
             from the script, timed to reading speed.
     """
     return bool(_get_optional("voiceover", True))
+
+
+def get_youtube_visibility() -> str:
+    """
+    Gets the visibility for uploaded Shorts.
+
+    Returns:
+        visibility (str): "PUBLIC" (default), "UNLISTED" or "PRIVATE"
+    """
+    value = str(_get_optional("youtube_visibility", "public")).upper()
+    return value if value in ("PUBLIC", "UNLISTED", "PRIVATE") else "PUBLIC"

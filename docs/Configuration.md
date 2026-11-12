@@ -16,6 +16,7 @@ All your configurations will be in a file in the root directory, called `config.
 - `nanobanana2_aspect_ratio`: `string` - Aspect ratio for generated images (default: `9:16`).
 - `threads`: `number` - The amount of threads that will be used to execute operations, e.g. writing to a file using MoviePy.
 - `is_for_kids`: `boolean` - If `true`, the application will upload the video to YouTube Shorts as a video for kids.
+- `youtube_visibility`: `string` - Visibility for uploaded Shorts: `public` (default), `unlisted` or `private`.
 - `google_maps_scraper`: `string` - The URL to the Google Maps scraper. This will be used to scrape Google Maps for local businesses. It is recommended to use the default value.
 - `zip_url`: `string` - The URL to the ZIP file that contains the to be used Songs for the YouTube Shorts Automater.
 - `email`: `object`:

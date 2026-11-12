@@ -12,6 +12,7 @@
   "threads": 2,
   "zip_url": "",
   "is_for_kids": false,
+  "youtube_visibility": "public",
   "google_maps_scraper": "https://github.com/gosom/google-maps-scraper/archive/refs/tags/v0.9.7.zip",
   "email": {
     "smtp_server": "smtp.gmail.com",
