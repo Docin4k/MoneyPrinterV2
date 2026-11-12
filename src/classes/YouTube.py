@@ -1036,6 +1036,26 @@ class YouTube:
 
         return channel_id
 
+    def _require_expected_channel(self) -> None:
+        """Refuse to upload when the Firefox profile is on a different channel
+        than the one this folder posts to ("youtube_channel_id" in config.json).
+        One Google account can own several channels, and Studio uploads to
+        whichever one was last selected in that profile."""
+        try:
+            with open(os.path.join(ROOT_DIR, "config.json"), encoding="utf-8") as f:
+                expected = (json.load(f).get("youtube_channel_id") or "").strip()
+        except (OSError, ValueError):
+            expected = ""
+        if expected and self.channel_id != expected:
+            raise RuntimeError(
+                f"Wrong YouTube channel: Firefox is on channel {self.channel_id}, but this folder "
+                f"posts to {expected}. Nothing was uploaded. Open this Firefox profile, switch to "
+                "the right channel (profile picture > Switch account), quit Firefox and run again."
+            )
+        if get_verbose():
+            info(f"\t=> Uploading to channel {self.channel_id}"
+                 + (" (matches config)" if expected else " (set youtube_channel_id in config.json to lock it)"))
+
     @staticmethod
     def _on_sign_in_page(driver) -> bool:
         url = driver.current_url
@@ -1141,6 +1161,7 @@ class YouTube:
         """
         try:
             self.get_channel_id()
+            self._require_expected_channel()
 
             driver = self.browser
             verbose = get_verbose()
