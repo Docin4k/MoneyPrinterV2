@@ -32,7 +32,9 @@ sys.path.insert(0, os.path.join(ROOT, "src"))
 import pixel_art as pa  # noqa: E402
 from chiptune import STYLES  # noqa: E402
 
-CTA = "Follow WonderBytes for more facts that sound fake but are true."
+# Channel details (name, call to action) live in content/channel.json
+CHANNEL = json.load(open(os.path.join(ROOT, "content", "channel.json")))
+CTA = CHANNEL["cta"]
 CTA_SCENES = ["starfield", "nebula", "galaxy", "comet"]
 
 
@@ -139,7 +141,7 @@ def cmd_add(path: str) -> int:
             "topic": item["topic"],
             "script": " ".join(sentences + [CTA]),
             "title": item["title"],
-            "description": f"{item['description']}\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n{item['hashtags']}",
+            "description": f"{item['description']}\n\n{CTA}\n\n{item['hashtags']}",
             "last_sentence_is_cta": True,
             "scenes": scenes + [{"scene": CTA_SCENES[(next_num + i) % len(CTA_SCENES)]}],
             "music_style": style,

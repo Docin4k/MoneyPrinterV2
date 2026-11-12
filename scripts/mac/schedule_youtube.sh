@@ -15,11 +15,10 @@
 #   scripts/mac/schedule_youtube.sh --nickname WonderBytes --times 12:00,18:00
 #   scripts/mac/schedule_youtube.sh --run-now     # run the scheduled job once now
 #   scripts/mac/schedule_youtube.sh --remove      # stop and delete the schedule
+#   (add --nickname OtherChannel to --run-now/--remove for another channel)
 
 set -euo pipefail
 
-LABEL="com.moneyprinterv2.youtube"
-PLIST="$HOME/Library/LaunchAgents/$LABEL.plist"
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 NICKNAME="WonderBytes"
 TIMES="17:00"
@@ -37,6 +36,16 @@ while [[ $# -gt 0 ]]; do
     *) echo "Unknown option: $1 (try --help)"; exit 1 ;;
   esac
 done
+
+# One schedule per channel. WonderBytes keeps the original name so existing
+# schedules stay in place; other channels get their own.
+SLUG="$(echo "$NICKNAME" | tr '[:upper:]' '[:lower:]' | tr -cd 'a-z0-9')"
+if [[ "$SLUG" == "wonderbytes" ]]; then
+  LABEL="com.moneyprinterv2.youtube"
+else
+  LABEL="com.moneyprinterv2.youtube.$SLUG"
+fi
+PLIST="$HOME/Library/LaunchAgents/$LABEL.plist"
 
 if [[ "$ACTION" == "remove" ]]; then
   launchctl bootout "gui/$(id -u)/$LABEL" 2>/dev/null || true
