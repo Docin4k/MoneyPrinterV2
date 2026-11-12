@@ -11,3 +11,4 @@ auto.sh
 logs/
 geckodriver.log
 *TEMP_MPY_*
+channel-art/
