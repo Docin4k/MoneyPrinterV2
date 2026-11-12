@@ -1,0 +1,29 @@
+{
+  "topic": "Magnetars",
+  "script": "Magnetars are the strongest magnets known in the universe. They are a type of neutron star with incredibly powerful magnetic fields. Their fields can be trillions of times stronger than Earth's. Starquakes on their surfaces can release huge bursts of energy. In 2004, a flare from one about 50,000 light-years away disturbed Earth's upper atmosphere. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "The Strongest Magnets in the Universe #Magnetar #SpaceFacts #Shorts",
+  "description": "Magnetars are neutron stars with fields trillions of times Earth's; a 2004 giant flare from SGR 1806-20 affected Earth's ionosphere.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Magnetar #NeutronStar #Space #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "pulsar"
+    },
+    {
+      "scene": "pulsar"
+    },
+    {
+      "scene": "planet",
+      "preset": "earth"
+    },
+    {
+      "scene": "supernova"
+    },
+    {
+      "scene": "aurora"
+    },
+    {
+      "scene": "galaxy"
+    }
+  ],
+  "music_style": "waltz"
+}

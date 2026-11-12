@@ -1,0 +1,28 @@
+{
+  "topic": "The James Webb Space Telescope",
+  "script": "The James Webb Space Telescope sits about 1.5 million kilometers from Earth. Its main mirror is 6.5 meters wide and made of 18 gold-coated pieces. A sunshield the size of a tennis court keeps it extremely cold. It sees infrared light, which lets it peer through clouds of dust. It has spotted some of the earliest galaxies ever seen. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "The Webb Telescope Has a Gold Mirror #JWST #SpaceFacts #Shorts",
+  "description": "JWST orbits about 1.5 million km away, with an 18-segment gold mirror and a tennis-court-sized sunshield, seeing in infrared.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#JWST #Webb #Telescope #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "telescope"
+    },
+    {
+      "scene": "telescope"
+    },
+    {
+      "scene": "telescope"
+    },
+    {
+      "scene": "nebula"
+    },
+    {
+      "scene": "galaxy"
+    },
+    {
+      "scene": "starfield"
+    }
+  ],
+  "music_style": "waltz"
+}

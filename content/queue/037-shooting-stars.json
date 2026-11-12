@@ -1,0 +1,29 @@
+{
+  "topic": "What shooting stars are",
+  "script": "Most shooting stars are made by bits of space dust no bigger than a grain of sand. They hit our atmosphere at tens of thousands of kilometers per hour. The air in front of them heats up and glows. Earth sweeps up dozens of tons of space dust every day. Meteor showers happen when Earth passes through dust left behind by comets. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "Shooting Stars Are Tiny Grains of Dust #ShootingStars #SpaceFacts #Shorts",
+  "description": "Most meteors are sand-sized grains hitting the atmosphere at tens of thousands of km/h. Meteor showers come from comet dust.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#ShootingStars #Meteors #Space #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "starfield"
+    },
+    {
+      "scene": "starfield"
+    },
+    {
+      "scene": "asteroids"
+    },
+    {
+      "scene": "planet",
+      "preset": "earth"
+    },
+    {
+      "scene": "comet"
+    },
+    {
+      "scene": "starfield"
+    }
+  ],
+  "music_style": "adventure"
+}

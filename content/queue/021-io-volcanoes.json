@@ -1,0 +1,37 @@
+{
+  "topic": "Io's volcanoes",
+  "script": "Jupiter's moon Io is the most volcanic place in the solar system. It has hundreds of active volcanoes. Some shoot plumes hundreds of kilometers up into space. The heat comes from Jupiter's gravity stretching and squeezing Io as it orbits. Its surface is repaved so often that it has almost no craters. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "The Most Volcanic World in the Solar System #Io #SpaceFacts #Shorts",
+  "description": "Io has hundreds of active volcanoes, powered by tidal heating from Jupiter, with plumes reaching hundreds of kilometres high.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Io #Jupiter #Volcano #Space #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "planet",
+      "preset": "io"
+    },
+    {
+      "scene": "planet",
+      "preset": "io",
+      "radius": 75,
+      "y": 215
+    },
+    {
+      "scene": "planet",
+      "preset": "io",
+      "radius": 50,
+      "y": 205
+    },
+    {
+      "scene": "planet",
+      "preset": "jupiter"
+    },
+    {
+      "scene": "planet",
+      "preset": "io"
+    },
+    {
+      "scene": "starfield"
+    }
+  ],
+  "music_style": "march"
+}

@@ -1,0 +1,34 @@
+{
+  "topic": "TRAPPIST-1's seven planets",
+  "script": "A tiny star called TRAPPIST-1 has seven Earth-sized planets. They are about 40 light-years away. All seven orbit closer to their star than Mercury does to the Sun. Their years last between one and a half and 19 Earth days. Several of them are in the zone where liquid water could exist. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "One Tiny Star Has Seven Earth-Sized Planets #TRAPPIST1 #SpaceFacts #Shorts",
+  "description": "TRAPPIST-1, a red dwarf 40 light-years away, hosts seven Earth-sized planets with years of 1.5 to 19 days, several in the habitable zone.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#TRAPPIST1 #Exoplanets #Space #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "planet",
+      "preset": "earth"
+    },
+    {
+      "scene": "starfield"
+    },
+    {
+      "scene": "planet",
+      "preset": "lava"
+    },
+    {
+      "scene": "planet",
+      "preset": "ice"
+    },
+    {
+      "scene": "planet",
+      "preset": "earth",
+      "radius": 45,
+      "y": 200
+    },
+    {
+      "scene": "nebula"
+    }
+  ],
+  "music_style": "space ambient"
+}

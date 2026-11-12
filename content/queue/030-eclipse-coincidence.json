@@ -1,0 +1,29 @@
+{
+  "topic": "The eclipse coincidence",
+  "script": "Total solar eclipses happen thanks to an amazing coincidence. The Sun is about 400 times wider than the Moon. But it is also about 400 times farther away. So from Earth, they look almost exactly the same size in the sky. A total eclipse can last up to about seven and a half minutes. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "The Coincidence Behind Solar Eclipses #Eclipse #SpaceFacts #Shorts",
+  "description": "The Sun is about 400 times wider than the Moon and about 400 times farther away, so they appear the same size and the Moon can cover the Sun exactly.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Eclipse #Sun #Moon #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "eclipse"
+    },
+    {
+      "scene": "sun"
+    },
+    {
+      "scene": "planet",
+      "preset": "moon"
+    },
+    {
+      "scene": "eclipse"
+    },
+    {
+      "scene": "eclipse"
+    },
+    {
+      "scene": "nebula"
+    }
+  ],
+  "music_style": "march"
+}

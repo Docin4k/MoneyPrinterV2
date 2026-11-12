@@ -1,0 +1,37 @@
+{
+  "topic": "The planet where it rains glass",
+  "script": "On a planet called HD 189733 b, it may rain glass. It is a giant gas planet about 64 light-years away. Its winds may blow at thousands of kilometers per hour. So the glass would fly sideways instead of falling. From far away, the planet looks a deep cobalt blue. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "It Rains Glass Sideways on This Planet #Exoplanet #SpaceFacts #Shorts",
+  "description": "HD 189733 b, a blue gas giant 64 light-years away, may have silicate glass rain driven sideways by winds of thousands of km/h.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Exoplanet #Planets #Space #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "planet",
+      "preset": "neptune"
+    },
+    {
+      "scene": "planet",
+      "preset": "neptune",
+      "radius": 75,
+      "y": 215
+    },
+    {
+      "scene": "planet",
+      "preset": "ice"
+    },
+    {
+      "scene": "planet",
+      "preset": "neptune",
+      "radius": 50,
+      "y": 205
+    },
+    {
+      "scene": "planet",
+      "preset": "neptune"
+    },
+    {
+      "scene": "comet"
+    }
+  ],
+  "music_style": "funk"
+}

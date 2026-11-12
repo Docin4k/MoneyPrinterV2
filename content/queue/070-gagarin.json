@@ -1,0 +1,29 @@
+{
+  "topic": "The first person in space",
+  "script": "In 1961, Yuri Gagarin became the first person in space. His flight lasted 108 minutes and circled Earth once. He landed by parachute after ejecting from his capsule. As he launched, he shouted 'Let's go!' in Russian. Two years later, Valentina Tereshkova became the first woman in space. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "The First Person in Space Flew for 108 Minutes #Gagarin #SpaceFacts #Shorts",
+  "description": "Yuri Gagarin orbited Earth once in 108 minutes in 1961; Valentina Tereshkova became the first woman in space in 1963.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Gagarin #SpaceHistory #Space #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "rocket"
+    },
+    {
+      "scene": "orbit"
+    },
+    {
+      "scene": "planet",
+      "preset": "earth"
+    },
+    {
+      "scene": "rocket"
+    },
+    {
+      "scene": "rocket"
+    },
+    {
+      "scene": "nebula"
+    }
+  ],
+  "music_style": "march"
+}

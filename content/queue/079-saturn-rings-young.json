@@ -1,0 +1,39 @@
+{
+  "topic": "Saturn's rings",
+  "script": "Saturn's rings are made of countless chunks of ice and rock. Some pieces are as small as dust, and others are as big as houses. Some scientists think the rings formed only a few hundred million years ago. They are also slowly raining down onto Saturn. In a few hundred million years, they could be mostly gone. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "Saturn's Rings Are Disappearing #Saturn #SpaceFacts #Shorts",
+  "description": "Saturn's icy rings may be young and are slowly raining onto the planet; they could largely vanish in a few hundred million years.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Saturn #Rings #Space #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "planet",
+      "preset": "saturn"
+    },
+    {
+      "scene": "planet",
+      "preset": "saturn",
+      "radius": 55,
+      "y": 220
+    },
+    {
+      "scene": "planet",
+      "preset": "saturn",
+      "radius": 34,
+      "y": 200
+    },
+    {
+      "scene": "planet",
+      "preset": "saturn",
+      "radius": 48,
+      "y": 210
+    },
+    {
+      "scene": "planet",
+      "preset": "saturn"
+    },
+    {
+      "scene": "galaxy"
+    }
+  ],
+  "music_style": "boss battle"
+}

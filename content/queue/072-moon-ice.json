@@ -1,0 +1,33 @@
+{
+  "topic": "Ice on the Moon",
+  "script": "There is water ice on the Moon. It hides in craters near the poles that never see sunlight. Some of those craters are colder than the surface of Pluto. Future astronauts might use that ice for drinking water and rocket fuel. NASA's Artemis program plans to land astronauts near the Moon's south pole. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "There Is Ice Hiding on the Moon #Moon #SpaceFacts #Shorts",
+  "description": "Permanently shadowed craters near the Moon's poles hold water ice and are colder than Pluto's surface; Artemis aims for the south pole.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Moon #Artemis #Space #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "planet",
+      "preset": "moon"
+    },
+    {
+      "scene": "surface",
+      "preset": "moon"
+    },
+    {
+      "scene": "planet",
+      "preset": "pluto"
+    },
+    {
+      "scene": "rocket"
+    },
+    {
+      "scene": "surface",
+      "preset": "moon",
+      "footprints": true
+    },
+    {
+      "scene": "comet"
+    }
+  ],
+  "music_style": "chill"
+}

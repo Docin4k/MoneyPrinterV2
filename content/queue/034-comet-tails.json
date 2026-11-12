@@ -1,0 +1,28 @@
+{
+  "topic": "Comet tails",
+  "script": "A comet's tail does not trail behind it. It always points away from the Sun. Sunlight and the solar wind push the dust and gas outward. Many comets have two tails, one of dust and one of glowing gas. Some tails stretch for millions of kilometers. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "Comet Tails Point Away From the Sun #Comet #SpaceFacts #Shorts",
+  "description": "A comet's tails are pushed outward by sunlight and the solar wind, so they point away from the Sun and can stretch millions of kilometres.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Comet #Sun #Space #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "comet"
+    },
+    {
+      "scene": "sun"
+    },
+    {
+      "scene": "comet"
+    },
+    {
+      "scene": "comet"
+    },
+    {
+      "scene": "comet"
+    },
+    {
+      "scene": "nebula"
+    }
+  ],
+  "music_style": "march"
+}

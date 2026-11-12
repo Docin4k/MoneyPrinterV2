@@ -1,0 +1,36 @@
+{
+  "topic": "Europa's hidden ocean",
+  "script": "Jupiter's moon Europa hides an ocean under its icy shell. That ocean may hold about twice as much water as all of Earth's oceans. The ice on top is cracked with long reddish-brown lines. Jupiter's gravity squeezes and heats the moon, which helps keep the water liquid. NASA's Europa Clipper spacecraft is on its way to study it. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "This Moon Has More Water Than Earth #Europa #SpaceFacts #Shorts",
+  "description": "Europa's ocean may hold about twice the water of all Earth's oceans, kept liquid by tidal heating from Jupiter. NASA's Europa Clipper is on its way.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Europa #Jupiter #Space #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "planet",
+      "preset": "europa"
+    },
+    {
+      "scene": "planet",
+      "preset": "europa",
+      "radius": 75,
+      "y": 215
+    },
+    {
+      "scene": "planet",
+      "preset": "europa",
+      "radius": 50,
+      "y": 205
+    },
+    {
+      "scene": "planet",
+      "preset": "jupiter"
+    },
+    {
+      "scene": "rocket"
+    },
+    {
+      "scene": "nebula"
+    }
+  ],
+  "music_style": "music box"
+}

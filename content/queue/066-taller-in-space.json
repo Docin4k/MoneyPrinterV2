@@ -1,0 +1,29 @@
+{
+  "topic": "Astronauts grow taller",
+  "script": "Astronauts grow taller in space. Without gravity pressing down, the discs in their spines spread apart. They can gain up to about 5 centimeters in height. Spacesuits have to allow room for the extra height. Back on Earth, they shrink to their normal height soon after returning. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "Astronauts Grow Taller in Space #Astronauts #SpaceFacts #Shorts",
+  "description": "In microgravity the spine stretches as its discs expand, so astronauts can grow up to about 5 cm, returning to normal back on Earth.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Astronauts #ISS #Space #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "orbit"
+    },
+    {
+      "scene": "orbit"
+    },
+    {
+      "scene": "starfield"
+    },
+    {
+      "scene": "orbit"
+    },
+    {
+      "scene": "planet",
+      "preset": "earth"
+    },
+    {
+      "scene": "nebula"
+    }
+  ],
+  "music_style": "funk"
+}

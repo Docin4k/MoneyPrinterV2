@@ -1,0 +1,30 @@
+{
+  "topic": "The Sun's future",
+  "script": "In about five billion years, the Sun will swell into a red giant. It could grow so large that it swallows Mercury and Venus. Earth may or may not escape, but it would be scorched either way. Later the Sun will shrink into a white dwarf about the size of Earth. A teaspoon of white dwarf material would weigh several tons. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "The Sun Will Become a Red Giant #Sun #SpaceFacts #Shorts",
+  "description": "In about five billion years the Sun will become a red giant, then shrink into an Earth-sized white dwarf so dense a teaspoon would weigh tons.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Sun #Stars #Space #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "sun"
+    },
+    {
+      "scene": "planet",
+      "preset": "venus"
+    },
+    {
+      "scene": "planet",
+      "preset": "earth"
+    },
+    {
+      "scene": "starfield"
+    },
+    {
+      "scene": "starfield"
+    },
+    {
+      "scene": "comet"
+    }
+  ],
+  "music_style": "funk"
+}

@@ -1,0 +1,33 @@
+{
+  "topic": "Pieces of Mars on Earth",
+  "script": "Pieces of Mars have landed on Earth. Asteroid impacts blasted rocks off Mars and into space. After drifting for millions of years, some fell here as meteorites. Hundreds have been found, many in Antarctica and the Sahara Desert. Tiny gas bubbles inside them match the air measured on Mars. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "There Are Pieces of Mars on Earth #Mars #SpaceFacts #Shorts",
+  "description": "Hundreds of Martian meteorites, blasted off Mars by impacts, have been found on Earth; trapped gases match Mars's atmosphere.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Mars #Meteorite #Space #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "planet",
+      "preset": "mars"
+    },
+    {
+      "scene": "asteroids"
+    },
+    {
+      "scene": "asteroids"
+    },
+    {
+      "scene": "planet",
+      "preset": "earth"
+    },
+    {
+      "scene": "planet",
+      "preset": "mars",
+      "radius": 70,
+      "y": 215
+    },
+    {
+      "scene": "comet"
+    }
+  ],
+  "music_style": "march"
+}

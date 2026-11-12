@@ -1,0 +1,33 @@
+{
+  "topic": "The Mars helicopter",
+  "script": "In 2021, a small helicopter called Ingenuity flew on Mars. It was the first powered flight on another planet. The air on Mars is so thin that its blades spun about 2,400 times a minute. It was meant to fly five times, but it flew 72. It carried a tiny piece of fabric from the Wright brothers' first airplane. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "A Helicopter Flew on Mars #Mars #SpaceFacts #Shorts",
+  "description": "Ingenuity made the first powered flight on another planet in 2021 and flew 72 times, carrying fabric from the Wright Flyer.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Mars #Ingenuity #NASA #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "surface",
+      "preset": "mars_day"
+    },
+    {
+      "scene": "surface",
+      "preset": "mars_day",
+      "rover": true
+    },
+    {
+      "scene": "planet",
+      "preset": "mars"
+    },
+    {
+      "scene": "surface",
+      "preset": "mars_sunset"
+    },
+    {
+      "scene": "rocket"
+    },
+    {
+      "scene": "comet"
+    }
+  ],
+  "music_style": "music box"
+}

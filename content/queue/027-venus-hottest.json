@@ -1,0 +1,37 @@
+{
+  "topic": "Why Venus is the hottest planet",
+  "script": "Venus is the hottest planet, even though Mercury is closer to the Sun. Its surface is about 465 degrees Celsius, hot enough to melt lead. Its thick carbon dioxide atmosphere traps heat like a blanket. The air pressure there is about 90 times greater than on Earth. That is like being nearly a kilometer deep in the ocean. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "Venus Is Hotter Than Mercury #Venus #SpaceFacts #Shorts",
+  "description": "A runaway greenhouse effect makes Venus about 465 \u00b0C at the surface, with air pressure about 90 times Earth's.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Venus #Space #Planets #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "planet",
+      "preset": "venus"
+    },
+    {
+      "scene": "surface",
+      "preset": "venus"
+    },
+    {
+      "scene": "planet",
+      "preset": "venus",
+      "radius": 75,
+      "y": 215
+    },
+    {
+      "scene": "surface",
+      "preset": "venus"
+    },
+    {
+      "scene": "planet",
+      "preset": "venus",
+      "radius": 45,
+      "y": 200
+    },
+    {
+      "scene": "galaxy"
+    }
+  ],
+  "music_style": "boss battle"
+}

@@ -1,0 +1,29 @@
+{
+  "topic": "The closest star",
+  "script": "Proxima Centauri is the closest star to the Sun. Even so, its light takes more than four years to reach us. The Voyager 1 probe would need more than 70,000 years to get there. Proxima is a small red dwarf, too dim to see without a telescope. It has at least one planet in the zone where water could be liquid. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "The Closest Star Is 70,000 Years Away by Spacecraft #Stars #SpaceFacts #Shorts",
+  "description": "Proxima Centauri is about 4.2 light-years away; Voyager 1 would need over 70,000 years to get there. It has a planet in its habitable zone.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#ProximaCentauri #Stars #Space #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "binary_suns"
+    },
+    {
+      "scene": "starfield"
+    },
+    {
+      "scene": "rocket"
+    },
+    {
+      "scene": "sun"
+    },
+    {
+      "scene": "planet",
+      "preset": "ice"
+    },
+    {
+      "scene": "galaxy"
+    }
+  ],
+  "music_style": "funk"
+}

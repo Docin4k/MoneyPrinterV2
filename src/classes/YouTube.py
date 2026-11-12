@@ -708,9 +708,10 @@ class YouTube:
 
         if get_music_source() == "chiptune":
             song = os.path.join(ROOT_DIR, ".mp", str(uuid4()) + ".wav")
-            generate_track(song, max_duration + 1, seed)
+            music_style = getattr(self, "music_style", None)
+            generate_track(song, max_duration + 1, seed, style=music_style)
             if get_verbose():
-                info(f" => Generated chiptune: {describe(seed)}")
+                info(f" => Generated chiptune: {describe(seed, music_style)}")
         else:
             song = choose_random_song()
 
@@ -916,6 +917,7 @@ class YouTube:
         self.images = []
         self.scenes = []
         self.has_cta = False
+        self.music_style = None
         self.subtitle_fixes = {}
 
         if script_spec is not None:
@@ -926,6 +928,7 @@ class YouTube:
                 "description": script_spec.get("description", ""),
             }
             self.has_cta = bool(script_spec.get("last_sentence_is_cta", False))
+            self.music_style = script_spec.get("music_style")
             self.subtitle_fixes = script_spec.get("subtitle_fixes", {})
             if get_verbose():
                 info(f" => Using ready-made script: {self.metadata['title']}")

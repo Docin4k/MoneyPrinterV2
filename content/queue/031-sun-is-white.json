@@ -1,0 +1,30 @@
+{
+  "topic": "The Sun's real color",
+  "script": "The Sun is not actually yellow. Seen from space, sunlight looks white. It contains all the colors of the rainbow mixed together. Our atmosphere scatters blue light, which makes the Sun look slightly yellow from the ground. At sunset its light passes through even more air, so it turns orange and red. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "The Sun Is Actually White #Sun #SpaceFacts #Shorts",
+  "description": "Sunlight is white, a mix of every color. Our atmosphere scatters blue light, making the Sun look yellow and sunsets look orange and red.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Sun #Light #Space #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "sun"
+    },
+    {
+      "scene": "orbit"
+    },
+    {
+      "scene": "sun"
+    },
+    {
+      "scene": "planet",
+      "preset": "earth"
+    },
+    {
+      "scene": "surface",
+      "preset": "mars_sunset"
+    },
+    {
+      "scene": "galaxy"
+    }
+  ],
+  "music_style": "chill"
+}

@@ -1,0 +1,30 @@
+{
+  "topic": "The asteroid belt is empty",
+  "script": "The asteroid belt is not crowded like in the movies. Asteroids are usually hundreds of thousands of kilometers apart. Spacecraft have flown through it many times without hitting anything. All the asteroids together have less mass than our Moon. The biggest object there is the dwarf planet Ceres. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "The Asteroid Belt Is Mostly Empty #Asteroids #SpaceFacts #Shorts",
+  "description": "Asteroids in the main belt are typically hundreds of thousands of kilometres apart, and together weigh less than our Moon.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Asteroids #Ceres #Space #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "asteroids"
+    },
+    {
+      "scene": "asteroids"
+    },
+    {
+      "scene": "rocket"
+    },
+    {
+      "scene": "planet",
+      "preset": "moon"
+    },
+    {
+      "scene": "planet",
+      "preset": "ceres"
+    },
+    {
+      "scene": "galaxy"
+    }
+  ],
+  "music_style": "music box"
+}

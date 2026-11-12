@@ -1,0 +1,35 @@
+{
+  "topic": "Uranus spins on its side",
+  "script": "Uranus spins on its side, tipped over by about 98 degrees. Scientists think a giant collision long ago knocked it over. One trip around the Sun takes Uranus 84 Earth years. So each of its poles gets about 42 years of sunlight in a row. Then it spends about 42 years in darkness. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "Uranus Spins on Its Side #Uranus #SpaceFacts #Shorts",
+  "description": "Uranus is tilted about 98 degrees, probably by an ancient collision, so each pole gets about 42 years of sunlight and then 42 years of darkness.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Uranus #Space #Planets #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "planet",
+      "preset": "uranus"
+    },
+    {
+      "scene": "asteroids"
+    },
+    {
+      "scene": "sun"
+    },
+    {
+      "scene": "planet",
+      "preset": "uranus",
+      "radius": 75,
+      "y": 215
+    },
+    {
+      "scene": "planet",
+      "preset": "uranus",
+      "radius": 45,
+      "y": 200
+    },
+    {
+      "scene": "nebula"
+    }
+  ],
+  "music_style": "waltz"
+}

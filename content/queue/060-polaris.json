@@ -1,0 +1,32 @@
+{
+  "topic": "The North Star",
+  "script": "The North Star is not the brightest star in the sky. Polaris ranks around 48th in brightness. It is famous because it sits almost directly above Earth's North Pole. So it barely moves while the other stars wheel around it. Because Earth's axis slowly wobbles, Vega will be the North Star in about 12,000 years. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "The North Star Isn't the Brightest Star #Stars #SpaceFacts #Shorts",
+  "description": "Polaris is only about the 48th brightest star; it matters because it sits above the North Pole. Earth's wobble will make Vega the pole star in about 12,000 years.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Polaris #Stars #Astronomy #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "starfield"
+    },
+    {
+      "scene": "starfield"
+    },
+    {
+      "scene": "planet",
+      "preset": "earth"
+    },
+    {
+      "scene": "aurora"
+    },
+    {
+      "scene": "planet",
+      "preset": "earth",
+      "radius": 70,
+      "y": 215
+    },
+    {
+      "scene": "comet"
+    }
+  ],
+  "music_style": "boss battle"
+}

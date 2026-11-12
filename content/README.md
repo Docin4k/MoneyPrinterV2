@@ -47,6 +47,7 @@ posted, e.g. `013-pluto.json`.
 | `last_sentence_is_cta` | no | `true` if the last sentence is a call to action; its footer says "FOLLOW FOR MORE" instead of a fact number. |
 | `scenes` | no | One scene per sentence, for `"visual_style": "pixel_art"`. If missing or the count doesn't match the sentences, scenes are picked from keywords in each sentence. |
 | `subtitle_fixes` | no | Regex replacements for the subtitles, e.g. `{"wonder\\s*bites": "WonderBytes"}`. |
+| `music_style` | no | Chiptune style for this video: `adventure`, `chill`, `space ambient`, `march`, `waltz`, `funk`, `boss battle` or `music box`. If missing, the title picks one. The queue rotates them so neighbouring videos sound different. |
 
 ### Writing tips
 
@@ -60,7 +61,7 @@ posted, e.g. `013-pluto.json`.
 
 | `scene` | Options |
 |---|---|
-| `planet` | `preset`: `venus`, `earth`, `mars`, `jupiter`, `saturn`, `neptune`, `uranus`, `moon`, `mercury`. Optional `radius` (pixels on the 180x320 canvas, default 58) and `y` (vertical centre, default 205). |
+| `planet` | `preset`: `venus`, `earth`, `mars`, `jupiter`, `saturn`, `neptune`, `uranus`, `moon`, `mercury`, `pluto`, `io`, `europa`, `titan`, `ganymede`, `triton`, `ceres`, `lava` (lava world), `ice` (ice world). Optional `radius` (pixels on the 180x320 canvas, default 58) and `y` (vertical centre, default 205). |
 | `surface` | `preset`: `mars_day`, `mars_sunset`, `venus`, `moon`. Optional `rover`, `volcano`, `footprints` (true/false). |
 | `sun` | The Sun with a flickering corona and a prominence. |
 | `black_hole` | Black hole with a spinning accretion disk. |
@@ -69,3 +70,12 @@ posted, e.g. `013-pluto.json`.
 | `orbit` | The space station orbiting above Earth. |
 | `diamond_rain` | Falling, sparkling diamonds. |
 | `starfield` | Drifting stars; good for the closing call to action. |
+| `comet` | A comet with a curved dust tail and a blue gas tail, pointing away from the Sun. |
+| `asteroids` | Tumbling rocks drifting past at different distances. |
+| `aurora` | Green and purple aurora curtains over a snowy forest. |
+| `eclipse` | Total solar eclipse with a streaming corona. |
+| `rocket` | A rocket launching through a dawn sky. |
+| `supernova` | An expanding shockwave with glowing debris. |
+| `nebula` | A colourful star-forming cloud with bright young stars. |
+| `telescope` | A space telescope with a gold segmented mirror and sunshield. |
+| `binary_suns` | Two suns circling above desert dunes. |

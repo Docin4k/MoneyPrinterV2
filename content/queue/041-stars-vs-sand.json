@@ -1,0 +1,28 @@
+{
+  "topic": "Stars versus sand",
+  "script": "There may be more stars in the universe than grains of sand on all of Earth's beaches. Our Milky Way alone has hundreds of billions of stars. And there are probably more than a hundred billion galaxies. On a clear, dark night you can see only a few thousand stars with your eyes. Every single star you can see is in our own galaxy. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "More Stars Than Grains of Sand #Stars #SpaceFacts #Shorts",
+  "description": "With hundreds of billions of stars in the Milky Way and likely over a hundred billion galaxies, the universe may hold more stars than Earth has sand grains.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Stars #Galaxy #Space #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "starfield"
+    },
+    {
+      "scene": "galaxy"
+    },
+    {
+      "scene": "nebula"
+    },
+    {
+      "scene": "starfield"
+    },
+    {
+      "scene": "galaxy"
+    },
+    {
+      "scene": "starfield"
+    }
+  ],
+  "music_style": "march"
+}

@@ -1,0 +1,29 @@
+{
+  "topic": "Sirius",
+  "script": "The brightest star in the night sky is Sirius. It is about 8.6 light-years away. Sirius is actually two stars orbiting each other. Its tiny partner is a white dwarf about the size of Earth. Ancient Egyptians watched for Sirius to predict the yearly Nile flood. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "The Brightest Star Is Actually Two Stars #Sirius #SpaceFacts #Shorts",
+  "description": "Sirius, 8.6 light-years away, is a pair: a bright star and an Earth-sized white dwarf. Its rising once marked the Nile flood season in ancient Egypt.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Sirius #Stars #Astronomy #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "starfield"
+    },
+    {
+      "scene": "starfield"
+    },
+    {
+      "scene": "binary_suns"
+    },
+    {
+      "scene": "planet",
+      "preset": "earth"
+    },
+    {
+      "scene": "binary_suns"
+    },
+    {
+      "scene": "starfield"
+    }
+  ],
+  "music_style": "funk"
+}

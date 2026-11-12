@@ -1,0 +1,37 @@
+{
+  "topic": "Iapetus, the two-toned moon",
+  "script": "Saturn's moon Iapetus has two very different sides. One half is as dark as coal, and the other is bright like snow. It also has a strange ridge running around its middle, like a walnut. In places the ridge is up to about 20 kilometers high. Scientists are still debating how that ridge formed. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "This Moon Has a Dark Side and a Bright Side #Saturn #SpaceFacts #Shorts",
+  "description": "Iapetus has one coal-dark and one bright hemisphere, plus an equatorial ridge up to about 20 km high whose origin is still debated.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Iapetus #Saturn #Space #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "planet",
+      "preset": "moon"
+    },
+    {
+      "scene": "planet",
+      "preset": "ceres"
+    },
+    {
+      "scene": "planet",
+      "preset": "moon",
+      "radius": 75,
+      "y": 215
+    },
+    {
+      "scene": "planet",
+      "preset": "moon",
+      "radius": 50,
+      "y": 205
+    },
+    {
+      "scene": "planet",
+      "preset": "saturn"
+    },
+    {
+      "scene": "galaxy"
+    }
+  ],
+  "music_style": "space ambient"
+}

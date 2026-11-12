@@ -1,0 +1,28 @@
+{
+  "topic": "The first pulsar",
+  "script": "The first pulsar was discovered in 1967 by astronomer Jocelyn Bell Burnell. Its radio signal pulsed so regularly that it was nicknamed LGM-1. That stood for Little Green Men, a joke about aliens. It turned out to be a spinning neutron star sweeping beams across space. Some pulsars keep time almost as accurately as atomic clocks. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "The First Pulsar Was Nicknamed Little Green Men #Pulsar #SpaceFacts #Shorts",
+  "description": "Jocelyn Bell Burnell discovered the first pulsar in 1967; its regular pulses earned the joking nickname LGM-1 before it was identified as a spinning neutron star.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Pulsar #Astronomy #Space #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "telescope"
+    },
+    {
+      "scene": "pulsar"
+    },
+    {
+      "scene": "starfield"
+    },
+    {
+      "scene": "pulsar"
+    },
+    {
+      "scene": "pulsar"
+    },
+    {
+      "scene": "comet"
+    }
+  ],
+  "music_style": "chill"
+}

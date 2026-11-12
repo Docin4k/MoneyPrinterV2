@@ -1,0 +1,36 @@
+{
+  "topic": "Neptune's winds",
+  "script": "Neptune has the fastest winds in the solar system. They can blow at about 2,000 kilometers per hour. That is faster than the speed of sound on Earth. Neptune is about 30 times farther from the Sun than Earth is. Scientists are still not sure what powers such fierce winds so far from the Sun. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "Neptune Has Supersonic Winds #Neptune #SpaceFacts #Shorts",
+  "description": "Winds on Neptune reach about 2,000 km/h, faster than sound travels on Earth, even though it is 30 times farther from the Sun than we are.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Neptune #Space #Planets #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "planet",
+      "preset": "neptune"
+    },
+    {
+      "scene": "planet",
+      "preset": "neptune",
+      "radius": 75,
+      "y": 215
+    },
+    {
+      "scene": "planet",
+      "preset": "neptune",
+      "radius": 45,
+      "y": 200
+    },
+    {
+      "scene": "sun"
+    },
+    {
+      "scene": "planet",
+      "preset": "neptune"
+    },
+    {
+      "scene": "galaxy"
+    }
+  ],
+  "music_style": "boss battle"
+}

@@ -1,0 +1,29 @@
+{
+  "topic": "The first black hole photo",
+  "script": "The first photo of a black hole was revealed in 2019. It showed a glowing orange ring around a dark center. The black hole, in a galaxy called M87, weighs about six and a half billion Suns. The picture needed radio telescopes all over Earth working together. Together they acted like one telescope almost as big as our planet. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "The First Photo of a Black Hole #BlackHole #SpaceFacts #Shorts",
+  "description": "In 2019 the Event Horizon Telescope, a planet-wide network of radio dishes, revealed the black hole in M87, about 6.5 billion solar masses.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#BlackHole #EHT #Space #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "black_hole"
+    },
+    {
+      "scene": "black_hole"
+    },
+    {
+      "scene": "galaxy"
+    },
+    {
+      "scene": "telescope"
+    },
+    {
+      "scene": "planet",
+      "preset": "earth"
+    },
+    {
+      "scene": "comet"
+    }
+  ],
+  "music_style": "music box"
+}

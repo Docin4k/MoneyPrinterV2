@@ -1,0 +1,37 @@
+{
+  "topic": "Martian dust storms",
+  "script": "Mars has dust storms that can cover the entire planet. One in 2018 blocked so much sunlight that it ended NASA's Opportunity rover. Opportunity ran on solar power, and its panels could no longer charge. The storm lasted for months. Martian dust is finer than flour. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "Mars Has Planet-Wide Dust Storms #Mars #SpaceFacts #Shorts",
+  "description": "A planet-encircling dust storm in 2018 blocked sunlight from Opportunity's solar panels and ended its mission.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Mars #Opportunity #Space #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "planet",
+      "preset": "mars"
+    },
+    {
+      "scene": "surface",
+      "preset": "mars_day",
+      "rover": true
+    },
+    {
+      "scene": "surface",
+      "preset": "mars_sunset",
+      "rover": true
+    },
+    {
+      "scene": "planet",
+      "preset": "mars",
+      "radius": 75,
+      "y": 215
+    },
+    {
+      "scene": "surface",
+      "preset": "mars_day"
+    },
+    {
+      "scene": "starfield"
+    }
+  ],
+  "music_style": "space ambient"
+}

@@ -1,0 +1,30 @@
+{
+  "topic": "The Sun's share of the solar system",
+  "script": "The Sun holds about 99.8 percent of all the mass in the solar system. All the planets, moons, asteroids and comets together are just the leftovers. Jupiter makes up most of that tiny remainder. The Sun's gravity reaches far beyond Pluto. Yet it is only a medium-sized star. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "The Sun Is 99.8% of the Solar System #Sun #SpaceFacts #Shorts",
+  "description": "The Sun contains about 99.8% of the solar system's mass, with Jupiter holding most of the rest, yet it is a fairly ordinary star.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Sun #Space #Astronomy #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "sun"
+    },
+    {
+      "scene": "asteroids"
+    },
+    {
+      "scene": "planet",
+      "preset": "jupiter"
+    },
+    {
+      "scene": "planet",
+      "preset": "pluto"
+    },
+    {
+      "scene": "sun"
+    },
+    {
+      "scene": "comet"
+    }
+  ],
+  "music_style": "waltz"
+}

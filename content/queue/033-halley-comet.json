@@ -1,0 +1,28 @@
+{
+  "topic": "Halley's Comet",
+  "script": "Halley's Comet swings past Earth about every 76 years. It was last seen from Earth in 1986. It will be back in 2061. Each time it passes the Sun, it sheds dust that later makes meteor showers. Its core is a dirty snowball about 15 kilometers long. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "Halley's Comet Returns in 2061 #Comet #SpaceFacts #Shorts",
+  "description": "Halley's Comet returns about every 76 years; last seen in 1986, it is due back in 2061. Its dust causes two meteor showers each year.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Comet #Halley #Space #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "comet"
+    },
+    {
+      "scene": "comet"
+    },
+    {
+      "scene": "starfield"
+    },
+    {
+      "scene": "comet"
+    },
+    {
+      "scene": "comet"
+    },
+    {
+      "scene": "starfield"
+    }
+  ],
+  "music_style": "waltz"
+}

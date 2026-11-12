@@ -67,6 +67,7 @@ _GLYPHS = {
     "'": "01100 00100 01000 00000 00000 00000 00000", "!": "00100 00100 00100 00100 00100 00000 00100",
     "?": "01110 10001 00001 00010 00100 00000 00100", "-": "00000 00000 00000 11111 00000 00000 00000",
     ":": "00000 01100 01100 00000 01100 01100 00000", "/": "00001 00010 00010 00100 01000 01000 10000",
+    ";": "00000 01100 01100 00000 01100 00100 01000",
     "%": "11000 11001 00010 00100 01000 10011 00011", "&": "01100 10010 10100 01000 10101 10010 01101",
     "(": "00010 00100 01000 01000 01000 00100 00010", ")": "01000 00100 00010 00010 00010 00100 01000",
     "#": "01010 01010 11111 01010 11111 01010 01010", " ": "00000 00000 00000 00000 00000 00000 00000",
@@ -207,6 +208,8 @@ SPRITES = {
     "flag": ["#####", "####.", "#####", "#....", "#....", "#....", "#...."],
     "rover": ["...##....", "..####...", "#######..", "#.#.#.#..", ".#.#.#..."],
     "footprint": [".##.", "####", "####", ".##.", "....", ".##.", ".##."],
+    "rocket": ["...#...", "..###..", "..###..", ".#####.", ".##.##.", ".#####.", ".#####.", ".#####.",
+               ".#####.", ".#####.", ".#####.", ".#####.", "##.#.##", "#.....#"],
 }
 
 
@@ -243,6 +246,24 @@ PLANET_PRESETS = {
              "noise": 0.8, "spin": 0.15, "atmo": None, "craters": True},
     "mercury": {"ramp": [(50, 40, 35), (110, 95, 85), (170, 155, 140), (220, 210, 195)], "bands": 0.0,
                 "noise": 0.8, "spin": 0.1, "atmo": None, "craters": True},
+    "pluto": {"ramp": [(60, 40, 30), (140, 100, 75), (200, 170, 140), (245, 235, 220)], "bands": 0.0,
+              "noise": 0.8, "spin": 0.12, "atmo": None, "heart": True},
+    "io": {"ramp": [(90, 50, 10), (200, 150, 40), (235, 210, 90), (250, 240, 170)], "bands": 0.0,
+           "noise": 0.9, "spin": 0.3, "atmo": None, "volcanic": True},
+    "europa": {"ramp": [(120, 90, 70), (190, 175, 160), (230, 225, 215), (250, 250, 245)], "bands": 0.0,
+               "noise": 0.5, "spin": 0.2, "atmo": None, "cracks": 0.0},
+    "titan": {"ramp": [(110, 60, 15), (180, 110, 40), (220, 160, 70), (240, 200, 120)], "bands": 0.25,
+              "noise": 0.25, "spin": 0.15, "atmo": (240, 170, 80)},
+    "ganymede": {"ramp": [(60, 50, 45), (110, 100, 90), (170, 160, 150), (215, 210, 200)], "bands": 0.0,
+                 "noise": 1.0, "spin": 0.2, "atmo": None, "craters": True},
+    "triton": {"ramp": [(90, 70, 75), (170, 140, 140), (220, 195, 190), (245, 235, 230)], "bands": 0.1,
+               "noise": 0.7, "spin": -0.2, "atmo": None},
+    "ceres": {"ramp": [(45, 45, 45), (95, 95, 95), (145, 145, 145), (190, 190, 190)], "bands": 0.0,
+              "noise": 0.7, "spin": 0.3, "atmo": None, "craters": True, "bright_spots": True},
+    "lava": {"ramp": [(20, 10, 10), (60, 20, 15), (200, 60, 20), (255, 200, 60)], "bands": 0.0,
+             "noise": 0.6, "spin": 0.25, "atmo": (255, 120, 40), "cracks": 1.0},
+    "ice": {"ramp": [(40, 70, 110), (110, 160, 200), (180, 220, 240), (240, 250, 255)], "bands": 0.4,
+            "noise": 0.5, "spin": 0.3, "atmo": (180, 230, 255)},
 }
 
 
@@ -273,6 +294,20 @@ def draw_planet(frame, t, preset, cx, cy, r, seed=1, light=(-0.6, -0.4)):
         spot = ((slon / 0.45) ** 2 + ((lat + 0.35) / 0.18) ** 2) < 1
     if p.get("caps"):
         val = np.where(np.abs(lat) > 1.25, 1.0, val)
+    if p.get("heart"):
+        # Pluto's bright heart-shaped plain (two overlapping lobes)
+        hl = np.angle(np.exp(1j * lon))
+        lobe1 = ((hl + 0.25) / 0.45) ** 2 + ((lat + 0.05) / 0.42) ** 2 < 1
+        lobe2 = ((hl - 0.3) / 0.38) ** 2 + ((lat - 0.08) / 0.36) ** 2 < 1
+        val = np.where(lobe1 | lobe2, 1.0, val)
+    if p.get("cracks") is not None:
+        # Long crossing lines (Europa's ice cracks, a lava world's glowing seams)
+        crng = random.Random(seed + 5)
+        lines = np.zeros_like(val, dtype=bool)
+        for _ in range(8):
+            k, m, ph = crng.randint(1, 4), crng.uniform(-3, 3), crng.uniform(0, 6.28)
+            lines |= np.abs(np.sin(k * lon + m * lat + ph)) < 0.035
+        val = np.where(lines, p["cracks"], val)
     if p.get("craters"):
         rng = random.Random(seed)
         for _ in range(14):
@@ -280,6 +315,12 @@ def draw_planet(frame, t, preset, cx, cy, r, seed=1, light=(-0.6, -0.4)):
             dl = np.angle(np.exp(1j * (lon - clon)))
             dd = np.sqrt((dl * np.cos(lat)) ** 2 + (lat - clat) ** 2)
             val = np.where(dd < cr, val - 0.25, np.where(dd < cr * 1.25, val + 0.15, val))
+    if p.get("bright_spots"):
+        brng = random.Random(seed + 9)
+        for _ in range(3):
+            clon, clat = brng.uniform(-3.14, 3.14), brng.uniform(-0.6, 0.6)
+            dl = np.angle(np.exp(1j * (lon - clon)))
+            val = np.where(np.sqrt((dl * np.cos(lat)) ** 2 + (lat - clat) ** 2) < 0.06, 1.0, val)
 
     lx, ly = light
     lz = math.sqrt(max(0.0, 1 - lx ** 2 - ly ** 2))
@@ -290,6 +331,13 @@ def draw_planet(frame, t, preset, cx, cy, r, seed=1, light=(-0.6, -0.4)):
         spot_col = dither_ramp(0.4 + 0.6 * shade[spot], [(90, 20, 10), (180, 60, 30), (230, 110, 70)],
                                PY[inside][spot], PX[inside][spot])
         colors[spot] = spot_col
+    if p.get("volcanic"):
+        vrng = random.Random(seed + 3)
+        for _ in range(9):
+            clon, clat = vrng.uniform(-3.14, 3.14), vrng.uniform(-1.1, 1.1)
+            dl = np.angle(np.exp(1j * (lon - clon)))
+            spot_v = np.sqrt((dl * np.cos(lat)) ** 2 + (lat - clat) ** 2) < vrng.uniform(0.05, 0.12)
+            colors[spot_v & (shade > 0.05)] = (120, 25, 10)
     frame[inside] = colors
 
     if p.get("atmo"):
@@ -592,13 +640,235 @@ def scene_starfield(frame, t, spec, seed):
     Stars(seed, 220).draw(frame, t, drift=4)
 
 
+def _plot(frame, xs, ys, values, ramp):
+    """Plot design-unit points with a dithered colour ramp."""
+    xi, yi = (np.asarray(xs) * DETAIL).astype(int), (np.asarray(ys) * DETAIL).astype(int)
+    ok = (xi >= 0) & (xi < PW) & (yi >= 0) & (yi < PH)
+    frame[yi[ok], xi[ok]] = dither_ramp(np.asarray(values)[ok], ramp, yi[ok], xi[ok])
+
+
+def scene_comet(frame, t, spec, seed):
+    Stars(seed).draw(frame, t, drift=0.6)
+    hx, hy = 62 + t * 1.6, 120 + t * 0.9
+    # Tails point away from the Sun, which is off-screen at (-60, -80)
+    ux, uy = (hx + 60) / math.hypot(hx + 60, hy + 80), (hy + 80) / math.hypot(hx + 60, hy + 80)
+    px_, py_ = -uy, ux                                # perpendicular
+    rng = np.random.default_rng(seed)
+    n = 2600
+    s_ = rng.random(n) ** 1.7 * 170                  # distance along the tail
+    spread = rng.normal(0, 1, n) * (1.5 + s_ * 0.13)
+    bend = (s_ ** 2) * 0.0022
+    _plot(frame, hx + ux * s_ + px_ * (spread + bend), hy + uy * s_ + py_ * (spread + bend),
+          1 - s_ / 175 + rng.uniform(-0.1, 0.1, n),
+          [(60, 50, 40), (170, 150, 110), (240, 225, 180), (255, 250, 230)])
+    m = 1200
+    s2 = rng.random(m) * 190
+    flick = 0.6 + 0.4 * np.sin(s2 * 0.3 - t * 6)
+    _plot(frame, hx + ux * s2 + px_ * rng.normal(0, 1, m) * (0.8 + s2 * 0.02),
+          hy + uy * s2 + py_ * rng.normal(0, 1, m) * (0.8 + s2 * 0.02),
+          (1 - s2 / 200) * flick, [(20, 40, 90), (60, 120, 220), (160, 210, 255)])
+    d = np.sqrt((XX - hx) ** 2 + (YY - hy) ** 2)
+    coma = d < 9
+    frame[coma] = dither_ramp(1 - d[coma] / 9, [(120, 140, 160), (210, 230, 240), (255, 255, 255)], PY[coma], PX[coma])
+
+
+def _rock_mask(cx, cy, r, ang, seed):
+    rng = random.Random(seed)
+    a1, a2, p1, p2 = rng.uniform(0.12, 0.22), rng.uniform(0.05, 0.12), rng.uniform(0, 6.3), rng.uniform(0, 6.3)
+    dx, dy = XX - cx, YY - cy
+    theta = np.arctan2(dy, dx) - ang
+    edge = r * (1 + a1 * np.sin(3 * theta + p1) + a2 * np.sin(5 * theta + p2))
+    d = np.sqrt(dx ** 2 + dy ** 2)
+    return d < edge, dx / np.maximum(edge, 1e-6), dy / np.maximum(edge, 1e-6), theta
+
+
+def scene_asteroids(frame, t, spec, seed):
+    Stars(seed).draw(frame, t, drift=1)
+    rng = random.Random(seed)
+    rocks = sorted(({"r": rng.uniform(4, 26), "x": rng.uniform(0, LW), "y": rng.uniform(40, 300),
+                     "w": rng.uniform(-0.6, 0.6), "s": rng.randint(0, 9999)} for _ in range(16)), key=lambda k: k["r"])
+    ramp = [(30, 25, 22), (80, 70, 60), (140, 125, 110), (200, 185, 165)]
+    for k in rocks:
+        x = (k["x"] - t * k["r"] * 0.35) % (LW + 60) - 30
+        inside, nx, ny, theta = _rock_mask(x, k["y"], k["r"], t * k["w"], k["s"])
+        if not inside.any():
+            continue
+        shade = np.clip(0.55 - 0.45 * (nx[inside] * 0.7 + ny[inside] * 0.5), 0, 1)
+        tex = periodic_noise(theta[inside] * 2, np.sqrt(nx[inside] ** 2 + ny[inside] ** 2) * 3, k["s"], 3)
+        frame[inside] = dither_ramp(shade * (0.7 + 0.3 * tex), ramp, PY[inside], PX[inside])
+
+
+def scene_aurora(frame, t, spec, seed):
+    sky((2, 6, 20), (8, 30, 45), frame)
+    Stars(seed).draw(frame, t, drift=0.2)
+    xs = XX[0]
+    for i, (hue, base) in enumerate(((0, 120), (1, 95), (0, 150))):
+        ph = i * 2.1
+        yb = base + 18 * np.sin(xs / 30 + t * 0.6 + ph) + 8 * np.sin(xs / 13 - t * 0.9 + ph)
+        h = 55 + 22 * np.sin(xs / 22 + t * 0.4 + ph)
+        rel = (yb[None, :] - YY) / h[None, :]
+        band = (rel > 0) & (rel < 1)
+        rays = 0.55 + 0.45 * np.sin(XX * 0.9 + t * 3 + ph) ** 2
+        v = (1 - rel) * rays * (0.85 if i else 1.0)
+        ramp = [(10, 40, 40), (30, 160, 90), (120, 255, 170)] if hue == 0 else [(30, 15, 50), (120, 60, 170), (220, 150, 255)]
+        sel = band & (v > 0.12)
+        frame[sel] = np.maximum(frame[sel], dither_ramp(v[sel], ramp, PY[sel], PX[sel]))
+    hills = 250 + 10 * np.sin(xs / 40 + seed) + 5 * np.sin(xs / 11)
+    ground = YY >= hills[None, :]
+    frame[ground] = dither_ramp(((YY[ground] - 240) / 80), [(150, 170, 200), (60, 80, 110), (20, 30, 50)], PY[ground], PX[ground])
+    rng = random.Random(seed)
+    for _ in range(9):
+        tx, th = rng.uniform(0, LW), rng.uniform(14, 30)
+        base = 250 + 10 * math.sin(tx / 40 + seed) + 5 * math.sin(tx / 11)
+        tree = (YY < base + 2) & (YY > base - th) & (np.abs(XX - tx) < (YY - (base - th)) * 0.32)
+        frame[tree] = (6, 12, 20)
+
+
+def scene_eclipse(frame, t, spec, seed):
+    Stars(seed).draw(frame, t, drift=0.3)
+    cx, cy, r = LW / 2, 190, 34
+    d = np.sqrt((XX - cx) ** 2 + (YY - cy) ** 2)
+    ang = np.arctan2(YY - cy, XX - cx)
+    rng = random.Random(seed)
+    streak = sum(rng.uniform(0.3, 1) * np.abs(np.sin(ang * k + rng.uniform(0, 6.3) + t * 0.05)) ** 6
+                 for k in (2, 3, 5, 7))
+    v = np.exp(-(d - r) / (10 + 22 * streak)) * (d > r)
+    sel = v > 0.06
+    frame[sel] = dither_ramp(v[sel], [(10, 20, 40), (90, 110, 160), (200, 215, 240), (255, 255, 255)], PY[sel], PX[sel])
+    mx = cx + 2.5 * math.sin(t * 0.25)
+    moon = (XX - mx) ** 2 + (YY - cy) ** 2 <= (r + 0.6) ** 2
+    frame[moon] = (0, 0, 0)
+    if abs(mx - cx) > 1.6:   # a sliver of sunlight: the "diamond ring"
+        bx = cx - r * math.copysign(1, mx - cx)
+        bead = (XX - bx) ** 2 + (YY - cy) ** 2 <= 9
+        frame[bead] = (255, 255, 255)
+
+
+def scene_rocket(frame, t, spec, seed):
+    # Dawn: navy -> purple -> orange near the horizon
+    frame[:] = dither_ramp(np.clip((YY - 20) / 270, 0, 1), [(8, 14, 50), (40, 30, 90), (120, 60, 120), (240, 140, 80)])
+    Stars(seed).draw(frame, t, drift=0.2, mask=YY > 130)
+    lift = max(0.0, t - 0.6) ** 1.7 * 5
+    rx, ry = LW / 2 - 10.5, 180 - lift
+    rng = np.random.default_rng(seed + int(t * 12))
+    n = 420
+    fx = rx + 10.5 + rng.normal(0, 3.2, n)
+    fy = ry + 42 + rng.random(n) ** 1.5 * 46
+    _plot(frame, fx, fy, 1 - (fy - ry - 42) / 48, [(200, 60, 20), (250, 160, 40), (255, 240, 180)])
+    smoke = np.random.default_rng(seed)
+    for _ in range(14):
+        sx, sr = LW / 2 + smoke.normal(0, 30), smoke.uniform(8, 22) * (1 + min(t, 6) * 0.15)
+        puff = (XX - sx) ** 2 + ((YY - 268) * 1.4) ** 2 <= sr ** 2
+        frame[puff] = dither_ramp(np.full(puff.sum(), 0.6), [(90, 90, 100), (170, 170, 180), (230, 230, 235)], PY[puff], PX[puff])
+    frame[YY > 280] = (40, 35, 40)
+    tower = (XX > LW / 2 + 16) & (XX < LW / 2 + 20) & (YY > 170) & (YY < 280)
+    frame[tower & ((PY // 6 + PX // 6) % 2 == 0)] = (180, 60, 40)
+    body = (220, 225, 235)
+    draw_sprite(frame, "rocket", rx, ry, body, scale=3)
+    for fx_, fy_ in ((rx, ry + 36), (rx + 18, ry + 36), (rx + 9, ry + 3)):
+        put(frame, fx_, fy_, (200, 40, 40), size=3 * DETAIL)
+
+
+def scene_supernova(frame, t, spec, seed):
+    Stars(seed).draw(frame, t, drift=0.3)
+    cx, cy = LW / 2, 190
+    phase = t % 7
+    R = 12 + phase * 20
+    d = np.sqrt((XX - cx) ** 2 + (YY - cy) ** 2)
+    ang = np.arctan2(YY - cy, XX - cx)
+    wob = 1 + 0.08 * np.sin(ang * 7 + seed) + 0.05 * np.sin(ang * 13)
+    ring = np.abs(d - R * wob) < (2 + R * 0.05)
+    frame[ring] = dither_ramp(0.6 + 0.4 * np.sin(ang[ring] * 9 + t), [(120, 40, 120), (240, 110, 150), (255, 220, 200)], PY[ring], PX[ring])
+    rng = np.random.default_rng(seed)
+    n = 1800
+    a = rng.uniform(0, 2 * np.pi, n)
+    dist = R * (0.35 + 0.6 * rng.random(n)) * (1 + 0.08 * np.sin(a * 7 + seed))
+    hue = rng.random(n)
+    _plot(frame, cx + np.cos(a) * dist, cy + np.sin(a) * dist, hue, [(30, 120, 140), (90, 200, 200), (250, 160, 80), (255, 230, 150)])
+    glow = np.exp(-d / (10 + 6 * math.sin(t * 3))) * (1.2 - phase / 7)
+    sel = glow > 0.08
+    frame[sel] = np.maximum(frame[sel], dither_ramp(glow[sel], [(80, 90, 160), (200, 210, 255), (255, 255, 255)], PY[sel], PX[sel]))
+
+
+def scene_nebula(frame, t, spec, seed):
+    rng = random.Random(seed * 3 + 1)
+    u, v = XX / LW * 2 * np.pi + t * 0.02, YY / LH * 2 * np.pi
+    layers = [((220, 100, 150), (60, 15, 50)), ((70, 180, 180), (8, 40, 55)), ((210, 160, 90), (60, 35, 15))]
+    for hi, lo in layers:
+        field = np.zeros(XX.shape)
+        for k in range(5):
+            a, b = rng.uniform(0.6, 2.4), rng.uniform(0.6, 3.0)
+            field += np.sin(u * a + rng.uniform(0, 6.3) + np.sin(v * b + rng.uniform(0, 6.3)) * 1.6) / (k + 1)
+        field = (field - field.min()) / (np.ptp(field) + 1e-9)
+        dens = np.clip((field - 0.62) / 0.38, 0, 1) ** 1.2   # separate clouds with dark space between
+        sel = dens > 0.04
+        frame[sel] = np.maximum(frame[sel], dither_ramp(dens[sel], [(4, 4, 16), lo, hi], PY[sel], PX[sel]))
+    Stars(seed, 260).draw(frame, t, drift=0.3)
+    srng = random.Random(seed)
+    for _ in range(7):
+        x, y = srng.uniform(20, LW - 20), srng.uniform(60, 290)
+        b = 0.6 + 0.4 * math.sin(t * 2 + x)
+        for dx in range(-6, 7):
+            put(frame, x + dx * 0.5, y, (int(255 * b), int(255 * b), 255))
+        for dy in range(-6, 7):
+            put(frame, x, y + dy * 0.5, (int(255 * b), int(255 * b), 255))
+
+
+def _hex(cx, cy, s):
+    dx, dy = np.abs(XX - cx), np.abs(YY - cy)
+    h = s * math.sqrt(3) / 2
+    return (dy <= h) & (dx * math.sqrt(3) / 2 + dy / 2 <= h)
+
+
+def scene_telescope(frame, t, spec, seed):
+    Stars(seed).draw(frame, t, drift=0.4)
+    cx, cy = LW / 2 + 3 * math.sin(t * 0.3), 175
+    for k in range(5):     # sunshield layers
+        y0 = cy + 52 + k * 3
+        layer = (np.abs(XX - cx) / 82 + np.abs(YY - y0) / 26) <= 1
+        frame[layer] = (120 + k * 20, 90 + k * 22, 170 + k * 16)
+    s = 9.0
+    cells = [(q, r) for q in range(-2, 3) for r in range(-2, 3) if 0 < max(abs(q), abs(r), abs(q + r)) <= 2]
+    for q, r in cells:
+        hx, hy = cx + s * 1.5 * q, cy + s * math.sqrt(3) * (r + q / 2)
+        cell = _hex(hx, hy, s - 0.8)
+        shine = 0.55 + 0.45 * np.sin((XX[cell] + YY[cell]) * 0.08 - t * 1.5)
+        frame[cell] = dither_ramp(shine, [(120, 80, 20), (210, 160, 40), (255, 220, 110), (255, 250, 210)], PY[cell], PX[cell])
+    tip = (cx, cy - 46)
+    for ex, ey in ((cx - 24, cy + 20), (cx + 24, cy + 20), (cx, cy + 34)):
+        for i in range(60):
+            f = i / 59
+            put(frame, tip[0] + (ex - tip[0]) * f, tip[1] + (ey - tip[1]) * f, (190, 190, 200))
+    frame[_hex(*tip, 3.5)] = (230, 200, 120)
+
+
+def scene_binary_suns(frame, t, spec, seed):
+    sky((60, 30, 70), (250, 170, 90), frame)
+    a = t * 0.5
+    for (ox, r, core, glow) in ((1, 14, (255, 200, 120), (255, 140, 60)), (-1, 9, (255, 250, 220), (255, 220, 150))):
+        sx, sy = LW / 2 + ox * 34 * math.cos(a), 110 + ox * 10 * math.sin(a)
+        d = np.sqrt((XX - sx) ** 2 + (YY - sy) ** 2)
+        halo_ = (d > r) & (d < r * 2.6)
+        frame[halo_] = np.maximum(frame[halo_], dither_ramp(1 - (d[halo_] - r) / (r * 1.6), [(200, 110, 80), glow], PY[halo_], PX[halo_]))
+        frame[d <= r] = core
+    rng = np.random.default_rng(seed)
+    xs = XX[0]
+    for layer, col in enumerate([(160, 90, 50), (200, 120, 60), (230, 160, 90)]):
+        prof = 215 + layer * 24 + 9 * np.sin(xs / (30 + layer * 9) + rng.uniform(0, 6)) + 3 * np.sin(xs / 7 + rng.uniform(0, 6))
+        frame[YY >= prof[None, :]] = col
+
+
 SCENES = {
     "planet": scene_planet, "sun": scene_sun, "black_hole": scene_black_hole, "pulsar": scene_pulsar,
     "galaxy": scene_galaxy, "surface": scene_surface, "orbit": scene_orbit,
     "diamond_rain": scene_diamond_rain, "starfield": scene_starfield,
+    "comet": scene_comet, "asteroids": scene_asteroids, "aurora": scene_aurora, "eclipse": scene_eclipse,
+    "rocket": scene_rocket, "supernova": scene_supernova, "nebula": scene_nebula,
+    "telescope": scene_telescope, "binary_suns": scene_binary_suns,
 }
 # Scenes set in space (dark background) that get a nebula and shooting stars
-SPACE_SCENES = {"planet", "sun", "black_hole", "pulsar", "galaxy", "orbit"}
+SPACE_SCENES = {"planet", "sun", "black_hole", "pulsar", "galaxy", "orbit", "comet", "asteroids",
+                "eclipse", "supernova", "telescope"}
 
 
 def render_frame(spec: dict, t: float, seed: int, headline: str = "", channel: str = "",
@@ -671,6 +941,22 @@ def render_caption(txt: str, **_) -> ImageClip:
 
 # Keyword -> scene, checked in order; the first match wins
 _KEYWORD_SCENES = [
+    (("supernova", "exploding star", "kilonova"), {"scene": "supernova"}),
+    (("nebula", "stellar nursery", "pillars of creation"), {"scene": "nebula"}),
+    (("telescope", "webb", "hubble"), {"scene": "telescope"}),
+    (("two suns", "binary star", "tatooine"), {"scene": "binary_suns"}),
+    (("comet", "halley", "meteor shower"), {"scene": "comet"}),
+    (("asteroid", "meteorite", "dinosaur", "tunguska", "apophis"), {"scene": "asteroids"}),
+    (("aurora", "northern lights", "solar storm", "solar wind"), {"scene": "aurora"}),
+    (("eclipse",), {"scene": "eclipse"}),
+    (("rocket", "launch", "gagarin", "laika", "spacewalk"), {"scene": "rocket"}),
+    (("pluto",), {"scene": "planet", "preset": "pluto"}),
+    (("europa",), {"scene": "planet", "preset": "europa"}),
+    (("titan",), {"scene": "planet", "preset": "titan"}),
+    (("ganymede",), {"scene": "planet", "preset": "ganymede"}),
+    (("triton",), {"scene": "planet", "preset": "triton"}),
+    (("ceres",), {"scene": "planet", "preset": "ceres"}),
+    (("io",), {"scene": "planet", "preset": "io"}),
     (("black hole", "spaghetti", "event horizon"), {"scene": "black_hole"}),
     (("neutron", "pulsar", "magnetar"), {"scene": "pulsar"}),
     (("diamond",), {"scene": "diamond_rain"}),

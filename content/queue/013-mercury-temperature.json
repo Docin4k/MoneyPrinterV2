@@ -1,0 +1,36 @@
+{
+  "topic": "Mercury's temperature swings",
+  "script": "Mercury is the closest planet to the Sun, but it is not the hottest. Its daytime side reaches about 430 degrees Celsius, hot enough to melt lead. But Mercury has almost no atmosphere to hold on to that heat. So at night its surface plunges to around minus 180 degrees Celsius. That is a swing of more than 600 degrees between day and night. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "Mercury Swings 600 Degrees Between Day and Night #Mercury #SpaceFacts #Shorts",
+  "description": "Mercury's day side reaches about 430 \u00b0C, but with almost no atmosphere its night side drops to around -180 \u00b0C.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Mercury #Space #Astronomy #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "planet",
+      "preset": "mercury"
+    },
+    {
+      "scene": "sun"
+    },
+    {
+      "scene": "planet",
+      "preset": "mercury",
+      "radius": 75,
+      "y": 215
+    },
+    {
+      "scene": "planet",
+      "preset": "mercury",
+      "radius": 45,
+      "y": 200
+    },
+    {
+      "scene": "planet",
+      "preset": "mercury"
+    },
+    {
+      "scene": "starfield"
+    }
+  ],
+  "music_style": "march"
+}

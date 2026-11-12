@@ -1,0 +1,39 @@
+{
+  "topic": "Titan's methane lakes",
+  "script": "Saturn's moon Titan has lakes and seas, but they are not water. They are filled with liquid methane and ethane. Titan is the only other world known to have liquid on its surface. Its thick, hazy atmosphere is denser than Earth's. With such weak gravity and thick air, a person could fly by flapping wings on their arms. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "On Titan, You Could Fly With Wings #Titan #SpaceFacts #Shorts",
+  "description": "Titan has seas of liquid methane and ethane, a thick hazy atmosphere and low gravity, so a person with strap-on wings could fly.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Titan #Saturn #Space #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "planet",
+      "preset": "titan"
+    },
+    {
+      "scene": "planet",
+      "preset": "titan",
+      "radius": 75,
+      "y": 215
+    },
+    {
+      "scene": "planet",
+      "preset": "titan",
+      "radius": 50,
+      "y": 205
+    },
+    {
+      "scene": "planet",
+      "preset": "titan"
+    },
+    {
+      "scene": "planet",
+      "preset": "titan",
+      "radius": 40,
+      "y": 200
+    },
+    {
+      "scene": "comet"
+    }
+  ],
+  "music_style": "funk"
+}

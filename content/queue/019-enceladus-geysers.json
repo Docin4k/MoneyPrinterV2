@@ -1,0 +1,37 @@
+{
+  "topic": "Enceladus shoots water into space",
+  "script": "Saturn's small moon Enceladus shoots water into space. Giant geysers spray icy jets from cracks near its south pole. Some of that ice ends up in one of Saturn's rings. The water comes from a hidden ocean beneath its frozen surface. That makes Enceladus one of the best places to look for life beyond Earth. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "This Moon Sprays Water Into Space #Enceladus #SpaceFacts #Shorts",
+  "description": "Geysers near Enceladus's south pole spray water from an underground ocean, feeding Saturn's E ring and making it a top target in the search for life.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Enceladus #Saturn #Space #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "planet",
+      "preset": "ice"
+    },
+    {
+      "scene": "planet",
+      "preset": "ice",
+      "radius": 70,
+      "y": 215
+    },
+    {
+      "scene": "planet",
+      "preset": "saturn"
+    },
+    {
+      "scene": "planet",
+      "preset": "ice",
+      "radius": 50,
+      "y": 205
+    },
+    {
+      "scene": "planet",
+      "preset": "ice"
+    },
+    {
+      "scene": "galaxy"
+    }
+  ],
+  "music_style": "boss battle"
+}

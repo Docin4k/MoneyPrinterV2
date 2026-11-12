@@ -1,0 +1,35 @@
+{
+  "topic": "A day on Mercury",
+  "script": "On Mercury, one day lasts two of its years. A year on Mercury is just 88 Earth days. But it spins so slowly that sunrise to sunrise takes 176 Earth days. From some spots, the Sun would even seem to stop and move backwards for a while. Mercury is also shrinking as its iron core cools. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "One Day on Mercury Lasts Two Years #Mercury #SpaceFacts #Shorts",
+  "description": "Mercury orbits in 88 days, but sunrise to sunrise takes 176 days, so one solar day spans two Mercury years.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Mercury #Space #Planets #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "planet",
+      "preset": "mercury"
+    },
+    {
+      "scene": "planet",
+      "preset": "mercury",
+      "radius": 75,
+      "y": 215
+    },
+    {
+      "scene": "sun"
+    },
+    {
+      "scene": "sun"
+    },
+    {
+      "scene": "planet",
+      "preset": "mercury",
+      "radius": 45,
+      "y": 200
+    },
+    {
+      "scene": "comet"
+    }
+  ],
+  "music_style": "music box"
+}

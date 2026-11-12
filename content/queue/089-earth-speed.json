@@ -1,0 +1,35 @@
+{
+  "topic": "How fast you are moving",
+  "script": "Right now you are flying through space at about 107,000 kilometers per hour. That is how fast Earth races around the Sun. Earth also spins, carrying people at the equator at about 1,670 kilometers per hour. We do not feel it because the motion is so smooth and steady. The whole solar system is also orbiting the center of our galaxy. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "You Are Moving 107,000 km/h Right Now #Earth #SpaceFacts #Shorts",
+  "description": "Earth orbits the Sun at about 107,000 km/h and spins at about 1,670 km/h at the equator, while the solar system orbits the galaxy.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Earth #Space #Physics #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "planet",
+      "preset": "earth"
+    },
+    {
+      "scene": "sun"
+    },
+    {
+      "scene": "planet",
+      "preset": "earth",
+      "radius": 75,
+      "y": 215
+    },
+    {
+      "scene": "planet",
+      "preset": "earth",
+      "radius": 45,
+      "y": 200
+    },
+    {
+      "scene": "galaxy"
+    },
+    {
+      "scene": "starfield"
+    }
+  ],
+  "music_style": "adventure"
+}

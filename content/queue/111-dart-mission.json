@@ -1,0 +1,29 @@
+{
+  "topic": "Crashing into an asteroid on purpose",
+  "script": "In 2022, NASA crashed a spacecraft into an asteroid on purpose. The mission was called DART, and its target was a small moonlet named Dimorphos. The impact shortened Dimorphos's orbit by about 33 minutes. It was the first test of pushing an asteroid off course. Dimorphos was never a danger to Earth; it was a practice run. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "NASA Crashed Into an Asteroid on Purpose #DART #SpaceFacts #Shorts",
+  "description": "NASA's DART spacecraft hit Dimorphos in 2022, shortening its orbit by about 33 minutes in the first planetary-defense test.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#DART #Asteroid #NASA #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "rocket"
+    },
+    {
+      "scene": "asteroids"
+    },
+    {
+      "scene": "asteroids"
+    },
+    {
+      "scene": "asteroids"
+    },
+    {
+      "scene": "planet",
+      "preset": "earth"
+    },
+    {
+      "scene": "galaxy"
+    }
+  ],
+  "music_style": "music box"
+}

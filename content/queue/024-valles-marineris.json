@@ -1,0 +1,38 @@
+{
+  "topic": "Mars's giant canyon",
+  "script": "Mars has a canyon that would stretch across the entire United States. It is called Valles Marineris, and it is about 4,000 kilometers long. In places it is about 7 kilometers deep. That is almost four times deeper than the Grand Canyon. It probably formed as the Martian crust stretched and cracked. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "Mars Has a Canyon as Long as the USA #Mars #SpaceFacts #Shorts",
+  "description": "Valles Marineris runs about 4,000 km across Mars and reaches about 7 km deep, almost four times the depth of the Grand Canyon.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Mars #VallesMarineris #Space #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "planet",
+      "preset": "mars"
+    },
+    {
+      "scene": "surface",
+      "preset": "mars_day"
+    },
+    {
+      "scene": "surface",
+      "preset": "mars_day",
+      "volcano": true
+    },
+    {
+      "scene": "planet",
+      "preset": "mars",
+      "radius": 75,
+      "y": 215
+    },
+    {
+      "scene": "planet",
+      "preset": "mars",
+      "radius": 50,
+      "y": 205
+    },
+    {
+      "scene": "comet"
+    }
+  ],
+  "music_style": "chill"
+}

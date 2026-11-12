@@ -1,0 +1,29 @@
+{
+  "topic": "Starlight is old light",
+  "script": "When you look at the stars, you are looking back in time. Light from the Moon is about one second old when it reaches you. Light from the Sun is about eight minutes old. Some stars you see shine with light that left them before you were born. A star you see tonight might not even exist anymore. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "Looking at Stars Is Looking Into the Past #Stars #SpaceFacts #Shorts",
+  "description": "Light takes time to travel: moonlight is about a second old, sunlight eight minutes, and starlight can be centuries old.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Stars #Light #Space #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "starfield"
+    },
+    {
+      "scene": "planet",
+      "preset": "moon"
+    },
+    {
+      "scene": "sun"
+    },
+    {
+      "scene": "starfield"
+    },
+    {
+      "scene": "supernova"
+    },
+    {
+      "scene": "galaxy"
+    }
+  ],
+  "music_style": "march"
+}

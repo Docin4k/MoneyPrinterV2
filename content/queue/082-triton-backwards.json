@@ -1,0 +1,36 @@
+{
+  "topic": "Triton orbits backwards",
+  "script": "Neptune's largest moon, Triton, orbits backwards. It circles in the opposite direction to the way Neptune spins. That means it was probably captured from the outer solar system. Triton has geysers that shoot nitrogen gas high into its thin air. It is slowly spiraling inward and may be torn apart billions of years from now. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "This Moon Orbits Backwards #Triton #SpaceFacts #Shorts",
+  "description": "Triton's retrograde orbit suggests Neptune captured it; it has nitrogen geysers and may eventually be torn apart.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Triton #Neptune #Space #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "planet",
+      "preset": "triton"
+    },
+    {
+      "scene": "planet",
+      "preset": "neptune"
+    },
+    {
+      "scene": "asteroids"
+    },
+    {
+      "scene": "planet",
+      "preset": "triton",
+      "radius": 75,
+      "y": 215
+    },
+    {
+      "scene": "planet",
+      "preset": "triton",
+      "radius": 45,
+      "y": 200
+    },
+    {
+      "scene": "nebula"
+    }
+  ],
+  "music_style": "waltz"
+}

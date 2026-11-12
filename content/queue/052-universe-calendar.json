@@ -1,0 +1,32 @@
+{
+  "topic": "The universe in one year",
+  "script": "The universe is about 13.8 billion years old. Earth is about 4.5 billion years old. If the universe's history were squeezed into one year, Earth would form in early September. Dinosaurs would appear around Christmas. All of recorded human history would fit in the last dozen seconds of New Year's Eve. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "If the Universe Were One Year Old #Universe #SpaceFacts #Shorts",
+  "description": "On a cosmic calendar, Earth forms in early September, dinosaurs arrive around Christmas and recorded history fits in the final seconds.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Universe #History #Space #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "galaxy"
+    },
+    {
+      "scene": "planet",
+      "preset": "earth"
+    },
+    {
+      "scene": "planet",
+      "preset": "earth",
+      "radius": 75,
+      "y": 215
+    },
+    {
+      "scene": "asteroids"
+    },
+    {
+      "scene": "starfield"
+    },
+    {
+      "scene": "comet"
+    }
+  ],
+  "music_style": "music box"
+}
