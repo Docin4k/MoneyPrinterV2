@@ -132,6 +132,7 @@ def main():
                         video_path=youtube.video_path,
                         title=youtube.metadata.get("title", ""),
                         interactive=False,
+                        description=youtube.metadata.get("description", ""),
                     )
                 else:
                     warning("YouTube upload failed. Skipping Post Bridge cross-post.")

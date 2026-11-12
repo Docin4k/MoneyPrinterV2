@@ -13,6 +13,15 @@ Post Bridge is a publishing API for social platforms. In this integration, Money
 
 MoneyPrinterV2 still owns video generation and the initial YouTube upload. Post Bridge only starts after YouTube upload succeeds.
 
+## Quick setup (per channel, on the Mac)
+
+From the channel's folder, run `venv/bin/python scripts/setup_post_bridge.py`.
+It asks for the API key (hidden), lists the accounts connected to Post Bridge,
+saves the one(s) you pick for this channel in its `config.json`, and turns on
+automatic cross-posting. `--off` turns it off again. Captions use the video's
+description (facts, call to action, hashtags) with `#Shorts` changed to
+`#reels`, and the phone notification says whether the cross-post worked.
+
 ## Setup
 
 1. Create a Post Bridge account.
