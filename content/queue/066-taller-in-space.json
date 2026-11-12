@@ -25,5 +25,12 @@
       "scene": "nebula"
     }
   ],
-  "music_style": "funk"
+  "music_style": "funk",
+  "stat": "THEY SHRINK BACK ON EARTH",
+  "gauge": {
+    "label": "GROWTH",
+    "value": 5,
+    "max": 6,
+    "unit": "CM"
+  }
 }

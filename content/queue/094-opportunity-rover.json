@@ -32,5 +32,12 @@
       "scene": "nebula"
     }
   ],
-  "music_style": "waltz"
+  "music_style": "waltz",
+  "stat": "PLANNED: 90 DAYS. LASTED: 15 YEARS",
+  "gauge": {
+    "label": "DRIVEN",
+    "value": 45,
+    "max": 50,
+    "unit": "KM"
+  }
 }

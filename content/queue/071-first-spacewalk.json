@@ -25,5 +25,12 @@
       "scene": "galaxy"
     }
   ],
-  "music_style": "waltz"
+  "music_style": "waltz",
+  "stat": "ALEXEI LEONOV, 1965",
+  "gauge": {
+    "label": "OUTSIDE",
+    "value": 12,
+    "max": 15,
+    "unit": "MIN"
+  }
 }

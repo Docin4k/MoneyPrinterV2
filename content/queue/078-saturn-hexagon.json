@@ -32,5 +32,12 @@
       "scene": "nebula"
     }
   ],
-  "music_style": "adventure"
+  "music_style": "adventure",
+  "stat": "EACH SIDE IS WIDER THAN EARTH",
+  "gauge": {
+    "label": "SIDES",
+    "value": 6,
+    "max": 8,
+    "unit": ""
+  }
 }

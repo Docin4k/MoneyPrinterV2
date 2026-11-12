@@ -1,7 +1,8 @@
 """Original chiptune background music, generated from a seed.
 
 Each seed picks one of several styles (adventure, chill, space ambient,
-march, waltz, funk, boss battle, music box) and then a key, tempo, scale,
+march, waltz, funk, boss battle, music box, and the mysterious ocean styles
+in OCEAN_STYLES) and then a key, tempo, scale,
 chord progressions, instruments, bass and drum patterns and a melody. Tracks
 have an intro, A and B sections with different progressions, and sometimes a
 key change, so consecutive videos sound clearly different.
@@ -32,8 +33,10 @@ MODES = {
     "lydian": [0, 2, 4, 6, 7, 9, 11],
     "phrygian": [0, 1, 3, 5, 7, 8, 10],
     "harmonic minor": [0, 2, 3, 5, 7, 8, 11],
+    "melodic minor": [0, 2, 3, 5, 7, 9, 11],
+    "lydian dominant": [0, 2, 4, 6, 7, 9, 10],
 }
-MAJORISH = {"major", "mixolydian", "lydian"}
+MAJORISH = {"major", "mixolydian", "lydian", "lydian dominant"}
 
 # Chord roots as scale degrees (0 = tonic), one chord per bar
 PROGRESSIONS = {
@@ -41,6 +44,10 @@ PROGRESSIONS = {
                  [0, 2, 3, 4], [0, 6, 3, 4], [5, 4, 3, 4], [0, 3, 1, 4]],
     "minorish": [[0, 5, 2, 6], [0, 3, 5, 4], [0, 6, 5, 6], [0, 5, 3, 4], [0, 3, 6, 2], [5, 6, 0, 0],
                  [0, 6, 5, 4], [3, 4, 0, 0], [0, 1, 0, 6], [0, 4, 5, 6]],
+    # Floating, unresolved progressions for the mysterious ocean styles: the
+    # lydian I-II and the dorian i-IV sway, with no dark minor cadences
+    "mystic_major": [[0, 1, 0, 1], [0, 1, 4, 0], [0, 5, 1, 0], [0, 2, 1, 0], [0, 1, 5, 4], [0, 4, 1, 1]],
+    "mystic_minor": [[0, 3, 0, 3], [0, 6, 3, 0], [0, 1, 6, 0], [0, 3, 6, 3], [0, 4, 3, 6], [0, 2, 3, 0]],
 }
 
 # Drum patterns: lists of step indexes within a bar (16 steps, or 12 in 3/4)
@@ -91,7 +98,37 @@ STYLES = {
     "music box": dict(bpm=(84, 104), modes=["major", "lydian"], meter=3, lead=("triangle", None),
                       arp=("triangle", None), arp_rate=2, bass="soft", drums=None, rhythm="waltz",
                       echo=0.3, swing=0.0, key_change=0.0, octave=1),
+    # ---- Ocean styles (Pixel Abyss): mysterious and curious, never scary.
+    # Extra options: mystic (floating progressions), pad (soft held chords),
+    # ping (a sonar ping every other bar), bubbles (chance per step of a
+    # rising bubble blip).
+    "deep current": dict(bpm=(62, 74), modes=["dorian", "melodic minor"], meter=4, lead=("triangle", None),
+                         arp=("pulse", 0.125), arp_rate=4, bass="drone", drums=None, rhythm="long",
+                         echo=0.5, swing=0.0, key_change=0.0, mystic=True, pad=True, bubbles=0.03),
+    "sonar": dict(bpm=(70, 84), modes=["lydian", "dorian"], meter=4, lead=("pulse", 0.5),
+                  arp=("triangle", None), arp_rate=2, bass="long", drums=None, rhythm="long",
+                  echo=0.45, swing=0.0, key_change=0.0, mystic=True, pad=True, ping=True),
+    "bioluminescence": dict(bpm=(84, 100), modes=["lydian", "lydian dominant"], meter=4, lead=("triangle", None),
+                            arp=("pulse", 0.125), arp_rate=1, bass="soft", drums=None, rhythm="even",
+                            echo=0.4, swing=0.0, key_change=0.0, octave=1, mystic=True, bubbles=0.02),
+    "tide pool": dict(bpm=(86, 98), modes=["dorian", "mixolydian"], meter=4, lead=("pulse", 0.25),
+                      arp=("pulse", 0.25), arp_rate=2, bass="long", drums="soft", rhythm="syncopated",
+                      echo=0.25, swing=0.12, key_change=0.0, mystic=True, bubbles=0.05),
+    "kelp drift": dict(bpm=(96, 114), modes=["dorian", "melodic minor"], meter=3, lead=("triangle", None),
+                       arp=("triangle", None), arp_rate=2, bass="waltz", drums=None, rhythm="waltz",
+                       echo=0.35, swing=0.0, key_change=0.0, mystic=True, pad=True),
+    "explorer": dict(bpm=(96, 112), modes=["lydian dominant", "mixolydian", "dorian"], meter=4,
+                     lead=("pulse", 0.25), arp=("pulse", 0.125), arp_rate=1, bass="octave", drums="soft",
+                     rhythm="dotted", echo=0.2, swing=0.0, key_change=0.3, mystic=True, ping=True),
+    "midnight zone": dict(bpm=(54, 64), modes=["dorian", "lydian"], meter=4, lead=("pulse", 0.5),
+                          arp=None, arp_rate=4, bass="drone", drums=None, rhythm="long",
+                          echo=0.6, swing=0.0, key_change=0.0, mystic=True, pad=True, ping=True, bubbles=0.02),
+    "sunken treasure": dict(bpm=(90, 108), modes=["melodic minor", "dorian"], meter=3, lead=("triangle", None),
+                            arp=("triangle", None), arp_rate=2, bass="soft", drums=None, rhythm="waltz",
+                            echo=0.3, swing=0.0, key_change=0.0, octave=1, mystic=True, bubbles=0.03),
 }
+OCEAN_STYLES = ["deep current", "sonar", "bioluminescence", "tide pool", "kelp drift", "explorer",
+                "midnight zone", "sunken treasure"]
 
 
 def seed_from_text(text: str) -> int:
@@ -108,6 +145,8 @@ def _plan(seed: int, style: str | None = None) -> dict:
     style = STYLES[style_name]
     mode = rng.choice(style["modes"])
     family = "majorish" if mode in MAJORISH else "minorish"
+    if style.get("mystic"):
+        family = "mystic_" + ("major" if mode in MAJORISH else "minor")
     prog_a = rng.choice(PROGRESSIONS[family])
     prog_b = rng.choice([p for p in PROGRESSIONS[family] if p != prog_a])
     return {
@@ -229,7 +268,8 @@ def generate_track(path: str, duration: float, seed: int, volume: float = 0.8,
     bar_len = steps * step
     total_bars = int(duration / bar_len) + 2
     n_total = int((total_bars * bar_len + 2) * SR)
-    voices = {k: np.zeros(n_total) for k in ("lead", "arp", "bass", "drums")}
+    voices = {k: np.zeros(n_total) for k in ("lead", "arp", "bass", "drums", "pad", "fx")}
+    fx_rng = random.Random(seed + 99)   # separate, so effects never change the melody
     noise = np.random.default_rng(seed).uniform(-1, 1, int(SR * 0.5))
     metal = np.sign(np.sin(np.arange(int(SR * 0.1)) * 0.9)) * 0.5 + noise[:int(SR * 0.1)] * 0.5
 
@@ -307,6 +347,30 @@ def generate_track(path: str, duration: float, seed: int, volume: float = 0.8,
                     n = int(0.09 * SR)
                     _add(voices["drums"], pos, metal[:n] * np.exp(-np.arange(n) / SR * 30) * 0.15)
 
+        # Soft held chord (slow attack, like a synth pad)
+        if style.get("pad"):
+            n = int(bar_len * SR)
+            for note in tones[:3]:
+                sig = _wave("pulse", _phase(_freq(note), n), 0.5) * _env(n, attack=0.35, decay=1.0, sustain=0.7, release=0.3)
+                _add(voices["pad"], at(bar, 0), sig)
+
+        # Sonar ping every other bar
+        if style.get("ping") and bar % 2 == 0:
+            n = int(1.4 * SR)
+            t = np.arange(n) / SR
+            sig = _wave("triangle", _phase(_freq(tones[0] + 36), n)) * np.exp(-t * 3.5)
+            _add(voices["fx"], at(bar, 0), sig * 0.8)
+
+        # Bubbles: quick rising blips
+        if style.get("bubbles"):
+            for s in range(steps):
+                if fx_rng.random() < style["bubbles"]:
+                    n = int(0.07 * SR)
+                    t = np.arange(n) / SR
+                    f0 = fx_rng.uniform(300, 600)
+                    ph = np.cumsum(np.linspace(f0, f0 * fx_rng.uniform(2.2, 3.5), n) / SR) % 1.0
+                    _add(voices["fx"], at(bar, s), _wave("pulse", ph, 0.25) * np.exp(-t * 35) * 0.5)
+
         # Lead melody (not during the intro)
         if not intro:
             for (start, length), deg in phrase[max(0, bar - p["intro_bars"]) % 4]:
@@ -324,8 +388,9 @@ def generate_track(path: str, duration: float, seed: int, volume: float = 0.8,
     if style["echo"]:
         voices["lead"] = _echo(voices["lead"], step * 3, style["echo"])
         voices["arp"] = _echo(voices["arp"], step * 2, style["echo"] * 0.7)
+        voices["fx"] = _echo(voices["fx"], step * 3, min(0.6, style["echo"] + 0.15))
 
-    levels = {"lead": 0.22, "arp": 0.12, "bass": 0.32, "drums": 0.34}
+    levels = {"lead": 0.22, "arp": 0.12, "bass": 0.32, "drums": 0.34, "pad": 0.05, "fx": 0.12}
     if lead_kind == "triangle":
         levels["lead"] = 0.34
     if not style["drums"]:

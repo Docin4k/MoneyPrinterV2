@@ -32,5 +32,12 @@
       "scene": "galaxy"
     }
   ],
-  "music_style": "boss battle"
+  "music_style": "boss battle",
+  "stat": "SPINS BACKWARDS: SUN RISES IN THE WEST",
+  "gauge": {
+    "label": "ONE SPIN",
+    "value": 243,
+    "max": 300,
+    "unit": "DAYS"
+  }
 }

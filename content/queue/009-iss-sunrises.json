@@ -25,5 +25,12 @@
       "scene": "starfield"
     }
   ],
-  "music_style": "funk"
+  "music_style": "funk",
+  "stat": "ONE LAP EVERY 90 MINUTES",
+  "gauge": {
+    "label": "SPEED",
+    "value": 28000,
+    "max": 30000,
+    "unit": "KM/H"
+  }
 }

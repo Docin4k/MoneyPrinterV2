@@ -24,5 +24,12 @@
       "scene": "nebula"
     }
   ],
-  "music_style": "boss battle"
+  "music_style": "boss battle",
+  "stat": "EDGE: 46 BILLION LIGHT-YEARS AWAY",
+  "gauge": {
+    "label": "WIDTH",
+    "value": 93,
+    "max": 100,
+    "unit": "BN LY"
+  }
 }

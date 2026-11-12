@@ -25,5 +25,12 @@
       "scene": "nebula"
     }
   ],
-  "music_style": "march"
+  "music_style": "march",
+  "stat": "400X WIDER, 400X FARTHER",
+  "gauge": {
+    "label": "TOTALITY",
+    "value": 7.5,
+    "max": 8,
+    "unit": "MIN"
+  }
 }

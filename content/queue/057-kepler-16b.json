@@ -25,5 +25,6 @@
       "scene": "starfield"
     }
   ],
-  "music_style": "adventure"
+  "music_style": "adventure",
+  "stat": "FOUND BY KEPLER IN 2011"
 }

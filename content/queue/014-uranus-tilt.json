@@ -31,5 +31,12 @@
       "scene": "nebula"
     }
   ],
-  "music_style": "waltz"
+  "music_style": "waltz",
+  "stat": "42 YEARS OF SUN, 42 OF DARK",
+  "gauge": {
+    "label": "TILT",
+    "value": 98,
+    "max": 180,
+    "unit": "DEG"
+  }
 }

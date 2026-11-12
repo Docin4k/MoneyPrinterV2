@@ -25,5 +25,12 @@
       "scene": "galaxy"
     }
   ],
-  "music_style": "funk"
+  "music_style": "funk",
+  "stat": "IT WILL EXPLODE SOMEDAY",
+  "gauge": {
+    "label": "DISTANCE",
+    "value": 550,
+    "max": 700,
+    "unit": "LY"
+  }
 }

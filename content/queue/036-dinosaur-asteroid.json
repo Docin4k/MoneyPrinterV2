@@ -28,5 +28,12 @@
       "scene": "comet"
     }
   ],
-  "music_style": "boss battle"
+  "music_style": "boss battle",
+  "stat": "THE ROCK WAS ABOUT 10 KM WIDE",
+  "gauge": {
+    "label": "CRATER",
+    "value": 180,
+    "max": 200,
+    "unit": "KM"
+  }
 }

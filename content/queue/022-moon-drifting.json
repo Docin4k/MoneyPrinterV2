@@ -34,5 +34,12 @@
       "scene": "nebula"
     }
   ],
-  "music_style": "adventure"
+  "music_style": "adventure",
+  "stat": "AS FAST AS FINGERNAILS GROW",
+  "gauge": {
+    "label": "DRIFT/YEAR",
+    "value": 3.8,
+    "max": 5,
+    "unit": "CM"
+  }
 }

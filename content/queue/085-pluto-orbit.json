@@ -32,5 +32,12 @@
       "scene": "starfield"
     }
   ],
-  "music_style": "boss battle"
+  "music_style": "boss battle",
+  "stat": "FIRST ORBIT ENDS IN 2178",
+  "gauge": {
+    "label": "ORBIT",
+    "value": 248,
+    "max": 300,
+    "unit": "YRS"
+  }
 }

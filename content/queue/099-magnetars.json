@@ -25,5 +25,12 @@
       "scene": "galaxy"
     }
   ],
-  "music_style": "waltz"
+  "music_style": "waltz",
+  "stat": "A 2004 FLARE REACHED EARTH",
+  "gauge": {
+    "label": "DISTANCE",
+    "value": 50000,
+    "max": 60000,
+    "unit": "LY"
+  }
 }

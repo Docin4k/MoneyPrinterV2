@@ -32,5 +32,12 @@
       "scene": "starfield"
     }
   ],
-  "music_style": "space ambient"
+  "music_style": "space ambient",
+  "stat": "12 PEOPLE WALKED ON THE MOON",
+  "gauge": {
+    "label": "MOONWALKERS",
+    "value": 12,
+    "max": 15,
+    "unit": ""
+  }
 }

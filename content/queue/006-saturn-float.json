@@ -35,5 +35,12 @@
       "scene": "starfield"
     }
   ],
-  "music_style": "waltz"
+  "music_style": "waltz",
+  "stat": "700+ EARTHS COULD FIT INSIDE",
+  "gauge": {
+    "label": "RINGS",
+    "value": 10,
+    "max": 20,
+    "unit": "M THICK"
+  }
 }

@@ -31,5 +31,12 @@
       "scene": "comet"
     }
   ],
-  "music_style": "music box"
+  "music_style": "music box",
+  "stat": "A YEAR THERE: 88 EARTH DAYS",
+  "gauge": {
+    "label": "DAY LENGTH",
+    "value": 176,
+    "max": 200,
+    "unit": "DAYS"
+  }
 }

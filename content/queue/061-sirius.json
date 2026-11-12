@@ -25,5 +25,12 @@
       "scene": "starfield"
     }
   ],
-  "music_style": "funk"
+  "music_style": "funk",
+  "stat": "ABOUT 8.6 LIGHT-YEARS AWAY",
+  "gauge": {
+    "label": "DISTANCE",
+    "value": 8.6,
+    "max": 10,
+    "unit": "LY"
+  }
 }

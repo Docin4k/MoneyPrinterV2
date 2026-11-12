@@ -25,5 +25,12 @@
       "scene": "nebula"
     }
   ],
-  "music_style": "chill"
+  "music_style": "chill",
+  "stat": "ABOUT 340 METERS WIDE",
+  "gauge": {
+    "label": "DISTANCE",
+    "value": 32000,
+    "max": 40000,
+    "unit": "KM"
+  }
 }

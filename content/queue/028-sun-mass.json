@@ -26,5 +26,12 @@
       "scene": "comet"
     }
   ],
-  "music_style": "waltz"
+  "music_style": "waltz",
+  "stat": "IT IS ONLY A MEDIUM-SIZED STAR",
+  "gauge": {
+    "label": "MASS SHARE",
+    "value": 99.8,
+    "max": 100,
+    "unit": "%"
+  }
 }

@@ -25,5 +25,12 @@
       "scene": "galaxy"
     }
   ],
-  "music_style": "march"
+  "music_style": "march",
+  "stat": "SUNLIGHT IS 8 MINUTES OLD",
+  "gauge": {
+    "label": "MOONLIGHT",
+    "value": 1,
+    "max": 2,
+    "unit": "SEC"
+  }
 }

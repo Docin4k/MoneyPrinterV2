@@ -27,5 +27,12 @@
       "scene": "galaxy"
     }
   ],
-  "music_style": "march"
+  "music_style": "march",
+  "stat": "FIRST AROUND A SUN-LIKE STAR: 1995",
+  "gauge": {
+    "label": "EXOPLANETS",
+    "value": 5000,
+    "max": 6000,
+    "unit": ""
+  }
 }

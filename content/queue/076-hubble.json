@@ -24,5 +24,12 @@
       "scene": "comet"
     }
   ],
-  "music_style": "funk"
+  "music_style": "funk",
+  "stat": "FIXED BY ASTRONAUTS IN 1993",
+  "gauge": {
+    "label": "IN SERVICE",
+    "value": 35,
+    "max": 40,
+    "unit": "YRS"
+  }
 }

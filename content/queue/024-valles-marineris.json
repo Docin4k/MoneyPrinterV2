@@ -34,5 +34,12 @@
       "scene": "comet"
     }
   ],
-  "music_style": "chill"
+  "music_style": "chill",
+  "stat": "ABOUT 4,000 KM LONG",
+  "gauge": {
+    "label": "DEPTH",
+    "value": 7,
+    "max": 10,
+    "unit": "KM"
+  }
 }

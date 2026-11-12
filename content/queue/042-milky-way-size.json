@@ -24,5 +24,12 @@
       "scene": "nebula"
     }
   ],
-  "music_style": "chill"
+  "music_style": "chill",
+  "stat": "100,000 LIGHT-YEARS ACROSS",
+  "gauge": {
+    "label": "ONE LAP",
+    "value": 230,
+    "max": 300,
+    "unit": "M YRS"
+  }
 }

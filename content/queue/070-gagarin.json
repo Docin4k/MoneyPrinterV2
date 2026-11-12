@@ -25,5 +25,12 @@
       "scene": "nebula"
     }
   ],
-  "music_style": "march"
+  "music_style": "march",
+  "stat": "HE CIRCLED EARTH ONCE IN 1961",
+  "gauge": {
+    "label": "FLIGHT",
+    "value": 108,
+    "max": 120,
+    "unit": "MIN"
+  }
 }

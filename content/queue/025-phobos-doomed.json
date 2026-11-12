@@ -32,5 +32,12 @@
       "scene": "starfield"
     }
   ],
-  "music_style": "adventure"
+  "music_style": "adventure",
+  "stat": "IT CIRCLES MARS 3 TIMES A DAY",
+  "gauge": {
+    "label": "ORBITS/DAY",
+    "value": 3,
+    "max": 4,
+    "unit": ""
+  }
 }

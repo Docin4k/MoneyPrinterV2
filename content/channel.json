@@ -2,5 +2,17 @@
   "name": "WonderBytes",
   "niche": "surprising science and space facts",
   "cta": "Follow WonderBytes for more facts that sound fake but are true.",
-  "tagline": "Space facts that sound fake but are true"
+  "tagline": "Space facts that sound fake but are true",
+  "video_layout": "hud",
+  "handle": "@WONDERBYTES",
+  "music_styles": [
+    "adventure",
+    "chill",
+    "space ambient",
+    "march",
+    "waltz",
+    "funk",
+    "boss battle",
+    "music box"
+  ]
 }

@@ -23,7 +23,7 @@ posted, e.g. `013-pluto.json`.
 ```json
 {
   "topic": "A day on Venus is longer than its year",
-  "script": "On Venus, a single day lasts longer than an entire year. Venus spins so slowly that one full turn takes about 243 Earth days. ... Follow WonderBytes for more facts that sound fake but are true.",
+  "script": "On Venus, a single day lasts longer than an entire year. Venus spins so slowly that one full turn takes about 243 Earth days. ... Follow the channel for more.",
   "title": "A Day on Venus Is Longer Than Its Year #Venus #SpaceFacts #Shorts",
   "description": "Text for the YouTube description, including hashtags.",
   "last_sentence_is_cta": true,
@@ -47,7 +47,9 @@ posted, e.g. `013-pluto.json`.
 | `last_sentence_is_cta` | no | `true` if the last sentence is a call to action; its footer says "FOLLOW FOR MORE" instead of a fact number. |
 | `scenes` | no | One scene per sentence, for `"visual_style": "pixel_art"`. If missing or the count doesn't match the sentences, scenes are picked from keywords in each sentence. |
 | `subtitle_fixes` | no | Regex replacements for the subtitles, e.g. `{"wonder\\s*bites": "WonderBytes"}`. |
-| `music_style` | no | Chiptune style for this video: `adventure`, `chill`, `space ambient`, `march`, `waltz`, `funk`, `boss battle` or `music box`. If missing, the title picks one. The queue rotates them so neighbouring videos sound different. |
+| `stat` | no | Short key fact shown in a bar under the title for the whole video (HUD layout, `"video_layout": "hud"` in `content/channel.json`). At most 52 characters. |
+| `gauge` | no | Animated dial in the corner (HUD layout): `{"label": "DEPTH", "value": 10935, "max": 11000, "unit": "M"}`. |
+| `music_style` | no | Chiptune style for this video: `adventure`, `chill`, `space ambient`, `march`, `waltz`, `funk`, `boss battle`, `music box`, or the mysterious ocean styles `deep current`, `sonar`, `bioluminescence`, `tide pool`, `kelp drift`, `explorer`, `midnight zone`, `sunken treasure`. If missing, the title picks one (from `music_styles` in `content/channel.json` when it lists them). The queue rotates the channel's styles so neighbouring videos sound different. |
 
 ### Writing tips
 
@@ -79,3 +81,8 @@ posted, e.g. `013-pluto.json`.
 | `nebula` | A colourful star-forming cloud with bright young stars. |
 | `telescope` | A space telescope with a gold segmented mirror and sunshield. |
 | `binary_suns` | Two suns circling above desert dunes. |
+
+Underwater scenes (from `src/pixel_ocean.py`): `deep_sea`, `anglerfish`,
+`jellyfish`, `whale`, `octopus`, `coral_reef`, `shark`, `shipwreck`, `vent`,
+`submarine`, `squid`, `ocean_surface`, `trench`, `fish_school`, `sea_turtle`,
+`kelp_forest`. See `content/WRITING_GUIDE.md` for what each shows.

@@ -24,5 +24,12 @@
       "scene": "starfield"
     }
   ],
-  "music_style": "adventure"
+  "music_style": "adventure",
+  "stat": "RED STARS ARE THE COOLEST",
+  "gauge": {
+    "label": "SUN SURFACE",
+    "value": 5500,
+    "max": 6000,
+    "unit": "C"
+  }
 }

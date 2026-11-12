@@ -30,5 +30,12 @@
       "scene": "nebula"
     }
   ],
-  "music_style": "space ambient"
+  "music_style": "space ambient",
+  "stat": "ABOUT 40 LIGHT-YEARS AWAY",
+  "gauge": {
+    "label": "PLANETS",
+    "value": 7,
+    "max": 8,
+    "unit": ""
+  }
 }

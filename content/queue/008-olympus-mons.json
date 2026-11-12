@@ -35,5 +35,12 @@
       "scene": "starfield"
     }
   ],
-  "music_style": "chill"
+  "music_style": "chill",
+  "stat": "2.5 TIMES TALLER THAN EVEREST",
+  "gauge": {
+    "label": "VS EVEREST",
+    "value": 2.5,
+    "max": 3,
+    "unit": "X"
+  }
 }

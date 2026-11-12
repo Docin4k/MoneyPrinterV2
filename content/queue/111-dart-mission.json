@@ -25,5 +25,12 @@
       "scene": "galaxy"
     }
   ],
-  "music_style": "music box"
+  "music_style": "music box",
+  "stat": "TARGET: THE MOONLET DIMORPHOS",
+  "gauge": {
+    "label": "ORBIT CUT",
+    "value": 33,
+    "max": 60,
+    "unit": "MIN"
+  }
 }

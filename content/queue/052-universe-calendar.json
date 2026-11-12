@@ -28,5 +28,12 @@
       "scene": "comet"
     }
   ],
-  "music_style": "music box"
+  "music_style": "music box",
+  "stat": "EARTH FORMS IN EARLY SEPTEMBER",
+  "gauge": {
+    "label": "AGE",
+    "value": 13.8,
+    "max": 15,
+    "unit": "BN YRS"
+  }
 }

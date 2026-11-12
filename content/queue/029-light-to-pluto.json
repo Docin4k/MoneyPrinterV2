@@ -26,5 +26,12 @@
       "scene": "starfield"
     }
   ],
-  "music_style": "space ambient"
+  "music_style": "space ambient",
+  "stat": "8 MINUTES TO REACH EARTH",
+  "gauge": {
+    "label": "LIGHT TRIP",
+    "value": 5.5,
+    "max": 6,
+    "unit": "HRS"
+  }
 }

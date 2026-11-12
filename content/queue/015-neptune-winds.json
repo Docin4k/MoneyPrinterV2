@@ -32,5 +32,12 @@
       "scene": "galaxy"
     }
   ],
-  "music_style": "boss battle"
+  "music_style": "boss battle",
+  "stat": "30 TIMES FARTHER FROM THE SUN",
+  "gauge": {
+    "label": "WIND",
+    "value": 2000,
+    "max": 2500,
+    "unit": "KM/H"
+  }
 }

@@ -32,5 +32,12 @@
       "scene": "comet"
     }
   ],
-  "music_style": "march"
+  "music_style": "march",
+  "stat": "A THIRD OF THE BELT'S MASS",
+  "gauge": {
+    "label": "WIDTH",
+    "value": 940,
+    "max": 1000,
+    "unit": "KM"
+  }
 }

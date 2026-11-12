@@ -32,5 +32,12 @@
       "scene": "starfield"
     }
   ],
-  "music_style": "march"
+  "music_style": "march",
+  "stat": "MINUS 180 C AT NIGHT",
+  "gauge": {
+    "label": "DAY TEMP",
+    "value": 430,
+    "max": 500,
+    "unit": "C"
+  }
 }

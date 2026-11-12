@@ -33,5 +33,12 @@
       "scene": "galaxy"
     }
   ],
-  "music_style": "chill"
+  "music_style": "chill",
+  "stat": "IT EVEN HAS A RING",
+  "gauge": {
+    "label": "ONE SPIN",
+    "value": 4,
+    "max": 24,
+    "unit": "HRS"
+  }
 }

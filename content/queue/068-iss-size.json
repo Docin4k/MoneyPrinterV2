@@ -24,5 +24,12 @@
       "scene": "comet"
     }
   ],
-  "music_style": "adventure"
+  "music_style": "adventure",
+  "stat": "AS LONG AS A FOOTBALL FIELD",
+  "gauge": {
+    "label": "MASS",
+    "value": 400000,
+    "max": 500000,
+    "unit": "KG"
+  }
 }

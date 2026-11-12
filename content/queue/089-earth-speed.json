@@ -31,5 +31,12 @@
       "scene": "starfield"
     }
   ],
-  "music_style": "adventure"
+  "music_style": "adventure",
+  "stat": "EARTH SPINS AT 1,670 KM/H TOO",
+  "gauge": {
+    "label": "SPEED",
+    "value": 107000,
+    "max": 120000,
+    "unit": "KM/H"
+  }
 }

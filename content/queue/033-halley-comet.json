@@ -24,5 +24,12 @@
       "scene": "starfield"
     }
   ],
-  "music_style": "waltz"
+  "music_style": "waltz",
+  "stat": "LAST SEEN IN 1986",
+  "gauge": {
+    "label": "ORBIT",
+    "value": 76,
+    "max": 100,
+    "unit": "YRS"
+  }
 }

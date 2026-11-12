@@ -24,5 +24,12 @@
       "scene": "galaxy"
     }
   ],
-  "music_style": "music box"
+  "music_style": "music box",
+  "stat": "TENS OF THOUSANDS OF PIECES",
+  "gauge": {
+    "label": "SPEED",
+    "value": 28000,
+    "max": 30000,
+    "unit": "KM/H"
+  }
 }

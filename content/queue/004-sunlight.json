@@ -27,5 +27,12 @@
       "scene": "starfield"
     }
   ],
-  "music_style": "adventure"
+  "music_style": "adventure",
+  "stat": "ITS CORE: 15 MILLION C",
+  "gauge": {
+    "label": "LIGHT TRIP",
+    "value": 8,
+    "max": 10,
+    "unit": "MIN"
+  }
 }

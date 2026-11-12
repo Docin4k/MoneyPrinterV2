@@ -24,5 +24,12 @@
       "scene": "galaxy"
     }
   ],
-  "music_style": "adventure"
+  "music_style": "adventure",
+  "stat": "FIRST PICTURE RELEASED IN 2022",
+  "gauge": {
+    "label": "DISTANCE",
+    "value": 26000,
+    "max": 30000,
+    "unit": "LY"
+  }
 }

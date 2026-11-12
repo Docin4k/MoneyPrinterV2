@@ -33,5 +33,12 @@
       "scene": "galaxy"
     }
   ],
-  "music_style": "space ambient"
+  "music_style": "space ambient",
+  "stat": "A RIDGE UP TO 20 KM HIGH",
+  "gauge": {
+    "label": "RIDGE",
+    "value": 20,
+    "max": 25,
+    "unit": "KM"
+  }
 }

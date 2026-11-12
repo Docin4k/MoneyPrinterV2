@@ -29,5 +29,12 @@
       "scene": "comet"
     }
   ],
-  "music_style": "music box"
+  "music_style": "music box",
+  "stat": "PLANNED 5 FLIGHTS. FLEW 72.",
+  "gauge": {
+    "label": "ROTOR",
+    "value": 2400,
+    "max": 3000,
+    "unit": "RPM"
+  }
 }

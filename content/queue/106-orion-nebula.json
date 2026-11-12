@@ -24,5 +24,12 @@
       "scene": "nebula"
     }
   ],
-  "music_style": "funk"
+  "music_style": "funk",
+  "stat": "BELOW THE 3 BELT STARS OF ORION",
+  "gauge": {
+    "label": "DISTANCE",
+    "value": 1300,
+    "max": 1500,
+    "unit": "LY"
+  }
 }

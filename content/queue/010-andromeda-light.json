@@ -24,5 +24,12 @@
       "scene": "starfield"
     }
   ],
-  "music_style": "space ambient"
+  "music_style": "space ambient",
+  "stat": "LIGHT 2.5 MILLION YEARS OLD",
+  "gauge": {
+    "label": "APPROACH",
+    "value": 110,
+    "max": 150,
+    "unit": "KM/S"
+  }
 }

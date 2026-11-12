@@ -32,5 +32,12 @@
       "scene": "nebula"
     }
   ],
-  "music_style": "music box"
+  "music_style": "music box",
+  "stat": "A DAY THERE: 24 H 40 MIN",
+  "gauge": {
+    "label": "GRAVITY",
+    "value": 38,
+    "max": 100,
+    "unit": "%"
+  }
 }

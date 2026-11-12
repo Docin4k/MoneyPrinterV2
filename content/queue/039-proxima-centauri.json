@@ -25,5 +25,12 @@
       "scene": "galaxy"
     }
   ],
-  "music_style": "funk"
+  "music_style": "funk",
+  "stat": "ITS LIGHT TAKES 4+ YEARS TO GET HERE",
+  "gauge": {
+    "label": "BY VOYAGER",
+    "value": 70000,
+    "max": 80000,
+    "unit": "YRS"
+  }
 }

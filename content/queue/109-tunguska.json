@@ -24,5 +24,12 @@
       "scene": "starfield"
     }
   ],
-  "music_style": "waltz"
+  "music_style": "waltz",
+  "stat": "IT LEFT NO BIG CRATER",
+  "gauge": {
+    "label": "TREES",
+    "value": 80,
+    "max": 100,
+    "unit": "MILLION"
+  }
 }

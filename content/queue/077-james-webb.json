@@ -24,5 +24,12 @@
       "scene": "starfield"
     }
   ],
-  "music_style": "waltz"
+  "music_style": "waltz",
+  "stat": "18 GOLD-COATED MIRROR PIECES",
+  "gauge": {
+    "label": "MIRROR",
+    "value": 6.5,
+    "max": 8,
+    "unit": "M"
+  }
 }

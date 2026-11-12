@@ -7,7 +7,8 @@ stepped at 12 frames per second for a retro feel.
 
 A scene is described by a dict, for example {"scene": "planet", "preset": "venus"}.
 Available scenes: planet, sun, black_hole, pulsar, galaxy, surface, orbit,
-diamond_rain, starfield. See SCENES and PLANET_PRESETS below.
+diamond_rain, starfield and more; underwater scenes live in pixel_ocean.py.
+See SCENES and PLANET_PRESETS below.
 
 Text uses a built-in 5x7 bitmap font, so no font files are needed.
 """
@@ -70,7 +71,8 @@ _GLYPHS = {
     ";": "00000 01100 01100 00000 01100 00100 01000",
     "%": "11000 11001 00010 00100 01000 10011 00011", "&": "01100 10010 10100 01000 10101 10010 01101",
     "(": "00010 00100 01000 01000 01000 00100 00010", ")": "01000 00100 00010 00010 00010 00100 01000",
-    "#": "01010 01010 11111 01010 11111 01010 01010", " ": "00000 00000 00000 00000 00000 00000 00000",
+    "#": "01010 01010 11111 01010 11111 01010 01010", "@": "01110 10001 10111 10101 10111 10000 01111",
+    "=": "00000 00000 11111 00000 11111 00000 00000", "+": "00000 00100 00100 11111 00100 00100 00000", " ": "00000 00000 00000 00000 00000 00000 00000",
 }
 GLYPHS = {k: np.array([[c == "1" for c in row] for row in v.split()], dtype=bool) for k, v in _GLYPHS.items()}
 
@@ -871,6 +873,12 @@ SPACE_SCENES = {"planet", "sun", "black_hole", "pulsar", "galaxy", "orbit", "com
                 "eclipse", "supernova", "telescope"}
 
 
+# HUD layout (pixel_hud.py): when set to a dict (title, stat, handle, gauge),
+# frames get bordered title/stat/handle boxes instead of the plain header and
+# footer, and captions go in a box under them
+OVERLAY = None
+
+
 def render_frame(spec: dict, t: float, seed: int, headline: str = "", channel: str = "",
                  footer: str = "") -> np.ndarray:
     """Draw one low-resolution frame of a scene with its text overlay."""
@@ -881,6 +889,14 @@ def render_frame(spec: dict, t: float, seed: int, headline: str = "", channel: s
         nebula(frame, seed)
         shooting_star(frame, tq(t), seed)
     SCENES.get(scene, scene_starfield)(frame, tq(t), spec, seed)
+
+    if OVERLAY:
+        import pixel_hud
+        if OVERLAY.get("cinematic", True):
+            frame = pixel_hud.lighting(pixel_hud.camera(frame, t, seed))
+        tag = footer.replace(" / ", " OF ") if footer else ""
+        pixel_hud.draw_overlay(frame, tq(t), OVERLAY, tag)
+        return frame
 
     # Darkened band behind the top text and footer for readability
     if channel or headline:
@@ -924,6 +940,10 @@ CAPTION_POSITION = "center"
 
 def render_caption(txt: str, **_) -> ImageClip:
     """Pixel-font caption for SubtitlesClip: yellow with a black outline."""
+    if OVERLAY:
+        import pixel_hud
+        rgba = pixel_hud.caption_frame(txt, pixel_hud.caption_top(OVERLAY))
+        return ImageClip(upscale(rgba), transparent=True)
     frame = np.zeros((PH, PW, 3), dtype=np.uint8)
     mask = text_mask(txt, 2 * DETAIL, (LW - 12) * DETAIL)
     h, w = mask.shape
@@ -1011,3 +1031,7 @@ def scenes_for_script(sentences: list[str], topic: str = "") -> list[dict]:
         scenes.append(scene)
         previous = scene
     return scenes
+
+
+# Underwater scenes (deep_sea, whale, anglerfish, ...) register themselves here
+import pixel_ocean  # noqa: E402,F401

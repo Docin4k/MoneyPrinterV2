@@ -33,5 +33,12 @@
       "scene": "galaxy"
     }
   ],
-  "music_style": "boss battle"
+  "music_style": "boss battle",
+  "stat": "AIR PRESSURE 90X EARTH'S",
+  "gauge": {
+    "label": "SURFACE",
+    "value": 465,
+    "max": 500,
+    "unit": "C"
+  }
 }

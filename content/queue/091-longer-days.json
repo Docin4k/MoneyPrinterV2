@@ -32,5 +32,6 @@
       "scene": "galaxy"
     }
   ],
-  "music_style": "boss battle"
+  "music_style": "boss battle",
+  "stat": "+2 MILLISECONDS PER CENTURY"
 }
