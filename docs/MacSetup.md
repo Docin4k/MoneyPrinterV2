@@ -215,3 +215,19 @@ schedule.
 | Nothing happens at the scheduled time | Check `logs/launchd.log` and `logs/youtube.log`, and that the Mac was awake and you were logged in. `launchctl print gui/$(id -u)/com.moneyprinterv2.youtube` shows the job's state. |
 | `OMP: Error #15` and `Abort trap: 6` in the log | Two libraries load their own OpenMP runtime on Intel Macs. Run `git pull` to get the fix (it sets `KMP_DUPLICATE_LIB_OK=TRUE` on macOS). |
 | `Script queue is empty` in the log | Add more scripts to `content/queue/`. |
+
+## Phone notifications (optional)
+
+Get a message on your phone after every scheduled run: posted (with the
+link), upload failed (with the reason), or queue empty.
+
+1. Install the free **ntfy** app on your phone and subscribe to a topic name
+   only you know, e.g. `mpv2-` followed by random letters. Anyone who knows
+   the name can read the messages, so don't use something guessable.
+2. Add the same name to `config.json` in each channel's folder:
+   ```bash
+   venv/bin/python -c "import json; c=json.load(open('config.json')); c['ntfy_topic']='YOUR-TOPIC'; json.dump(c, open('config.json','w'), indent=2)"
+   ```
+3. Send a test: `venv/bin/python scripts/notify.py --test`
+
+Messages are sent by `scripts/notify.py`, called from `scripts/mac/run_youtube.sh`.
