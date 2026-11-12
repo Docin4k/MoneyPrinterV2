@@ -1081,9 +1081,17 @@ class YouTube:
         Selenium's clear() empties rich text boxes by setting innerHTML, which
         YouTube Studio's Trusted Types CSP now blocks ("Sink type mismatch
         violation blocked by CSP"). Select all and delete with the keyboard instead.
+        If a popup covers the box, it is focused with a script instead of clicked.
         """
         select_all = Keys.COMMAND if sys.platform == "darwin" else Keys.CONTROL
-        element.click()
+        driver = element.parent
+        driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
+        try:
+            element.click()
+        except Exception:
+            # Something covers the box (e.g. the hashtag suggestions list that
+            # opens after typing a #tag in the title): focus it directly instead
+            driver.execute_script("arguments[0].focus();", element)
         time.sleep(0.5)
         element.send_keys(select_all, "a")
         element.send_keys(Keys.BACKSPACE)
