@@ -101,7 +101,7 @@ def gauge(frame, t, spec, cx, cy, r=34):
         frame[int(y):int(y) + 2, int(x):int(x) + 2] = RED
     frame[cy - 2:cy + 3, cx - 2:cx + 3] = WHITE
     shown = value * sweep
-    number = f"{shown:,.0f}" if value >= 10 or value == int(value) else f"{shown:.1f}"
+    number = f"{shown:,.0f}" if value == int(value) else f"{shown:,.1f}"
     unit = str(spec.get("unit", ""))
     readout = f"{number} {unit}".strip()
     w = len(readout) * 12 + 12
