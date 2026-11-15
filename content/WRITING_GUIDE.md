@@ -8,14 +8,14 @@ which validates and numbers them; never hand-number files.
 
 - **WonderBytes:** surprising science and space facts, "facts that sound fake
   but are true".
-- Videos are 30–50 second YouTube Shorts with no voice-over: captions, 8-bit
+- Videos are YouTube Shorts of a minute or a little more with no voice-over: captions, 8-bit
   pixel-art scenes and chiptune music.
 
 ## Each script
 
 - **One topic, one hook.** The first sentence is the most surprising claim,
   stated plainly ("On Venus, a single day lasts longer than an entire year.").
-- **Exactly five fact sentences**, each under about 20 words, each adding
+- **Exactly six fact sentences**, each under about 20 words, each adding
   something new. The tool appends the call to action.
 - **Facts must be true and current.** Only use facts that are well established
   and that you are confident of. Round numbers sensibly ("about 2,000 km/h").
@@ -26,7 +26,7 @@ which validates and numbers them; never hand-number files.
   No quotes other than `'`, no accents (write "Bootes", not "Boötes").
 - **Title** under 100 characters, a short punchy claim plus 2–3 hashtags ending
   with `#Shorts`. **Description:** one or two sentences restating the facts.
-- **Scenes:** one per sentence, from the list in `content/README.md`. Prefer a
+- **Scenes:** one per sentence (six), from the list in `content/README.md`. Prefer a
   scene that shows what the sentence is about, and vary the framing
   (e.g. `planet:jupiter`, `planet:jupiter:80:225`, `planet:jupiter:45:200`).
 - **Stat and gauge (shown on screen the whole video).** WonderBytes uses the
@@ -59,11 +59,11 @@ shows up in space (light, gravity, time), and Earth as a planet.
 [
   {"slug": "venus-day",
    "topic": "A day on Venus is longer than its year",
-   "sentences": ["...", "...", "...", "...", "..."],
+   "sentences": ["...", "...", "...", "...", "...", "..."],
    "title": "A Day on Venus Is Longer Than Its Year #Venus #SpaceFacts #Shorts",
    "description": "One or two sentences.",
    "hashtags": "#Venus #Space #Astronomy #ScienceFacts #Shorts",
-   "scenes": ["planet:venus", "planet:venus:78:215", "sun", "surface:venus", "planet:venus:45:200"],
+   "scenes": ["planet:venus", "planet:venus:78:215", "sun", "surface:venus", "planet:venus:45:200", "planet:venus:60:210"],
    "stat": "SPINS BACKWARDS: SUN RISES IN THE WEST",
    "gauge": {"label": "ONE SPIN", "value": 243, "max": 300, "unit": "DAYS"}}
 ]
