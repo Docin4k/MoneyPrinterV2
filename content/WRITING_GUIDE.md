@@ -8,14 +8,14 @@ which validates and numbers them; never hand-number files.
 
 - **Pixel Abyss:** strange deep sea and ocean facts, "weird true facts from
   the deep".
-- Videos are 30-50 second YouTube Shorts with no voice-over: captions, 8-bit
+- Videos are YouTube Shorts of a minute or a little more with no voice-over: captions, 8-bit
   pixel-art underwater scenes and chiptune music.
 
 ## Each script
 
 - **One topic, one hook.** The first sentence is the most surprising claim,
   stated plainly ("An octopus has three hearts.").
-- **Exactly five fact sentences**, each under about 20 words, each adding
+- **Exactly six fact sentences**, each under about 20 words, each adding
   something new. The tool appends the call to action.
 - **Facts must be true and current.** Only use facts that are well established
   and that you are confident of. Round numbers sensibly ("about 2,000 meters").
@@ -30,7 +30,7 @@ which validates and numbers them; never hand-number files.
   Celsius").
 - **Title** under 100 characters, a short punchy claim plus 2-3 hashtags ending
   with `#Shorts`. **Description:** one or two sentences restating the facts.
-- **Scenes:** one per sentence, from the underwater list below. Prefer the
+- **Scenes:** one per sentence (six), from the underwater list below. Prefer the
   scene that shows what the sentence is about; neighbouring sentences can
   repeat a scene (each one animates differently over time).
 - **Stat and gauge (shown on screen the whole video).** Pixel Abyss uses the
@@ -88,11 +88,11 @@ currents, and the ocean's role in Earth's climate and oxygen.
 [
   {"slug": "octopus-three-hearts",
    "topic": "Octopuses have three hearts and blue blood",
-   "sentences": ["...", "...", "...", "...", "..."],
+   "sentences": ["...", "...", "...", "...", "...", "..."],
    "title": "Octopuses Have Three Hearts and Blue Blood #Octopus #Ocean #Shorts",
    "description": "One or two sentences.",
    "hashtags": "#Octopus #Ocean #MarineBiology #OceanFacts #Shorts",
-   "scenes": ["octopus", "octopus", "octopus", "octopus", "octopus"],
+   "scenes": ["octopus", "octopus", "octopus", "octopus", "octopus", "octopus"],
    "stat": "3 HEARTS. BLUE BLOOD.",
    "gauge": {"label": "HEARTS", "value": 3, "max": 4, "unit": ""}}
 ]

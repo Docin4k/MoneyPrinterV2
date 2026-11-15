@@ -220,8 +220,11 @@ def caption_frame(txt, top):
     """RGBA caption: white text in a fixed-size bordered box starting at `top`."""
     frame = np.zeros((pa.PH, pa.PW, 3), dtype=np.uint8)
     alpha = np.zeros((pa.PH, pa.PW), dtype=np.uint8)
-    lines = _lines(txt, 3, pa.PW - 2 * MARGIN - 24)[:3]
-    h = 2 * 27 + 14
+    # Size 3 text, or size 2 if a long caption piece wouldn't fit in 3 lines
+    scale = 3 if len(_lines(txt, 3, pa.PW - 2 * MARGIN - 24)) <= 3 else 2
+    step = 9 * scale
+    lines = _lines(txt, scale, pa.PW - 2 * MARGIN - 24)[:4]
+    h = 3 * 27 + 14
     x0, x1 = MARGIN + 4, pa.PW - MARGIN - 4
     frame[top:top + h, x0:x1] = BLACK
     alpha[top:top + h, x0:x1] = 210
@@ -230,15 +233,16 @@ def caption_frame(txt, top):
         edge[:] = CYAN
     alpha[top:top + 2, x0:x1] = alpha[top + h - 2:top + h, x0:x1] = 255
     alpha[top:top + h, x0:x0 + 2] = alpha[top:top + h, x1 - 2:x1] = 255
-    y = top + 8 + (2 - len(lines)) * 27 // 2 if len(lines) < 2 else top + 8
+    y = top + 7 + (3 * 27 - len(lines) * step) // 2   # centred in the box
     for i, line in enumerate(lines):
-        m = _line_mask(line, 3)
+        m = _line_mask(line, scale)
         x = pa.PW // 2 - m.shape[1] // 2
+        ly = y + i * step
         sh = np.zeros_like(alpha, dtype=bool)
-        sh[y + i * 27 + 2:y + i * 27 + 2 + m.shape[0], x + 2:x + 2 + m.shape[1]] = m
+        sh[ly + 2:ly + 2 + m.shape[0], x + 2:x + 2 + m.shape[1]] = m
         frame[sh] = (0, 0, 0)
         reg = np.zeros_like(sh)
-        reg[y + i * 27:y + i * 27 + m.shape[0], x:x + m.shape[1]] = m
+        reg[ly:ly + m.shape[0], x:x + m.shape[1]] = m
         frame[reg] = WHITE
         alpha[reg | sh] = 255
     return np.concatenate([frame, alpha[..., None]], axis=2)

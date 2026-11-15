@@ -837,7 +837,7 @@ class YouTube:
     @staticmethod
     def _reading_seconds(sentence: str) -> float:
         """How long to keep a sentence on screen when there is no voice-over."""
-        return max(3.0, 0.45 * len(sentence.split()) + 1.2)
+        return max(4.0, 0.6 * len(sentence.split()) + 1.8)
 
     @staticmethod
     def _caption_chunks(sentence: str, max_words: int = 4, max_chars: int = 22) -> List[str]:
@@ -852,11 +852,33 @@ class YouTube:
             chunks.append(" ".join(current))
         return chunks
 
+    @staticmethod
+    def _balanced_chunks(sentence: str) -> List[str]:
+        """Split a sentence into the fewest, evenly sized caption pieces that each
+        fit the HUD caption box (3 lines of large text)."""
+        import pixel_hud
+        words = sentence.split()
+        width = pixel_hud.pa.PW - 2 * pixel_hud.MARGIN - 24
+        for n in range(1, len(words) + 1):
+            target = len(sentence) / n
+            chunks, current = [], []
+            for word in words:
+                if current and len(" ".join(current)) >= target and len(chunks) < n - 1:
+                    chunks.append(" ".join(current))
+                    current = []
+                current.append(word)
+            chunks.append(" ".join(current))
+            if all(len(pixel_hud._lines(c, 3, width)) <= 3 for c in chunks):
+                return chunks
+        return words
+
     def _script_subtitles(self) -> str:
         """Write an SRT straight from the script, timed to reading speed."""
         entries, start = [], 0.0
+        # Bigger caption pieces in the HUD layout's 3-line caption box
+        hud = self._channel_info().get("video_layout") == "hud"
         for sentence, duration in zip(self.sentences, self.reading_durations):
-            chunks = self._caption_chunks(sentence)
+            chunks = self._balanced_chunks(sentence) if hud else self._caption_chunks(sentence)
             words = [len(c.split()) for c in chunks]
             for chunk, n in zip(chunks, words):
                 length = duration * n / sum(words)
@@ -1014,6 +1036,12 @@ class YouTube:
         else:
             self.tts_path = None
             self.reading_durations = [self._reading_seconds(sentence) for sentence in self.sentences]
+            # Stretch short videos to the channel's minimum length (content/channel.json
+            # "min_video_seconds"), so every caption stays up a little longer
+            minimum = float(self._channel_info().get("min_video_seconds", 0) or 0)
+            total = sum(self.reading_durations)
+            if total and total < minimum:
+                self.reading_durations = [d * minimum / total for d in self.reading_durations]
             if get_verbose():
                 info(f" => No voice-over: {sum(self.reading_durations):.0f}s of captions and music")
 

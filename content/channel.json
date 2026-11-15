@@ -20,5 +20,6 @@
     "sunken treasure"
   ],
   "video_layout": "hud",
-  "handle": "@PIXELABYSS"
+  "handle": "@PIXELABYSS",
+  "min_video_seconds": 61
 }
