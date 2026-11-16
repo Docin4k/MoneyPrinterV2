@@ -1,0 +1,38 @@
+{
+  "topic": "The longest mountain range is underwater",
+  "script": "Earth's longest mountain range is almost entirely underwater. The mid-ocean ridge winds around the planet for about 65,000 kilometers. Along it, the sea floor slowly pulls apart and new crust forms. Hot rock rising there feeds many hydrothermal vents. In Iceland, the ridge rises above the sea, and you can walk through its rift valley. Most of the ridge lies more than 2 kilometers below the waves. Follow Pixel Abyss for more strange facts from the deep.",
+  "title": "Earth's Longest Mountains Are Underwater #Ocean #Geology #Shorts",
+  "description": "The mid-ocean ridge, Earth's longest mountain range, runs about 65,000 kilometers, mostly hidden beneath the waves.\n\nFollow Pixel Abyss for more strange facts from the deep.\n\n#MidOceanRidge #Geology #Ocean #OceanFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "trench"
+    },
+    {
+      "scene": "trench"
+    },
+    {
+      "scene": "vent"
+    },
+    {
+      "scene": "vent"
+    },
+    {
+      "scene": "ocean_surface"
+    },
+    {
+      "scene": "submarine"
+    },
+    {
+      "scene": "kelp_forest"
+    }
+  ],
+  "music_style": "sonar",
+  "stat": "IT RISES ABOVE THE SEA IN ICELAND",
+  "gauge": {
+    "label": "LENGTH",
+    "value": 65000,
+    "max": 70000,
+    "unit": "KM"
+  }
+}

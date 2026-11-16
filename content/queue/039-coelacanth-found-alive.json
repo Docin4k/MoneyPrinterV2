@@ -1,0 +1,38 @@
+{
+  "topic": "The coelacanth, found alive in 1938",
+  "script": "A fish thought to have died out with the dinosaurs was found alive in 1938. It is called the coelacanth, and it was believed extinct for about 66 million years. A museum curator in South Africa, Marjorie Courtenay-Latimer, spotted one in a fisherman's catch. A second species was found in Indonesia in the late 1990s. Coelacanths have fleshy, limb-like fins. A 2021 study suggests they can live for about 100 years. Follow Pixel Abyss for more strange facts from the deep.",
+  "title": "This Fish Was Thought Extinct for 66 Million Years #Coelacanth #Ocean #Shorts",
+  "description": "The coelacanth was thought to have vanished with the dinosaurs until one turned up in a fisherman's catch in 1938.\n\nFollow Pixel Abyss for more strange facts from the deep.\n\n#Coelacanth #LivingFossil #Ocean #OceanFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "deep_sea"
+    },
+    {
+      "scene": "trench"
+    },
+    {
+      "scene": "ocean_surface"
+    },
+    {
+      "scene": "deep_sea"
+    },
+    {
+      "scene": "deep_sea"
+    },
+    {
+      "scene": "deep_sea"
+    },
+    {
+      "scene": "fish_school"
+    }
+  ],
+  "music_style": "deep current",
+  "stat": "FOUND IN A FISHERMAN'S CATCH",
+  "gauge": {
+    "label": "LIFESPAN",
+    "value": 100,
+    "max": 120,
+    "unit": "YRS"
+  }
+}

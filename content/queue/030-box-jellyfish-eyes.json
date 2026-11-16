@@ -1,0 +1,38 @@
+{
+  "topic": "Box jellyfish have 24 eyes",
+  "script": "Box jellyfish have 24 eyes. They are arranged in four clusters, one on each side of the box-shaped bell. Some of those eyes even have lenses, a bit like ours. Unlike most jellyfish, box jellyfish swim actively and can steer around obstacles. The sting of some species can kill a person within minutes. They have no brain, yet they still use their eyes to find their way. Follow Pixel Abyss for more strange facts from the deep.",
+  "title": "This Jellyfish Has 24 Eyes #Jellyfish #Ocean #Shorts",
+  "description": "Box jellyfish have 24 eyes in four clusters, some with lenses, and use them to steer even though they have no brain.\n\nFollow Pixel Abyss for more strange facts from the deep.\n\n#BoxJellyfish #Jellyfish #Ocean #OceanFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "jellyfish"
+    },
+    {
+      "scene": "jellyfish"
+    },
+    {
+      "scene": "jellyfish"
+    },
+    {
+      "scene": "jellyfish"
+    },
+    {
+      "scene": "deep_sea"
+    },
+    {
+      "scene": "jellyfish"
+    },
+    {
+      "scene": "kelp_forest"
+    }
+  ],
+  "music_style": "explorer",
+  "stat": "SOME EYES HAVE LENSES",
+  "gauge": {
+    "label": "EYES",
+    "value": 24,
+    "max": 30,
+    "unit": ""
+  }
+}

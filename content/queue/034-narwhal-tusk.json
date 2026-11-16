@@ -1,0 +1,38 @@
+{
+  "topic": "The narwhal's tusk is a tooth",
+  "script": "A narwhal's tusk is actually a tooth. It grows out through the upper lip, usually in males. The tusk can reach about 3 meters long. It always grows in a spiral that twists to the left. Some narwhals have two tusks, but that is rare. Narwhals live in Arctic waters and can dive more than 1,500 meters deep. Follow Pixel Abyss for more strange facts from the deep.",
+  "title": "A Narwhal's Tusk Is a Giant Tooth #Narwhal #Ocean #Shorts",
+  "description": "The narwhal's long spiral tusk is a tooth that can reach about 3 meters, usually found in males.\n\nFollow Pixel Abyss for more strange facts from the deep.\n\n#Narwhal #Whales #Ocean #OceanFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "whale"
+    },
+    {
+      "scene": "whale"
+    },
+    {
+      "scene": "whale"
+    },
+    {
+      "scene": "whale"
+    },
+    {
+      "scene": "ocean_surface"
+    },
+    {
+      "scene": "deep_sea"
+    },
+    {
+      "scene": "kelp_forest"
+    }
+  ],
+  "music_style": "sonar",
+  "stat": "IT ALWAYS SPIRALS TO THE LEFT",
+  "gauge": {
+    "label": "TUSK",
+    "value": 3,
+    "max": 4,
+    "unit": "M"
+  }
+}

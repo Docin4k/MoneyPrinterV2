@@ -1,0 +1,38 @@
+{
+  "topic": "Killer whales are dolphins",
+  "script": "Killer whales are actually the largest members of the dolphin family. Big males can grow up to about 9 meters long. They live in close family groups led by older females. Different groups use their own sets of calls, a bit like accents. Some groups work together to make waves that wash seals off floating ice. Female orcas can live for 80 years or more. Follow Pixel Abyss for more strange facts from the deep.",
+  "title": "Killer Whales Are Actually Dolphins #Orca #Ocean #Shorts",
+  "description": "Orcas are the largest dolphins, living in family groups led by older females, each group with its own calls.\n\nFollow Pixel Abyss for more strange facts from the deep.\n\n#Orca #KillerWhale #Ocean #OceanFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "whale"
+    },
+    {
+      "scene": "whale"
+    },
+    {
+      "scene": "fish_school"
+    },
+    {
+      "scene": "whale"
+    },
+    {
+      "scene": "ocean_surface"
+    },
+    {
+      "scene": "whale"
+    },
+    {
+      "scene": "jellyfish"
+    }
+  ],
+  "music_style": "bioluminescence",
+  "stat": "FAMILIES LED BY OLDER FEMALES",
+  "gauge": {
+    "label": "LENGTH",
+    "value": 9,
+    "max": 10,
+    "unit": "M"
+  }
+}
