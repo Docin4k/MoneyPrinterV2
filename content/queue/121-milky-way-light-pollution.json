@@ -1,0 +1,38 @@
+{
+  "topic": "Light pollution hides the Milky Way",
+  "script": "More than a third of people on Earth cannot see the Milky Way from home. Artificial light at night brightens the sky and drowns out faint stars. In a 2016 study, about 80 percent of North Americans could not see it. Under truly dark skies, you can see a few thousand stars with your eyes. From a bright city, you may see only a few dozen. Shielding outdoor lights so they point down helps bring the stars back. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "A Third of Humanity Can't See the Milky Way #MilkyWay #SpaceFacts #Shorts",
+  "description": "Light pollution hides the Milky Way from more than a third of people on Earth, including about 80 percent of North Americans.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#MilkyWay #LightPollution #Stars #SpaceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "galaxy"
+    },
+    {
+      "scene": "starfield"
+    },
+    {
+      "scene": "galaxy"
+    },
+    {
+      "scene": "starfield"
+    },
+    {
+      "scene": "nebula"
+    },
+    {
+      "scene": "galaxy"
+    },
+    {
+      "scene": "nebula"
+    }
+  ],
+  "music_style": "chill",
+  "stat": "80% OF NORTH AMERICANS CAN'T",
+  "gauge": {
+    "label": "N AMERICA",
+    "value": 80,
+    "max": 100,
+    "unit": "%"
+  }
+}

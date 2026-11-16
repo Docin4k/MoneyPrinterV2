@@ -1,0 +1,39 @@
+{
+  "topic": "The space station recycles almost all its water",
+  "script": "Astronauts on the space station drink water made from their own sweat and urine. The station recycles about 98 percent of the water it uses. It even captures moisture from the crew's breath in the air. Water is heavy, and launching it from Earth is very expensive. Machines filter and treat it until it is safe to drink. Recycling like this will matter even more on long trips to Mars. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "Astronauts Drink Recycled Sweat and Urine #ISS #SpaceFacts #Shorts",
+  "description": "The International Space Station recycles about 98 percent of its water, including sweat, urine and moisture from the crew's breath.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#ISS #Astronauts #NASA #SpaceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "orbit"
+    },
+    {
+      "scene": "orbit"
+    },
+    {
+      "scene": "orbit"
+    },
+    {
+      "scene": "rocket"
+    },
+    {
+      "scene": "orbit"
+    },
+    {
+      "scene": "planet",
+      "preset": "mars"
+    },
+    {
+      "scene": "galaxy"
+    }
+  ],
+  "music_style": "waltz",
+  "stat": "EVEN BREATH IS CAPTURED",
+  "gauge": {
+    "label": "RECYCLED",
+    "value": 98,
+    "max": 100,
+    "unit": "%"
+  }
+}

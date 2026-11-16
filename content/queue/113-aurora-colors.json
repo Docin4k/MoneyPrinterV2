@@ -1,0 +1,39 @@
+{
+  "topic": "What gives auroras their colors",
+  "script": "The colors of an aurora reveal which gas is glowing high above you. Auroras begin when charged particles from the Sun slam into Earth's upper atmosphere. Earth's magnetic field steers those particles toward the North and South Poles. Oxygen glows green or red, while nitrogen adds blue and purple. Most of the glow happens roughly 100 to 300 kilometers above the ground. In the far south, the same lights are called the aurora australis. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "Aurora Colors Reveal Which Gas Is Glowing #Aurora #SpaceFacts #Shorts",
+  "description": "Auroras glow when particles from the Sun hit gases high in our atmosphere: oxygen shines green and red, nitrogen blue and purple.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Aurora #NorthernLights #Space #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "aurora"
+    },
+    {
+      "scene": "sun"
+    },
+    {
+      "scene": "planet",
+      "preset": "earth"
+    },
+    {
+      "scene": "aurora"
+    },
+    {
+      "scene": "aurora"
+    },
+    {
+      "scene": "aurora"
+    },
+    {
+      "scene": "nebula"
+    }
+  ],
+  "music_style": "chill",
+  "stat": "OXYGEN GREEN. NITROGEN BLUE.",
+  "gauge": {
+    "label": "TOP HEIGHT",
+    "value": 300,
+    "max": 400,
+    "unit": "KM"
+  }
+}

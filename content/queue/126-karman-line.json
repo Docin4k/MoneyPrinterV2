@@ -1,0 +1,39 @@
+{
+  "topic": "Where space begins",
+  "script": "Space is closer than most people think, only about 100 kilometers up. That boundary is often called the Karman line. At highway speed, you could drive that distance in about an hour. Above it, the air is too thin for ordinary airplane wings to work. In the United States, flying above 50 miles, about 80 kilometers, can earn astronaut wings. The International Space Station orbits much higher, around 400 kilometers up. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "Space Is Only About 100 km Away #Space #SpaceFacts #Shorts",
+  "description": "Space is often said to begin at the Karman line, about 100 kilometers up, closer than a short road trip.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Space #KarmanLine #Astronauts #SpaceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "rocket"
+    },
+    {
+      "scene": "rocket"
+    },
+    {
+      "scene": "planet",
+      "preset": "earth"
+    },
+    {
+      "scene": "rocket"
+    },
+    {
+      "scene": "orbit"
+    },
+    {
+      "scene": "orbit"
+    },
+    {
+      "scene": "galaxy"
+    }
+  ],
+  "music_style": "adventure",
+  "stat": "THE ISS ORBITS ABOUT 400 KM UP",
+  "gauge": {
+    "label": "ALTITUDE",
+    "value": 100,
+    "max": 400,
+    "unit": "KM"
+  }
+}

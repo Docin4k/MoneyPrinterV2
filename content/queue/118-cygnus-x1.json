@@ -1,0 +1,38 @@
+{
+  "topic": "Cygnus X-1 and Stephen Hawking's bet",
+  "script": "Cygnus X-1 was one of the first objects widely accepted as a black hole. It was found in 1964 as a powerful source of X-rays. The black hole is pulling gas off a giant blue companion star. A 2021 study found it has about 21 times the mass of our Sun. It lies roughly 7,000 light-years away. Stephen Hawking once bet it was not a black hole, and later admitted he lost. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "Stephen Hawking Bet Against This Black Hole #BlackHole #SpaceFacts #Shorts",
+  "description": "Cygnus X-1 was one of the first known black holes, and Stephen Hawking famously bet it was not one, then admitted he lost.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#BlackHole #CygnusX1 #Space #SpaceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "black_hole"
+    },
+    {
+      "scene": "telescope"
+    },
+    {
+      "scene": "binary_suns"
+    },
+    {
+      "scene": "black_hole"
+    },
+    {
+      "scene": "galaxy"
+    },
+    {
+      "scene": "black_hole"
+    },
+    {
+      "scene": "galaxy"
+    }
+  ],
+  "music_style": "adventure",
+  "stat": "FOUND IN 1964 BY ITS X-RAYS",
+  "gauge": {
+    "label": "MASS",
+    "value": 21,
+    "max": 30,
+    "unit": "SUNS"
+  }
+}

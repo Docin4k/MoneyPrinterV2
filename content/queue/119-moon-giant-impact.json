@@ -1,0 +1,48 @@
+{
+  "topic": "The Moon may have formed from a giant impact",
+  "script": "The Moon may be made from pieces of the early Earth. Scientists think a Mars-sized world smashed into Earth about 4.5 billion years ago. The crash blasted rock and debris into orbit around Earth. Over time, that debris clumped together to form the Moon. Moon rocks brought back by Apollo astronauts are strikingly similar to rocks on Earth. The Moon is about a quarter as wide as Earth. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "The Moon May Be Made From Pieces of Earth #Moon #SpaceFacts #Shorts",
+  "description": "Scientists think the Moon formed from debris after a Mars-sized world hit the early Earth about 4.5 billion years ago.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Moon #Earth #Space #SpaceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "planet",
+      "preset": "moon"
+    },
+    {
+      "scene": "asteroids"
+    },
+    {
+      "scene": "planet",
+      "preset": "earth"
+    },
+    {
+      "scene": "planet",
+      "preset": "moon",
+      "radius": 45,
+      "y": 200
+    },
+    {
+      "scene": "surface",
+      "preset": "moon",
+      "footprints": true
+    },
+    {
+      "scene": "planet",
+      "preset": "moon",
+      "radius": 80,
+      "y": 225
+    },
+    {
+      "scene": "comet"
+    }
+  ],
+  "music_style": "march",
+  "stat": "A MARS-SIZED WORLD HIT EARTH",
+  "gauge": {
+    "label": "YEARS AGO",
+    "value": 4.5,
+    "max": 5,
+    "unit": "BN"
+  }
+}

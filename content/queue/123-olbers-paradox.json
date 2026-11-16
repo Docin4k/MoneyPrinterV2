@@ -1,0 +1,38 @@
+{
+  "topic": "Why the night sky is dark",
+  "script": "If the universe were endless and unchanging, the night sky should glow as bright as the Sun. Every direction you look would end on the surface of a star. This puzzle is called Olbers' paradox. Part of the answer is that the universe is about 13.8 billion years old. Light from the most distant stars has not had time to reach us yet. Space is also expanding, stretching old light into colors our eyes cannot see. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "Why Is the Night Sky Dark? #Universe #SpaceFacts #Shorts",
+  "description": "In an endless, unchanging universe the night sky would blaze with starlight. It is dark because the universe has an age and is expanding.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Universe #Cosmology #Space #SpaceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "starfield"
+    },
+    {
+      "scene": "galaxy"
+    },
+    {
+      "scene": "nebula"
+    },
+    {
+      "scene": "galaxy"
+    },
+    {
+      "scene": "starfield"
+    },
+    {
+      "scene": "nebula"
+    },
+    {
+      "scene": "comet"
+    }
+  ],
+  "music_style": "music box",
+  "stat": "IT IS CALLED OLBERS' PARADOX",
+  "gauge": {
+    "label": "AGE",
+    "value": 13.8,
+    "max": 15,
+    "unit": "BN YRS"
+  }
+}

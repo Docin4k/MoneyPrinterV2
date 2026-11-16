@@ -1,0 +1,39 @@
+{
+  "topic": "How Uranus was discovered and named",
+  "script": "Uranus was the first planet discovered with a telescope. William Herschel spotted it on March 13, 1781. At first, he thought it was a comet. He wanted to name it after King George the Third. The name Uranus, after the Greek god of the sky, was adopted later. Under very dark skies, Uranus is just bright enough to see with your eyes. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "Uranus Was Almost Named After a King #Uranus #SpaceFacts #Shorts",
+  "description": "William Herschel found Uranus with a telescope in 1781, first thought it was a comet, and wanted to name it after King George III.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Uranus #Astronomy #Space #SpaceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "planet",
+      "preset": "uranus"
+    },
+    {
+      "scene": "telescope"
+    },
+    {
+      "scene": "comet"
+    },
+    {
+      "scene": "planet",
+      "preset": "uranus",
+      "radius": 80,
+      "y": 225
+    },
+    {
+      "scene": "planet",
+      "preset": "uranus",
+      "radius": 45,
+      "y": 200
+    },
+    {
+      "scene": "starfield"
+    },
+    {
+      "scene": "starfield"
+    }
+  ],
+  "music_style": "space ambient",
+  "stat": "SPOTTED MARCH 13, 1781"
+}

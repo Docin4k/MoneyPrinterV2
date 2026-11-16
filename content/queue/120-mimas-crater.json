@@ -1,0 +1,47 @@
+{
+  "topic": "Saturn's moon Mimas and its giant crater",
+  "script": "One of Saturn's moons looks like a famous movie space station. Mimas has a giant crater called Herschel, about 130 kilometers wide. That is roughly a third of the moon's own width. Scientists think the impact that made it nearly broke Mimas apart. In 2024, scientists reported signs that Mimas may hide a young ocean under its ice. Mimas is only about 400 kilometers across. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "This Moon Looks Like a Movie Space Station #Saturn #SpaceFacts #Shorts",
+  "description": "Saturn's moon Mimas has a crater about a third as wide as the moon itself, and may hide a young ocean under its ice.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Saturn #Mimas #Space #SpaceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "planet",
+      "preset": "ice"
+    },
+    {
+      "scene": "planet",
+      "preset": "ice",
+      "radius": 80,
+      "y": 225
+    },
+    {
+      "scene": "planet",
+      "preset": "ice",
+      "radius": 45,
+      "y": 200
+    },
+    {
+      "scene": "asteroids"
+    },
+    {
+      "scene": "planet",
+      "preset": "ice"
+    },
+    {
+      "scene": "planet",
+      "preset": "saturn"
+    },
+    {
+      "scene": "starfield"
+    }
+  ],
+  "music_style": "boss battle",
+  "stat": "CRATER: 1/3 OF ITS WIDTH",
+  "gauge": {
+    "label": "CRATER",
+    "value": 130,
+    "max": 400,
+    "unit": "KM"
+  }
+}

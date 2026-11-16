@@ -1,0 +1,38 @@
+{
+  "topic": "The Sun's corona is hotter than its surface",
+  "script": "The Sun's outer atmosphere is hundreds of times hotter than its surface. The surface is about 5,500 degrees Celsius. But the corona, its thin outer layer, reaches more than a million degrees. Scientists are still working out exactly why. In 2021, NASA's Parker Solar Probe became the first spacecraft to fly through the corona. It is the fastest object ever built, reaching about 690,000 kilometers per hour. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "The Sun's Atmosphere Is Hotter Than Its Surface #Sun #SpaceFacts #Shorts",
+  "description": "The Sun's corona reaches over a million degrees, far hotter than its surface, and the Parker Solar Probe has flown through it.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Sun #ParkerSolarProbe #Space #SpaceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "sun"
+    },
+    {
+      "scene": "sun"
+    },
+    {
+      "scene": "eclipse"
+    },
+    {
+      "scene": "eclipse"
+    },
+    {
+      "scene": "rocket"
+    },
+    {
+      "scene": "sun"
+    },
+    {
+      "scene": "comet"
+    }
+  ],
+  "music_style": "music box",
+  "stat": "CORONA: OVER 1 MILLION C",
+  "gauge": {
+    "label": "PROBE SPEED",
+    "value": 690000,
+    "max": 750000,
+    "unit": "KM/H"
+  }
+}

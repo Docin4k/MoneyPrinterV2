@@ -1,0 +1,40 @@
+{
+  "topic": "Perseverance explores an ancient Martian lake",
+  "script": "NASA's Perseverance rover is exploring what was once a lake on Mars. It landed in Jezero Crater on February 18, 2021. Scientists think the crater held a lake billions of years ago. A dried-up river delta still fans out across its floor. The rover seals rock samples in tubes that scientists hope to bring to Earth someday. It also carries microphones that have recorded the wind on Mars. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "This Rover Is Exploring an Ancient Lake on Mars #Mars #SpaceFacts #Shorts",
+  "description": "Perseverance landed in Jezero Crater in 2021, a place scientists think held a lake billions of years ago.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Mars #Perseverance #NASA #SpaceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "surface",
+      "preset": "mars_day",
+      "rover": true
+    },
+    {
+      "scene": "rocket"
+    },
+    {
+      "scene": "planet",
+      "preset": "mars"
+    },
+    {
+      "scene": "surface",
+      "preset": "mars_day"
+    },
+    {
+      "scene": "surface",
+      "preset": "mars_day",
+      "rover": true
+    },
+    {
+      "scene": "surface",
+      "preset": "mars_sunset",
+      "rover": true
+    },
+    {
+      "scene": "nebula"
+    }
+  ],
+  "music_style": "funk",
+  "stat": "LANDED FEBRUARY 18, 2021"
+}

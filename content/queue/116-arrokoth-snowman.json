@@ -1,0 +1,38 @@
+{
+  "topic": "Arrokoth, the farthest world explored up close",
+  "script": "The most distant world ever explored up close looks like a snowman. It is called Arrokoth, and it orbits in the Kuiper Belt beyond Neptune. NASA's New Horizons spacecraft flew past it on January 1, 2019. At the time, it was about 6.6 billion kilometers from Earth. Arrokoth is two rounded lobes gently stuck together, about 36 kilometers long. Scientists think it has barely changed since the solar system formed. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "The Farthest World Ever Visited Looks Like a Snowman #Arrokoth #SpaceFacts #Shorts",
+  "description": "In 2019, New Horizons flew past Arrokoth, a snowman-shaped world in the Kuiper Belt about 6.6 billion kilometers from Earth.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Arrokoth #NewHorizons #Space #SpaceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "asteroids"
+    },
+    {
+      "scene": "asteroids"
+    },
+    {
+      "scene": "rocket"
+    },
+    {
+      "scene": "starfield"
+    },
+    {
+      "scene": "asteroids"
+    },
+    {
+      "scene": "nebula"
+    },
+    {
+      "scene": "starfield"
+    }
+  ],
+  "music_style": "space ambient",
+  "stat": "ABOUT 36 KM LONG",
+  "gauge": {
+    "label": "DISTANCE",
+    "value": 6.6,
+    "max": 8,
+    "unit": "BN KM"
+  }
+}

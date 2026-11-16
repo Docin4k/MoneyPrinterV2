@@ -1,0 +1,42 @@
+{
+  "topic": "Sputnik 1, the first artificial satellite",
+  "script": "The first artificial satellite was a metal ball about 58 centimeters wide. The Soviet Union launched Sputnik 1 on October 4, 1957. It circled Earth about every 96 minutes. Its radio sent out a simple beeping signal that radio operators around the world could hear. Its batteries ran out after about three weeks. It burned up in the atmosphere in January 1958. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "The First Satellite Was a Beeping Metal Ball #Sputnik #SpaceFacts #Shorts",
+  "description": "Sputnik 1, launched in 1957, was a 58-centimeter metal ball that beeped its way around Earth every 96 minutes.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Sputnik #SpaceHistory #Space #SpaceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "orbit"
+    },
+    {
+      "scene": "rocket"
+    },
+    {
+      "scene": "planet",
+      "preset": "earth"
+    },
+    {
+      "scene": "orbit"
+    },
+    {
+      "scene": "orbit"
+    },
+    {
+      "scene": "planet",
+      "preset": "earth",
+      "radius": 80,
+      "y": 225
+    },
+    {
+      "scene": "nebula"
+    }
+  ],
+  "music_style": "funk",
+  "stat": "LAUNCHED OCTOBER 4, 1957",
+  "gauge": {
+    "label": "ONE ORBIT",
+    "value": 96,
+    "max": 120,
+    "unit": "MIN"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "topic": "The Apollo 11 guidance computer",
+  "script": "The computer that landed Apollo 11 on the Moon had about 4 kilobytes of working memory. Apollo 11 touched down on the Moon on July 20, 1969. The guidance computer weighed about 32 kilograms. Its programs were stored in rope memory, with wires woven through tiny magnetic rings by hand. During the landing, alarms flashed because the computer was overloaded. It kept working by dropping less important tasks, and the landing went ahead. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "Apollo 11 Landed With 4 KB of Memory #Apollo11 #SpaceFacts #Shorts",
+  "description": "The computer that guided Apollo 11 to the Moon in 1969 had about 4 kilobytes of working memory, with programs woven by hand.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Apollo11 #Moon #NASA #SpaceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "rocket"
+    },
+    {
+      "scene": "surface",
+      "preset": "moon",
+      "footprints": true
+    },
+    {
+      "scene": "orbit"
+    },
+    {
+      "scene": "rocket"
+    },
+    {
+      "scene": "surface",
+      "preset": "moon"
+    },
+    {
+      "scene": "surface",
+      "preset": "moon",
+      "footprints": true
+    },
+    {
+      "scene": "galaxy"
+    }
+  ],
+  "music_style": "waltz",
+  "stat": "PROGRAMS WOVEN BY HAND",
+  "gauge": {
+    "label": "MEMORY",
+    "value": 4,
+    "max": 8,
+    "unit": "KB"
+  }
+}
