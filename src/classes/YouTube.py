@@ -293,7 +293,7 @@ class YouTube:
             image_prompts (List[str]): Generated List of image prompts.
         """
         # One image per sentence of the script
-        sentences = [s for s in re.split(r"(?<=[.!?])\s+", self.script.strip()) if s.strip()]
+        sentences = [s for s in re.split(r"(?<=[.!?])(?<!\b[A-Z]\.)\s+", self.script.strip()) if s.strip()]
         n_prompts = len(sentences) or get_script_sentence_length()
 
         prompt = f"""
@@ -1004,7 +1004,7 @@ class YouTube:
             self.generate_metadata()
 
         # One visual segment per sentence, timed by its length
-        self.sentences = [s for s in re.split(r"(?<=[.!?])\s+", self.script.strip()) if s.strip()]
+        self.sentences = [s for s in re.split(r"(?<=[.!?])(?<!\b[A-Z]\.)\s+", self.script.strip()) if s.strip()]
         self.segment_weights = [len(s.split()) for s in self.sentences]
         style = get_visual_style()
 

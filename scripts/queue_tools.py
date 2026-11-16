@@ -42,7 +42,7 @@ CTA_SCENES = CHANNEL.get("cta_scenes", ["starfield", "nebula", "galaxy", "comet"
 
 
 def split_sentences(script: str) -> list:
-    return [s for s in re.split(r"(?<=[.!?])\s+", script.strip()) if s.strip()]
+    return [s for s in re.split(r"(?<=[.!?])(?<!\b[A-Z]\.)\s+", script.strip()) if s.strip()]
 
 
 def parse_scene(short) -> dict:

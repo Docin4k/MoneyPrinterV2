@@ -3,6 +3,7 @@
 Run from the project folder:
     python scripts/make_channel_art.py [--name WonderBytes] [--tagline "..."] [--out channel-art]
     python scripts/make_channel_art.py --theme ocean --name "Pixel Abyss" --tagline "..."
+    python scripts/make_channel_art.py --theme dino --name "DinoBytes" --tagline "..."
 
 Writes:
   profile.png         800x800 profile picture (YouTube shows it as a circle)
@@ -21,6 +22,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "src"))
 import pixel_art as pa  # noqa: E402
 import pixel_ocean as po  # noqa: E402
+import pixel_prehistoric as pp  # noqa: E402
 
 
 def set_canvas(design_w: int, design_h: int) -> None:
@@ -33,6 +35,7 @@ def set_canvas(design_w: int, design_h: int) -> None:
     pa._NEBULA_CACHE.clear()
     for name in ("LW", "LH", "PW", "PH", "PY", "PX", "YY", "XX"):
         setattr(po, name, getattr(pa, name))
+        setattr(pp, name, getattr(pa, name))
 
 
 def blank():
@@ -142,17 +145,48 @@ def ocean_banner(out, name, tagline, seed):
     save(f, out, (2560, 1440))
 
 
+def dino_profile(out, seed, initials=None):
+    """A close-up of the T. rex's head."""
+    set_canvas(180, 320)
+    pa.OVERLAY = None
+    f = pa.render_frame({"scene": "trex"}, 0.3, seed)
+    x0, y0, size = 92, 118, 88
+    crop = f[pa.px(y0):pa.px(y0 + size), pa.px(x0):pa.px(x0 + size)].copy()
+    if initials:
+        set_canvas(size, size)
+        title(crop, initials, 6, 3, color=(255, 214, 64), shadow=(150, 60, 30))
+    save(crop, out, (800, 800))
+
+
+def dino_banner(out, name, tagline, seed):
+    """Three prehistoric scenes side by side with the name across the middle."""
+    set_canvas(180, 320)
+    pa.OVERLAY = None
+    panels = [pa.render_frame({"scene": sc}, 1.5, seed + i) for i, sc in enumerate(("sauropod", "trex", "pterosaur"))]
+    strip = np.concatenate(panels, axis=1)                       # 1080 x 640 pixels
+    h = strip.shape[1] * 9 // 16 // 2 * 2
+    top = strip.shape[0] - h - 20
+    f = strip[top:top + h].copy()
+    set_canvas(f.shape[1] // pa.DETAIL, f.shape[0] // pa.DETAIL)
+    band = (pa.YY > pa.LH * 0.36) & (pa.YY < pa.LH * 0.64) & (pa.XX > pa.LW * 0.2) & (pa.XX < pa.LW * 0.8)
+    f[band] = (f[band] * 0.45).astype(np.uint8)
+    title(f, name.upper(), pa.LH * 0.39, 5, color=(255, 214, 64), shadow=(150, 60, 30))
+    pa.stamp_text(f, tagline.upper(), pa.LH * 0.39 + 44, 2, (245, 240, 225), outline=(0, 0, 0), max_width=int(pa.LW * 0.58))
+    save(f, out, (2560, 1440))
+
+
 def main():
     ap = argparse.ArgumentParser(description="Make 8-bit YouTube channel art.")
     ap.add_argument("--name", default="WonderBytes")
     ap.add_argument("--tagline", default="Space facts that sound fake but are true")
     ap.add_argument("--seed", type=int, default=7)
-    ap.add_argument("--theme", choices=["space", "ocean"], default="space")
+    ap.add_argument("--theme", choices=["space", "ocean", "dino"], default="space")
     ap.add_argument("--out", default=os.path.join(ROOT, "channel-art"))
     args = ap.parse_args()
     os.makedirs(args.out, exist_ok=True)
     initials = "".join(c for c in args.name if c.isupper())[:2] or args.name[:2].upper()
-    make_profile, make_banner = (ocean_profile, ocean_banner) if args.theme == "ocean" else (profile, banner)
+    make_profile, make_banner = {"ocean": (ocean_profile, ocean_banner), "dino": (dino_profile, dino_banner)}.get(
+        args.theme, (profile, banner))
     make_profile(os.path.join(args.out, "profile.png"), args.seed)
     make_profile(os.path.join(args.out, "profile-letters.png"), args.seed, initials=initials)
     make_banner(os.path.join(args.out, "banner.png"), args.name, args.tagline, args.seed)

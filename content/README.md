@@ -49,7 +49,7 @@ posted, e.g. `013-pluto.json`.
 | `subtitle_fixes` | no | Regex replacements for the subtitles, e.g. `{"wonder\\s*bites": "WonderBytes"}`. |
 | `stat` | no | Short key fact shown in a bar under the title for the whole video (HUD layout, `"video_layout": "hud"` in `content/channel.json`). At most 52 characters. |
 | `gauge` | no | Animated dial in the corner (HUD layout): `{"label": "DEPTH", "value": 10935, "max": 11000, "unit": "M"}`. |
-| `music_style` | no | Chiptune style for this video: `adventure`, `chill`, `space ambient`, `march`, `waltz`, `funk`, `boss battle`, `music box`, or the mysterious ocean styles `deep current`, `sonar`, `bioluminescence`, `tide pool`, `kelp drift`, `explorer`, `midnight zone`, `sunken treasure`. If missing, the title picks one (from `music_styles` in `content/channel.json` when it lists them). The queue rotates the channel's styles so neighbouring videos sound different. |
+| `music_style` | no | Chiptune style for this video: `adventure`, `chill`, `space ambient`, `march`, `waltz`, `funk`, `boss battle`, `music box`, or the mysterious ocean styles `deep current`, `sonar`, `bioluminescence`, `tide pool`, `kelp drift`, `explorer`, `midnight zone`, `sunken treasure`, or the prehistoric styles `jungle`, `dino stomp`, `primeval`. If missing, the title picks one (from `music_styles` in `content/channel.json` when it lists them). The queue rotates the channel's styles so neighbouring videos sound different. |
 
 ### Writing tips
 
@@ -81,6 +81,11 @@ posted, e.g. `013-pluto.json`.
 | `nebula` | A colourful star-forming cloud with bright young stars. |
 | `telescope` | A space telescope with a gold segmented mirror and sunshield. |
 | `binary_suns` | Two suns circling above desert dunes. |
+
+Prehistoric scenes (from `src/pixel_prehistoric.py`): `trex`, `sauropod`,
+`triceratops`, `stegosaurus`, `raptor`, `pterosaur`, `mosasaur`, `plesiosaur`,
+`mammoth`, `impact`, `fossil`, `eggs`, `amber`, `volcano`, `cambrian`. See
+the DinoBytes writing guide for what each shows.
 
 Underwater scenes (from `src/pixel_ocean.py`): `deep_sea`, `anglerfish`,
 `jellyfish`, `whale`, `octopus`, `coral_reef`, `shark`, `shipwreck`, `vent`,

@@ -88,8 +88,10 @@ pushes to `wonderbytes-automation`. It runs in the original Claude session.
 |---|---|---|---|---|
 | WonderBytes (space) | `wonderbytes-automation` | `~/MoneyPrinterV2` | WonderBytes | 12:00, 18:00 |
 | Pixel Abyss (deep sea) | `channel-pixelabyss` | `~/PixelAbyss` | PixelAbyss | 15:00, 21:00 |
+| DinoBytes (prehistoric) | `channel-dinobytes` | `~/DinoBytes` | DinoBytes | 13:30, 19:30 |
 
-Pixel Abyss's setup steps are in `docs/PixelAbyssSetup.md`. Its underwater
+Pixel Abyss's setup steps are in `docs/PixelAbyssSetup.md`, DinoBytes' in
+`docs/DinoBytesSetup.md` (scenes in `src/pixel_prehistoric.py`). Its underwater
 scenes are in `src/pixel_ocean.py`; the name on its videos comes from
 `content/channel.json`, and its call-to-action scenes from `cta_scenes` there.
 
