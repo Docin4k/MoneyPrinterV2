@@ -7,7 +7,10 @@ animated gauge. Captions sit in a fixed box under the stat bar, so the scene
 below stays clear.
 
 Turned on per channel with "video_layout": "hud" in content/channel.json.
-Sizes here are in pixels on the 360x640 drawing (pixel_art.PW x PH).
+
+The HUD is drawn on its own 360x640 RGBA layer (HW x HH, shown at 3x on the
+1080x1920 video), so text and boxes keep the same size and crispness however
+finely the scene behind them is drawn (pixel_art.DETAIL).
 """
 import math
 
@@ -18,6 +21,37 @@ import pixel_art as pa
 WHITE, YELLOW, ORANGE, BLACK = (245, 245, 240), (255, 214, 64), (255, 150, 40), (6, 8, 14)
 RED, CYAN = (235, 70, 60), (120, 230, 240)
 MARGIN = 14
+HW, HH = 360, 640                 # HUD layer size
+HUD_SCALE = 1080 // HW            # 3x on the final video
+HPY, HPX = np.mgrid[0:HH, 0:HW]
+
+
+def new_layer():
+    """Empty RGBA HUD layer."""
+    return np.zeros((HH, HW, 4), dtype=np.uint8)
+
+
+def upscale_layer(layer):
+    return layer.repeat(HUD_SCALE, axis=0).repeat(HUD_SCALE, axis=1)
+
+
+def composite(big, layer):
+    """Lay an RGBA HUD layer over a full-size (1080x1920) RGB frame. Only rows
+    the HUD touches are blended, in integer maths, which keeps this fast."""
+    rows = np.flatnonzero(layer[..., 3].any(axis=1))
+    if rows.size == 0:
+        return big
+    out = big.copy()
+    # Contiguous runs of HUD rows (top boxes, bottom boxes)
+    breaks = np.flatnonzero(np.diff(rows) > 1)
+    for seg in np.split(rows, breaks + 1):
+        y0, y1 = seg[0], seg[-1] + 1
+        part = layer[y0:y1].repeat(HUD_SCALE, axis=0).repeat(HUD_SCALE, axis=1)
+        a = part[..., 3:4].astype(np.uint16)
+        Y0, Y1 = y0 * HUD_SCALE, y1 * HUD_SCALE
+        region = out[Y0:Y1].astype(np.uint16)
+        out[Y0:Y1] = ((region * (255 - a) + part[..., :3].astype(np.uint16) * a) // 255).astype(np.uint8)
+    return out
 
 
 def _lines(text, scale, max_w):
@@ -34,43 +68,43 @@ def _line_mask(line, scale):
     return m
 
 
-def text(frame, line, x, y, scale, color, center=False, shadow=True):
+def text(layer, line, x, y, scale, color, center=False, shadow=True):
     """Draw one line of pixel text with its top-left (or top-centre) at x, y; returns its width."""
     m = _line_mask(line, scale)
     h, w = m.shape
     if center:
         x = int(x - w / 2)
     for dx, dy, col in (((scale // 2 or 1), (scale // 2 or 1), BLACK),) if shadow else ():
-        _blit(frame, m, x + dx, y + dy, col)
-    _blit(frame, m, x, y, color)
+        _blit(layer, m, x + dx, y + dy, col)
+    _blit(layer, m, x, y, color)
     return w
 
 
-def _blit(frame, m, x, y, color):
+def _blit(layer, m, x, y, color):
     h, w = m.shape
     y0, x0 = max(0, y), max(0, x)
-    y1, x1 = min(pa.PH, y + h), min(pa.PW, x + w)
+    y1, x1 = min(HH, y + h), min(HW, x + w)
     if y0 < y1 and x0 < x1:
         sub = m[y0 - y:y1 - y, x0 - x:x1 - x]
-        frame[y0:y1, x0:x1][sub] = color
+        layer[y0:y1, x0:x1][sub] = (*color, 255)
 
 
-def box(frame, x0, y0, x1, y1, border, fill_alpha=0.82, width=2):
+def box(layer, x0, y0, x1, y1, border, fill_alpha=0.82, width=2):
     """Dark see-through box with a solid pixel border."""
-    x0, y0, x1, y1 = max(0, int(x0)), max(0, int(y0)), min(pa.PW, int(x1)), min(pa.PH, int(y1))
+    x0, y0, x1, y1 = max(0, int(x0)), max(0, int(y0)), min(HW, int(x1)), min(HH, int(y1))
     if x0 >= x1 or y0 >= y1:
         return
-    region = frame[y0:y1, x0:x1]
-    region[:] = (region * (1 - fill_alpha) + np.array(BLACK) * fill_alpha).astype(np.uint8)
-    frame[y0:y0 + width, x0:x1] = border
-    frame[y1 - width:y1, x0:x1] = border
-    frame[y0:y1, x0:x0 + width] = border
-    frame[y0:y1, x1 - width:x1] = border
+    layer[y0:y1, x0:x1] = (*BLACK, int(fill_alpha * 255))
+    edge = (*border, 255)
+    layer[y0:y0 + width, x0:x1] = edge
+    layer[y1 - width:y1, x0:x1] = edge
+    layer[y0:y1, x0:x0 + width] = edge
+    layer[y0:y1, x1 - width:x1] = edge
 
 
 def title_layout(title):
     """Pick the biggest title size that fits in three lines."""
-    inner = pa.PW - 2 * MARGIN - 20
+    inner = HW - 2 * MARGIN - 20
     for scale, most in ((4, 3), (3, 4), (2, 5)):
         lines = _lines(title, scale, inner)
         if len(lines) <= most:
@@ -78,41 +112,39 @@ def title_layout(title):
     return 2, _lines(title, 2, inner)[:4]
 
 
-def gauge(frame, t, spec, cx, cy, r=34):
+def gauge(layer, t, spec, cx, cy, r=34):
     """Round dial whose needle sweeps up to the value, with a readout below."""
     value, top = float(spec.get("value", 0)), float(spec.get("max") or spec.get("value", 1) or 1)
     sweep = min(1.0, t / 1.2) ** 0.5
     wobble = 0.012 * math.sin(t * 9) if sweep >= 1 else 0
     frac = max(0.0, min(1.0, value / top * sweep + wobble))
-    yy, xx = pa.PY - cy, pa.PX - cx
-    d = np.sqrt(xx ** 2 + yy ** 2)
-    disc = d <= r
-    frame[disc] = (frame[disc] * 0.15 + np.array((14, 18, 30)) * 0.85).astype(np.uint8)
-    frame[(d <= r) & (d > r - 2)] = WHITE
+    d = np.sqrt((HPX - cx) ** 2 + (HPY - cy) ** 2)
+    layer[d <= r] = (14, 18, 30, 217)
+    layer[(d <= r) & (d > r - 2)] = (*WHITE, 255)
     a0, a1 = math.radians(135), math.radians(405)          # dial runs clockwise from lower left
     for i in range(11):
         a = a0 + (a1 - a0) * i / 10
         for k in range(5 if i % 5 == 0 else 3):
             x, y = cx + math.cos(a) * (r - 4 - k), cy + math.sin(a) * (r - 4 - k)
-            frame[int(y):int(y) + 1, int(x):int(x) + 1] = RED if i >= 8 else WHITE
+            layer[int(y):int(y) + 1, int(x):int(x) + 1] = (*(RED if i >= 8 else WHITE), 255)
     a = a0 + (a1 - a0) * frac
     for k in range(int(r - 7)):
         x, y = cx + math.cos(a) * k, cy + math.sin(a) * k
-        frame[int(y):int(y) + 2, int(x):int(x) + 2] = RED
-    frame[cy - 2:cy + 3, cx - 2:cx + 3] = WHITE
+        layer[int(y):int(y) + 2, int(x):int(x) + 2] = (*RED, 255)
+    layer[cy - 2:cy + 3, cx - 2:cx + 3] = (*WHITE, 255)
     shown = value * sweep
     number = f"{shown:,.0f}" if value == int(value) else f"{shown:,.1f}"
     unit = str(spec.get("unit", ""))
     readout = f"{number} {unit}".strip()
     w = len(readout) * 12 + 12
-    bx = int(min(cx - w // 2, pa.PW - MARGIN - w))
-    box(frame, bx, cy + r + 4, bx + w + 1, cy + r + 26, ORANGE, 0.85)
-    text(frame, readout, bx + w // 2, cy + r + 9, 2, ORANGE, center=True, shadow=False)
+    bx = int(min(cx - w // 2, HW - MARGIN - w))
+    box(layer, bx, cy + r + 4, bx + w + 1, cy + r + 26, ORANGE, 0.85)
+    text(layer, readout, bx + w // 2, cy + r + 9, 2, ORANGE, center=True, shadow=False)
     label = str(spec.get("label", "")).strip().upper()
     if label:
         w = len(label) * 12
-        x = int(min(cx - w / 2, pa.PW - MARGIN - w))
-        text(frame, label, x, cy - r - 20, 2, CYAN)
+        x = int(min(cx - w / 2, HW - MARGIN - w))
+        text(layer, label, x, cy - r - 20, 2, CYAN)
 
 
 # ------------------------------------------------- camera and lighting ----
@@ -128,17 +160,18 @@ def _blur(img, k):
 
 
 _VIGNETTE = None
-_SCREEN = None
 
 
-def camera(frame, t, seed, focus_y=370, target_y=450):
+def camera(frame, t, seed, focus=0.578, target=0.703):
     """Zoom in a little and frame the scene so its subject (around focus_y in
     the drawing) lands in the clear area under the text boxes (target_y),
     with a slow push-in and gentle drift, so shots feel filmed."""
     rng = np.random.default_rng(seed)
     zoom = 1.12 + 0.05 * rng.random() + 0.01 * t
-    dx = 5 * math.sin(t * 0.35 + seed)
-    dy = 3 * math.sin(t * 0.27 + seed * 2)
+    k = pa.PH / 640
+    dx = 5 * k * math.sin(t * 0.35 + seed)
+    dy = 3 * k * math.sin(t * 0.27 + seed * 2)
+    focus_y, target_y = focus * pa.PH, target * pa.PH
     h, w = pa.PH / zoom, pa.PW / zoom
     y0 = min(max(0.0, focus_y + dy - target_y / zoom), pa.PH - h)
     x0 = min(max(0.0, pa.PW / 2 + dx - w / 2), pa.PW - w)
@@ -150,31 +183,31 @@ def camera(frame, t, seed, focus_y=370, target_y=450):
 def lighting(frame):
     """Bloom on bright parts, a vignette and a fine screen-dot texture."""
     global _VIGNETTE, _SCREEN
-    f = frame.astype(np.float32)
-    lum = f.max(axis=2)
-    bright = np.clip((lum - 205) / 50, 0, 1)[..., None] * f
-    small = bright[::4, ::4]
-    glow = _blur(_blur(small, 3), 3)
-    glow = np.repeat(np.repeat(glow, 4, 0), 4, 1)[:pa.PH, :pa.PW]
-    f = f + glow * 1.1
-    if _VIGNETTE is None:
+    if _VIGNETTE is None or _VIGNETTE.shape[:2] != frame.shape[:2]:
         yy, xx = (pa.PY / pa.PH - 0.55) * 1.1, (pa.PX / pa.PW - 0.5) * 1.3
-        _VIGNETTE = (1 - 0.45 * np.clip(xx ** 2 + yy ** 2, 0, 1))[..., None]
-        _SCREEN = np.where((pa.PY % 2 == 1) & (pa.PX % 2 == 1), 0.86, 1.0)[..., None]
-    f = f * _VIGNETTE * _SCREEN
+        vignette = 1 - 0.45 * np.clip(xx ** 2 + yy ** 2, 0, 1)
+        screen = np.where((pa.PY % 2 == 1) & (pa.PX % 2 == 1), 0.86, 1.0)
+        _VIGNETTE = (vignette * screen).astype(np.float32)[..., None]   # one combined multiplier
+    # Glow: find bright pixels on a quarter-size copy, blur, and add back
+    small = frame[::4, ::4].astype(np.float32)
+    bright = np.clip((small.max(axis=2) - 205) / 50, 0, 1)[..., None] * small
+    k = max(1, round(3 * pa.PH / 640 / 1.5))
+    glow = _blur(_blur(bright, k), k) * 1.1
+    glow = np.repeat(np.repeat(glow, 4, 0), 4, 1)[:pa.PH, :pa.PW]
+    f = (frame.astype(np.float32) + glow) * _VIGNETTE
     return np.clip(f, 0, 255).astype(np.uint8)
 
 
-def draw_overlay(frame, t, info, tag=""):
-    """All HUD boxes for one frame. `info` keys: title, stat, handle, gauge."""
+def draw_overlay(layer, t, info, tag=""):
+    """All HUD boxes for one layer. `info` keys: title, stat, handle, gauge."""
     y = 10
     # Tag box with a play-arrow, e.g. "FACT 2 OF 5"
     if tag:
         w = len(tag) * 12 + 26
-        box(frame, MARGIN, y, MARGIN + w, y + 22, ORANGE, 0.75)
+        box(layer, MARGIN, y, MARGIN + w, y + 22, ORANGE, 0.75)
         for i in range(8):   # little triangle
-            frame[y + 7 + i // 2: y + 15 - i // 2, MARGIN + 6 + i:MARGIN + 7 + i] = ORANGE
-        text(frame, tag, MARGIN + 18, y + 4, 2, ORANGE, shadow=False)
+            layer[y + 7 + i // 2: y + 15 - i // 2, MARGIN + 6 + i:MARGIN + 7 + i] = (*ORANGE, 255)
+        text(layer, tag, MARGIN + 18, y + 4, 2, ORANGE, shadow=False)
         y += 28
     # Title box: lines alternate white / yellow
     title = info.get("title", "")
@@ -182,27 +215,27 @@ def draw_overlay(frame, t, info, tag=""):
         scale, lines = title_layout(title)
         line_h = 9 * scale
         h = len(lines) * line_h + 14
-        box(frame, MARGIN, y, pa.PW - MARGIN, y + h, WHITE, 0.85, 3)
+        box(layer, MARGIN, y, HW - MARGIN, y + h, WHITE, 0.85, 3)
         for i, line in enumerate(lines):
-            text(frame, line, pa.PW // 2, y + 9 + i * line_h, scale, YELLOW if i % 2 else WHITE, center=True)
+            text(layer, line, HW // 2, y + 9 + i * line_h, scale, YELLOW if i % 2 else WHITE, center=True)
         y += h + 6
     # Stat bar
     stat = info.get("stat", "")
     if stat:
-        lines = _lines(stat, 2, pa.PW - 2 * MARGIN - 16)[:2]
+        lines = _lines(stat, 2, HW - 2 * MARGIN - 16)[:2]
         h = len(lines) * 18 + 8
-        box(frame, MARGIN + 8, y, pa.PW - MARGIN - 8, y + h, YELLOW, 0.85)
+        box(layer, MARGIN + 8, y, HW - MARGIN - 8, y + h, YELLOW, 0.85)
         for i, line in enumerate(lines):
-            text(frame, line, pa.PW // 2, y + 6 + i * 18, 2, YELLOW, center=True)
+            text(layer, line, HW // 2, y + 6 + i * 18, 2, YELLOW, center=True)
         y += h + 6
     # Handle box (bottom left) and gauge (bottom right)
     handle = info.get("handle", "")
     if handle:
         w = len(handle) * 12 + 16
-        box(frame, MARGIN, pa.PH - 46, MARGIN + w, pa.PH - 22, WHITE, 0.7)
-        text(frame, handle, MARGIN + 8, pa.PH - 40, 2, WHITE, shadow=False)
+        box(layer, MARGIN, HH - 46, MARGIN + w, HH - 22, WHITE, 0.7)
+        text(layer, handle, MARGIN + 8, HH - 40, 2, WHITE, shadow=False)
     if info.get("gauge"):
-        gauge(frame, t, info["gauge"], pa.PW - MARGIN - 44, pa.PH - 92)
+        gauge(layer, t, info["gauge"], HW - MARGIN - 44, HH - 92)
 
 
 def caption_top(info, tag=True):
@@ -212,20 +245,20 @@ def caption_top(info, tag=True):
         scale, lines = title_layout(info["title"])
         y += len(lines) * 9 * scale + 14 + 6
     if info.get("stat"):
-        y += len(_lines(info["stat"], 2, pa.PW - 2 * MARGIN - 16)[:2]) * 18 + 8 + 6
+        y += len(_lines(info["stat"], 2, HW - 2 * MARGIN - 16)[:2]) * 18 + 8 + 6
     return y
 
 
 def caption_frame(txt, top):
     """RGBA caption: white text in a fixed-size bordered box starting at `top`."""
-    frame = np.zeros((pa.PH, pa.PW, 3), dtype=np.uint8)
-    alpha = np.zeros((pa.PH, pa.PW), dtype=np.uint8)
+    frame = np.zeros((HH, HW, 3), dtype=np.uint8)
+    alpha = np.zeros((HH, HW), dtype=np.uint8)
     # Size 3 text, or size 2 if a long caption piece wouldn't fit in 3 lines
-    scale = 3 if len(_lines(txt, 3, pa.PW - 2 * MARGIN - 24)) <= 3 else 2
+    scale = 3 if len(_lines(txt, 3, HW - 2 * MARGIN - 24)) <= 3 else 2
     step = 9 * scale
-    lines = _lines(txt, scale, pa.PW - 2 * MARGIN - 24)[:4]
+    lines = _lines(txt, scale, HW - 2 * MARGIN - 24)[:4]
     h = 3 * 27 + 14
-    x0, x1 = MARGIN + 4, pa.PW - MARGIN - 4
+    x0, x1 = MARGIN + 4, HW - MARGIN - 4
     frame[top:top + h, x0:x1] = BLACK
     alpha[top:top + h, x0:x1] = 210
     for edge in (frame[top:top + 2, x0:x1], frame[top + h - 2:top + h, x0:x1],
@@ -236,7 +269,7 @@ def caption_frame(txt, top):
     y = top + 7 + (3 * 27 - len(lines) * step) // 2   # centred in the box
     for i, line in enumerate(lines):
         m = _line_mask(line, scale)
-        x = pa.PW // 2 - m.shape[1] // 2
+        x = HW // 2 - m.shape[1] // 2
         ly = y + i * step
         sh = np.zeros_like(alpha, dtype=bool)
         sh[ly + 2:ly + 2 + m.shape[0], x + 2:x + 2 + m.shape[1]] = m
