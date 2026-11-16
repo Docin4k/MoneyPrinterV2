@@ -873,6 +873,10 @@ SPACE_SCENES = {"planet", "sun", "black_hole", "pulsar", "galaxy", "orbit", "com
                 "eclipse", "supernova", "telescope"}
 
 
+# Named points the camera can zoom in on, per scene: {scene: {part: (x, y)}}
+# or {scene: function(t) -> {part: (x, y)}} (filled by the scene modules)
+FOCUS = {}
+
 # HUD layout (pixel_hud.py): when set to a dict (title, stat, handle, gauge),
 # frames get bordered title/stat/handle boxes instead of the plain header and
 # footer, and captions go in a box under them
@@ -895,7 +899,7 @@ def render_frame(spec: dict, t: float, seed: int, headline: str = "", channel: s
         # top at full video size (returns a 1080x1920 frame)
         import pixel_hud
         if OVERLAY.get("cinematic", True):
-            frame = pixel_hud.lighting(pixel_hud.camera(frame, t, seed))
+            frame = pixel_hud.lighting(pixel_hud.camera(frame, t, seed, spec))
         layer = pixel_hud.new_layer()
         tag = footer.replace(" / ", " OF ") if footer else ""
         pixel_hud.draw_overlay(layer, tq(t), OVERLAY, tag)
