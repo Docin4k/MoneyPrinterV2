@@ -164,14 +164,18 @@ def dino_banner(out, name, tagline, seed):
     pa.OVERLAY = None
     panels = [pa.render_frame({"scene": sc}, 1.5, seed + i) for i, sc in enumerate(("sauropod", "trex", "pterosaur"))]
     strip = np.concatenate(panels, axis=1)                       # 1080 x 640 pixels
-    h = strip.shape[1] * 9 // 16 // 2 * 2
+    h = strip.shape[1] * 9 // 16 // pa.DETAIL * pa.DETAIL
     top = strip.shape[0] - h - 20
     f = strip[top:top + h].copy()
     set_canvas(f.shape[1] // pa.DETAIL, f.shape[0] // pa.DETAIL)
-    band = (pa.YY > pa.LH * 0.36) & (pa.YY < pa.LH * 0.64) & (pa.XX > pa.LW * 0.2) & (pa.XX < pa.LW * 0.8)
+    band = (pa.YY > pa.LH * 0.36) & (pa.YY < pa.LH * 0.70) & (pa.XX > pa.LW * 0.2) & (pa.XX < pa.LW * 0.8)
     f[band] = (f[band] * 0.45).astype(np.uint8)
     title(f, name.upper(), pa.LH * 0.39, 5, color=(255, 214, 64), shadow=(150, 60, 30))
-    pa.stamp_text(f, tagline.upper(), pa.LH * 0.39 + 44, 2, (245, 240, 225), outline=(0, 0, 0), max_width=int(pa.LW * 0.58))
+    # Tagline on up to two balanced lines (split at a comma if there is one)
+    parts = [p.strip() for p in tagline.upper().split(",", 1)]
+    lines = [parts[0] + ",", parts[1]] if len(parts) == 2 else [tagline.upper()]
+    for i, line in enumerate(lines):
+        pa.stamp_text(f, line, pa.LH * 0.39 + 42 + i * 18, 2, (245, 240, 225), outline=(0, 0, 0), max_width=int(pa.LW * 0.62))
     save(f, out, (2560, 1440))
 
 
