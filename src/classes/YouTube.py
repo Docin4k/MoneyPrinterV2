@@ -719,7 +719,9 @@ class YouTube:
         clips[-1] = clips[-1].set_duration(clips[-1].duration + 0.5)
 
         final_clip = concatenate_videoclips(clips)
-        final_clip = final_clip.set_fps(30)
+        # Pixel art animates 12 times a second, so 24 fps shows every step
+        # (twice each) while encoding far fewer frames than 30 fps
+        final_clip = final_clip.set_fps(24 if style == "pixel_art" else 30)
 
         if get_music_source() == "chiptune":
             song = os.path.join(ROOT_DIR, ".mp", str(uuid4()) + ".wav")
@@ -767,6 +769,7 @@ class YouTube:
             combined_image_path,
             threads=threads,
             codec="libx264",
+            preset="faster",
             audio_codec="aac",
             audio_bitrate="160k",
             ffmpeg_params=["-pix_fmt", "yuv420p", "-movflags", "+faststart"],
@@ -858,7 +861,7 @@ class YouTube:
         fit the HUD caption box (3 lines of large text)."""
         import pixel_hud
         words = sentence.split()
-        width = pixel_hud.pa.PW - 2 * pixel_hud.MARGIN - 24
+        width = pixel_hud.HW - 2 * pixel_hud.MARGIN - 24
         for n in range(1, len(words) + 1):
             target = len(sentence) / n
             chunks, current = [], []

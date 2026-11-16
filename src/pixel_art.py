@@ -20,9 +20,9 @@ import numpy as np
 from moviepy.editor import ImageClip, VideoClip
 
 LW, LH = 180, 320          # design grid: all scene coordinates use these units
-DETAIL = 2                 # pixels per design unit: 2 -> drawn at 360x640
+DETAIL = 3                 # pixels per design unit: 3 -> drawn at 540x960 (2x to 1080x1920)
 PW, PH = LW * DETAIL, LH * DETAIL
-SCALE = 1080 // PW         # 360x640 -> 1080x1920
+SCALE = 1080 // PW         # 540x960 -> 1080x1920
 ANIM_FPS = 12              # animation steps per second
 
 BAYER = (np.array([[0, 8, 2, 10], [12, 4, 14, 6], [3, 11, 1, 9], [15, 7, 13, 5]]) + 0.5) / 16.0
@@ -891,12 +891,15 @@ def render_frame(spec: dict, t: float, seed: int, headline: str = "", channel: s
     SCENES.get(scene, scene_starfield)(frame, tq(t), spec, seed)
 
     if OVERLAY:
+        # HUD layout: the scene at drawing resolution, then the HUD layer on
+        # top at full video size (returns a 1080x1920 frame)
         import pixel_hud
         if OVERLAY.get("cinematic", True):
             frame = pixel_hud.lighting(pixel_hud.camera(frame, t, seed))
+        layer = pixel_hud.new_layer()
         tag = footer.replace(" / ", " OF ") if footer else ""
-        pixel_hud.draw_overlay(frame, tq(t), OVERLAY, tag)
-        return frame
+        pixel_hud.draw_overlay(layer, tq(t), OVERLAY, tag)
+        return pixel_hud.composite(upscale(frame), layer)
 
     # Darkened band behind the top text and footer for readability
     if channel or headline:
@@ -927,7 +930,8 @@ def scene_clip(spec: dict, duration: float, seed: int, headline: str = "", chann
         key = tq(t)
         if key not in cache:
             cache.clear()
-            cache[key] = upscale(render_frame(spec, key, seed, headline, channel, footer))
+            f = render_frame(spec, key, seed, headline, channel, footer)
+            cache[key] = f if f.shape[0] > PH else upscale(f)   # HUD frames come back full size
         return cache[key]
 
     return VideoClip(make_frame, duration=duration)
@@ -943,7 +947,7 @@ def render_caption(txt: str, **_) -> ImageClip:
     if OVERLAY:
         import pixel_hud
         rgba = pixel_hud.caption_frame(txt, pixel_hud.caption_top(OVERLAY))
-        return ImageClip(upscale(rgba), transparent=True)
+        return ImageClip(pixel_hud.upscale_layer(rgba), transparent=True)
     frame = np.zeros((PH, PW, 3), dtype=np.uint8)
     mask = text_mask(txt, 2 * DETAIL, (LW - 12) * DETAIL)
     h, w = mask.shape
