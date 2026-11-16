@@ -556,99 +556,177 @@ def scene_pterosaur(frame, t, spec, seed):
         limb(frame, x + 5 * sc, y - 2, x - 6 * sc, y - 9 * sc, 1.6 * sc + 0.4, 0.4, (210, 90, 60))
 
 
-def _water_reptile(frame, t, seed, top, bottom, length, cx, cy, ramp, belly):
+MOSA_BACK = [(18, 32, 42), (32, 54, 66), (52, 80, 92), (80, 112, 122), (120, 150, 156)]
+MOSA_BELLY = [(140, 150, 140), (185, 192, 178), (215, 220, 205)]
+MOSA_FIN = [(16, 28, 36), (30, 48, 58), (48, 72, 84), (72, 100, 110)]
+
+
+def _sea_backdrop(frame, t, seed):
     water(frame, [(40, 130, 170), (20, 80, 130), (8, 40, 80), (3, 18, 40)], 0.1, 1.0)
     light_rays(frame, t, seed, strength=0.3)
     marine_snow(frame, t, seed, 80, (110, 160, 190))
-    return swimmer(frame, cx, cy, length, top, bottom, ramp, 1, bend=6 * math.sin(t * 2), belly_ramp=belly)
 
 
-def scene_mosasaur(frame, t, spec, seed):
-    """A mosasaur, a giant sea reptile, gliding past ammonites."""
-    hx = 120 + t * 5
-    cy = 196 + 4 * math.sin(t * 0.8)
-    L = 160
-    top = lambda u: 11 * np.clip(u / 0.15, 0, 1) ** 0.6 * (1 - np.clip((u - 0.3) / 0.7, 0, 1) * 0.85)
-    bot = lambda u: 10 * np.clip(u / 0.12, 0, 1) ** 0.6 * (1 - np.clip((u - 0.3) / 0.7, 0, 1) * 0.85)
-    ramp = [(30, 50, 60), (55, 85, 95), (85, 120, 125)]
-    belly = [(150, 160, 150), (190, 195, 180)]
-    # Ammonites (coiled shells) drift in front of the water
-    _water_reptile(frame, t, seed, top, bot, L, hx, cy, ramp, belly)
-    for i in range(4):
-        ax, ay = (i * 47 + t * 3) % (LW + 20) - 10, 140 + (i * 31) % 90
+def _ammonites(frame, t, seed, count=4, behind=True):
+    for i in range(count):
+        ax, ay = (i * 47 + t * 3 + (0 if behind else 20)) % (LW + 20) - 10, 140 + (i * 31) % 90
         s = _win(ax, ay, 7, 7)
         if s is None:
             continue
         d = np.sqrt((XX[s] - ax) ** 2 + (YY[s] - ay) ** 2)
         a = np.arctan2(YY[s] - ay, XX[s] - ax)
         shell = d < 5.5
-        frame[s][shell] = dither_ramp(0.5 + 0.5 * np.sin(d[shell] * 2.2 + a[shell]), [(120, 80, 50), (200, 160, 110), (235, 210, 170)],
-                                      PY[s][shell], PX[s][shell])
-    # Flippers and tail fin
-    for fx, fy, dx in ((hx - 0.3 * L, cy + 8, 14), (hx - 0.6 * L, cy + 6, 10)):
-        tri(frame, [(fx, fy), (fx + 6, fy), (fx - dx, fy + 12 + 3 * math.sin(t * 2))], (40, 65, 75))
-    tri(frame, [(hx - L + 4, cy + 2), (hx - L - 12, cy - 12), (hx - L - 6, cy + 14)], (40, 65, 75))
-    # Long jaw with teeth
-    teeth(frame, hx - 26, hx - 3, cy + 1, True, 2.2)
-    eye(frame, hx - 22, cy - 4, 1.3)
+        frame[s][shell] = dither_ramp(0.5 + 0.5 * np.sin(d[shell] * 2.2 + a[shell]),
+                                      [(120, 80, 50), (200, 160, 110), (235, 210, 170)], PY[s][shell], PX[s][shell])
+        for k in range(4):   # tentacles trailing from the shell opening
+            limb(frame, ax - 4, ay + 1, ax - 8 - k * 0.6, ay + 3 + k * 1.5 + math.sin(t * 2 + k), 0.6, 0.4, (180, 140, 100))
+
+
+def mosasaur_geometry(t):
+    hx = 120 + t * 5
+    cy = 196 + 4 * math.sin(t * 0.8)
+    return hx, cy, 160
+
+
+def scene_mosasaur(frame, t, spec, seed):
+    """A mosasaur, a giant sea reptile related to lizards, gliding past ammonites:
+    a long crocodile-like head, paddle flippers and a shark-like tail fin."""
+    _sea_backdrop(frame, t, seed)
+    _ammonites(frame, t, seed)
+    hx, cy, L = mosasaur_geometry(t)
+    wave = 5 * math.sin(t * 2.0)
+    # Far flippers (darker), then body
+    for u0, ph in ((0.27, 0.6), (0.55, 2.1)):
+        bx = hx - u0 * L + 3
+        a = 0.9 + 0.35 * math.sin(t * 2 + ph)
+        limb_shaded(frame, bx, cy + 4, bx - 13 * math.cos(a) - 2, cy + 4 + 13 * math.sin(a), 3.6, 1.4, MOSA_FIN, seed + 3)
+    us =   [0.0, 0.04, 0.10, 0.17, 0.23, 0.32, 0.45, 0.60, 0.75, 0.88, 1.0]
+    cys =  [cy + 1, cy, cy - 1, cy - 1.5, cy, cy + 1, cy + 2, cy + 3, cy + 4, cy + 5, cy + 6]
+    cys = [c + wave * u ** 2 for c, u in zip(cys, us)]
+    tops = [2.2, 4.2, 6.2, 7.5, 7.5, 11, 12.5, 10.5, 6.5, 3.5, 2]
+    bots = [2.2, 4, 5.5, 7, 8, 11, 12.5, 9.5, 5.5, 3, 2]
+    res = body_profile(frame, hx, L, us, cys, tops, bots, MOSA_BACK, MOSA_BELLY, seed, stripes=0.12)
+    # Jaws open now and then
+    snap = max(0.0, math.sin(t * 1.3)) ** 4
+    if res is not None and res[3] is not None and snap > 0.05:
+        s_, m, u, rel = res
+        gap = m & (u < 0.15) & (YY[s_] > cys[2] - 0.2) & (YY[s_] < cys[2] + 5.5 * snap * np.clip((0.15 - u) / 0.15, 0, 1))
+        frame[s_][gap] = (70, 25, 30)
+    teeth(frame, hx - 23, hx - 2, cys[2] + 0.2, True, 2.0 + 1.2 * snap)
+    if snap > 0.05:
+        teeth(frame, hx - 21, hx - 4, cys[2] + 5 * snap, False, 1.8)
+    eye(frame, hx - 26, cys[3] - 3.5, 1.4)
+    # Shark-like tail fin, bigger lobe pointing down (as fossils show)
+    tx, ty = hx - L + 2, cys[-1]
+    tri(frame, [(tx + 10, ty - 1), (tx - 12, ty + 18 + wave), (tx + 2, ty + 3)], MOSA_FIN[2])
+    tri(frame, [(tx + 10, ty), (tx - 6, ty - 9 + wave * 0.5), (tx + 2, ty + 1)], MOSA_FIN[1])
+    # Near flippers
+    for u0, ph in ((0.25, 0.0), (0.53, 1.5)):
+        bx = hx - u0 * L
+        a = 0.9 + 0.35 * math.sin(t * 2 + ph)
+        limb_shaded(frame, bx, cy + 6, bx - 15 * math.cos(a) - 2, cy + 6 + 15 * math.sin(a), 4.2, 1.6, MOSA_BACK[:4], seed)
+    _ammonites(frame, t, seed + 9, 2, behind=False)
+
+
+PLESIO_BACK = [(36, 42, 30), (62, 72, 50), (95, 106, 74), (135, 145, 108), (175, 182, 145)]
+PLESIO_BELLY = [(150, 150, 120), (190, 190, 155), (220, 220, 190)]
+
+
+def plesiosaur_geometry(t):
+    cx, cy = 70 + t * 3, 212 + 3 * math.sin(t)
+    return cx, cy
 
 
 def scene_plesiosaur(frame, t, spec, seed):
-    """A long-necked plesiosaur rowing with four flippers through a school of fish."""
-    water(frame, [(40, 130, 170), (20, 80, 130), (8, 40, 80), (3, 18, 40)], 0.1, 1.0)
-    light_rays(frame, t, seed, strength=0.3)
+    """A long-necked plesiosaur flying underwater on four long flippers
+    through a school of fish."""
+    _sea_backdrop(frame, t, seed)
     for i in range(16):
         small_fish(frame, (i * 23 + t * 9) % (LW + 20) - 10, 130 + (i * 37) % 60, 2.5, 1, (200, 210, 190), t, i)
-    cx, cy = 70 + t * 3, 212 + 3 * math.sin(t)
-    ramp = [(50, 60, 45), (90, 100, 70), (130, 140, 100), (175, 180, 140)]
+    cx, cy = plesiosaur_geometry(t)
     row = math.sin(t * 2)
-    for fx, ph in ((cx + 14, 0), (cx - 18, 1.5)):
-        a = 0.6 + 0.5 * math.sin(t * 2 + ph)
-        limb(frame, fx, cy + 4, fx - 18 * math.cos(a), cy + 4 + 16 * math.sin(a), 4, 1, (60, 70, 50))
-    chain(frame, curve(cx - 22, cy, cx - 48, cy + 4, 2, 10), 7, 1.5, ramp)
-    ellipse(frame, cx, cy, 26, 12, ramp)
-    neck = curve(cx + 22, cy - 4, cx + 74, cy - 40 + 3 * row, -10, 26)
-    chain(frame, neck, 5.5, 3, ramp)
-    hx, hy = neck[-1]
-    ellipse(frame, hx + 3, hy, 6, 3.5, ramp)
-    teeth(frame, hx + 2, hx + 8, hy + 1.5, True, 1.4)
+
+    def flipper(fx, fy, ph, ramp, scale):
+        a = 0.55 + 0.55 * math.sin(t * 2 + ph)
+        ex, ey = fx - 24 * scale * math.cos(a), fy + 20 * scale * math.sin(a)
+        mx, my = (fx + ex) / 2 - 2, (fy + ey) / 2 + 1
+        limb_shaded(frame, fx, fy, mx, my, 5 * scale, 3.5 * scale, ramp, seed)
+        limb_shaded(frame, mx, my, ex, ey, 3.5 * scale, 0.8, ramp, seed)
+
+    flipper(cx + 14, cy + 2, 0.4, PLESIO_BACK[:3], 0.9)       # far front
+    flipper(cx - 16, cy + 2, 1.9, PLESIO_BACK[:3], 0.85)      # far back
+    # Body (broad, short tail) and long neck
+    body_profile(frame, cx + 28, 64, [0, 0.15, 0.4, 0.62, 0.8, 1.0], [cy - 2, cy - 1, cy, cy + 1, cy + 2, cy + 3],
+                 [6, 11, 13, 10, 5, 1.5], [6, 11, 13, 10, 4, 1.2], PLESIO_BACK, PLESIO_BELLY, seed, stripes=0.1)
+    pts = curve(cx + 22, cy - 3, cx + 74, cy - 40 + 3 * row, -10, 14)
+    widths = [6.5 - 3.5 * i / 13 for i in range(14)]
+    neck_tube(frame, pts, widths, PLESIO_BACK[:4], PLESIO_BELLY, seed)
+    hx, hy = pts[-1]
+    body_profile(frame, hx + 12, 15, [0, 0.4, 1], [hy + 0.5, hy, hy], [1.5, 3.5, 3.5], [1.5, 2.5, 3], PLESIO_BACK,
+                 PLESIO_BELLY, seed)
+    teeth(frame, hx + 3, hx + 11, hy + 0.8, True, 1.6)
     eye(frame, hx + 3, hy - 1.5, 1.0)
-    for fx, ph in ((cx + 10, 0.4), (cx - 14, 1.9)):
-        a = 0.6 + 0.5 * math.sin(t * 2 + ph)
-        limb(frame, fx, cy + 6, fx - 18 * math.cos(a), cy + 6 + 16 * math.sin(a), 4.5, 1.2, (85, 95, 65))
+    flipper(cx + 12, cy + 5, 0.0, PLESIO_BACK[:4], 1.0)       # near front
+    flipper(cx - 18, cy + 5, 1.5, PLESIO_BACK[:4], 0.95)      # near back
+
+
+MAMMOTH_FUR = [(38, 22, 14), (66, 40, 24), (100, 64, 38), (140, 96, 58), (180, 135, 88)]
+MAMMOTH_FUR_FAR = [(30, 18, 11), (50, 30, 18), (75, 48, 28), (105, 70, 42)]
+IVORY = [(150, 130, 100), (205, 190, 160), (235, 225, 200), (250, 245, 230)]
 
 
 def scene_mammoth(frame, t, spec, seed):
-    """A woolly mammoth walking through falling snow."""
+    """A woolly mammoth walking through falling snow: domed head, shoulder
+    hump, shaggy fur hanging below the body, curving tusks and a swinging trunk."""
     landscape(frame, t, seed, "ice")
-    wool = [(50, 30, 20), (90, 55, 30), (135, 90, 50), (175, 130, 80)]
-    leg_dark, leg_light = (70, 45, 28), (110, 72, 42)
-    for i, x in enumerate((60, 100)):
-        legs(frame, t * 0.5, [(x, 210)], 0, 0, 9, [leg_dark], phase=i, stride=5, toe=0)
-    ellipse(frame, 80, 194, 38, 24, wool)
-    ellipse(frame, 112, 176, 15, 17, wool)   # domed head
-    ellipse(frame, 104, 168, 7, 6, wool)     # shoulder hump
-    rng = np.random.default_rng(seed)
-    for _ in range(300):   # shaggy hair strands hanging down
-        x, y = rng.uniform(42, 126), rng.uniform(168, 218)
-        if ((x - 80) / 39) ** 2 + ((y - 194) / 25) ** 2 < 1 or ((x - 112) / 16) ** 2 + ((y - 176) / 18) ** 2 < 1:
-            for k in range(5):
-                pa.put(frame, x + 0.2 * k, y + k, (55, 35, 20) if rng.random() < 0.5 else (160, 112, 65))
-    for i, x in enumerate((68, 108)):
-        legs(frame, t * 0.5, [(x, 212)], 0, 0, 10, [leg_light], phase=i + 0.5, stride=5, toe=0)
-    # Trunk, then long curving tusks in front of it
     sw = 3 * math.sin(t * 1.2)
-    chain(frame, curve(122, 186, 128 + sw, 236, 7, 18), 5, 2.4, wool)
-    for k, off in enumerate((0, 4)):
-        for x, y in curve(118 + off, 196, 154 + off, 182, 16, 26):
-            disc(frame, x, y, 2.6, (245, 238, 220) if k else (215, 205, 180))
-    eye(frame, 117, 172, 1.4)
+    ground_shadow(frame, 88, 56, strength=0.25)
+    for i, x in enumerate((64, 108)):
+        column_leg(frame, t, x, 214, MAMMOTH_FUR_FAR, i * 1.7 + 0.8, width=7.5, speed=0.9, seed=seed + 2)
+    hx, L = 138, 100
+    us =   [0.0, 0.07, 0.16, 0.26, 0.36, 0.50, 0.66, 0.82, 0.94, 1.0]
+    cys =  [194, 188, 184, 190, 193, 196, 198, 200, 202, 205]
+    tops = [9, 16, 19, 14, 18, 16, 14, 11, 7, 3]
+    bots = [13, 15, 14, 17, 21, 22, 20, 16, 9, 4]
+    res = body_profile(frame, hx, L, us, cys, tops, bots, MAMMOTH_FUR, MAMMOTH_FUR[1:], seed)
+    if res is not None and res[3] is not None:   # fur streaks running down the body
+        s_, m, u, rel = res
+        streak = m & (np.sin(XX[s_] * 2.3 + np.sin(YY[s_] * 0.6) * 2) > 0.7)
+        frame[s_][streak] = (frame[s_][streak] * 0.72).astype(np.uint8)
+    # Shaggy fringe of long hair hanging below the belly and chest
+    rng = np.random.default_rng(seed)
+    for k in range(70):
+        u = rng.uniform(0.08, 0.9)
+        x = hx - u * L
+        y = float(np.interp(u, us, cys)) + float(np.interp(u, us, bots)) - 1
+        ln = rng.uniform(4, 9)
+        swing = math.sin(t * 1.5 + k) * 0.8
+        limb(frame, x, y, x - 1 + swing, y + ln, 0.9, 0.4, MAMMOTH_FUR[rng.integers(0, 3)])
+    # Small furry ear, eye
+    muscle(frame, hx - 22, 188, 5, 7, MAMMOTH_FUR, ang=0.2, seed=seed)
+    eye(frame, hx - 12, 186, 1.3)
+    # Trunk: a tapering tube with wrinkle rings
+    pts = curve(hx - 4, 196, hx - 2 + sw, 238, 8, 14)
+    widths = [5.5 - 3 * i / 13 for i in range(14)]
+    for (x1, y1), (x2, y2), w1, w2 in zip(pts, pts[1:], widths, widths[1:]):
+        limb_shaded(frame, x1, y1, x2, y2, w1, w2, MAMMOTH_FUR[1:], seed)
+    for i in range(1, 13, 2):
+        x, y = pts[i]
+        limb(frame, x - widths[i] * 0.8, y, x + widths[i] * 0.8, y + 0.4, 0.4, 0.4, MAMMOTH_FUR[0])
+    # Long tusks curving out and up
+    for k, off in enumerate((-3, 2)):
+        tusk = curve(hx - 6 + off, 204, hx + 26 + off, 188 - k * 2, 16, 14)
+        tw = [3.2 - 2.2 * i / 13 for i in range(14)]
+        for (x1, y1), (x2, y2), w1, w2 in zip(tusk, tusk[1:], tw, tw[1:]):
+            limb_shaded(frame, x1, y1, x2, y2, w1, w2, IVORY if k else IVORY[:3], seed)
+    for i, x in enumerate((70, 114)):
+        column_leg(frame, t, x, 216, MAMMOTH_FUR[:4], i * 1.7, width=8.5, speed=0.9, seed=seed, thigh_ramp=MAMMOTH_FUR[:4])
     # Snow
     srng = np.random.default_rng(seed + 3)
     for i in range(160):
         x = (srng.uniform(0, LW) + 6 * math.sin(t * 0.8 + i)) % LW
         y = (srng.uniform(0, LH) + t * srng.uniform(6, 14)) % LH
-        pa.put(frame, x, y, (255, 255, 255), 2 if i % 4 == 0 else 1)
+        pa.put(frame, x, y, (255, 255, 255), 3 if i % 4 == 0 else 2)
 
 
 def scene_impact(frame, t, spec, seed):
@@ -887,15 +965,15 @@ def _raptor_parts(t):
 
 
 def _mosasaur_parts(t):
-    hx, cy = 120 + t * 5, 196 + 4 * math.sin(t * 0.8)
-    return {"teeth": (hx - 14, cy + 1), "head": (hx - 16, cy), "eye": (hx - 22, cy - 4), "body": (hx - 70, cy),
-            "flippers": (hx - 50, cy + 12), "tail": (hx - 150, cy + 2)}
+    hx, cy, L = mosasaur_geometry(t)
+    return {"teeth": (hx - 12, cy + 1), "head": (hx - 18, cy - 1), "eye": (hx - 26, cy - 4), "body": (hx - 70, cy + 2),
+            "flippers": (hx - 45, cy + 14), "tail": (hx - L + 4, cy + 10)}
 
 
 def _plesiosaur_parts(t):
-    cx, cy = 70 + t * 3, 212 + 3 * math.sin(t)
-    return {"neck": (cx + 45, cy - 22), "head": (cx + 76, cy - 40), "teeth": (cx + 79, cy - 39),
-            "flippers": (cx, cy + 14), "body": (cx, cy)}
+    cx, cy = plesiosaur_geometry(t)
+    return {"neck": (cx + 46, cy - 22), "head": (cx + 80, cy - 40), "teeth": (cx + 82, cy - 39),
+            "eye": (cx + 77, cy - 42), "flippers": (cx - 2, cy + 16), "body": (cx, cy)}
 
 
 def _cambrian_parts(t):
@@ -915,8 +993,8 @@ FOCUS_POINTS = {
     "pterosaur": {"wings": (100, 150), "head": (115, 148), "beak": (118, 149)},
     "mosasaur": _mosasaur_parts,
     "plesiosaur": _plesiosaur_parts,
-    "mammoth": {"tusks": (138, 194), "trunk": (127, 216), "head": (112, 178), "eye": (117, 172),
-                "fur": (80, 192), "legs": (84, 238)},
+    "mammoth": {"tusks": (150, 196), "trunk": (137, 220), "head": (124, 186), "eye": (126, 186),
+                "fur": (88, 214), "legs": (90, 238)},
     "fossil": {"skull": (142, 168), "teeth": (142, 176), "ribs": (75, 205), "spine": (75, 185), "legs": (52, 232),
                "brush": (100, 240)},
     "eggs": {"egg": (100, 236), "nest": (92, 244), "baby": (101, 234)},
