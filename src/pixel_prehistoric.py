@@ -323,6 +323,36 @@ def neck_tube(frame, pts, widths, ramp, belly, seed):
         limb_shaded(frame, x1 + w1 * 0.3, y1 + w1 * 0.45, x2 + w2 * 0.3, y2 + w2 * 0.45, w1 * 0.45, w2 * 0.45, belly, seed)
 
 
+def mouth_with_teeth(frame, res, hx, length, u_end, top_y, open_h, max_tooth=3.0, inside=(70, 18, 22),
+                     tooth=(240, 235, 215)):
+    """Open a wedge-shaped mouth in a body_profile head and put the teeth
+    inside it: upper teeth hang from the top jaw, lower teeth stand on the
+    bottom jaw, both scaled to the opening, so nothing sticks outside the
+    mouth. The wedge is widest at the snout (u = 0) and closes at u_end."""
+    if res is None or res[3] is None or open_h < 0.6:
+        return
+    s_, m, u, rel = res
+    h = open_h * np.clip((u_end - u) / u_end, 0, 1)
+    inside_head = m & (rel < 0.86)                 # always keep a strip of lower jaw
+    gap = inside_head & (u < u_end) & (YY[s_] > top_y) & (YY[s_] < top_y + h)
+    before = frame[s_].copy()
+    frame[s_][gap] = inside
+    n = max(3, int(length * u_end / 3.2))
+    for i in range(n):
+        uu = (i + 0.6) / n * u_end * 0.92
+        x = hx - uu * length
+        hh = open_h * (u_end - uu) / u_end
+        if hh < 1.5:
+            continue
+        ln = min(max_tooth, hh * 0.42)
+        tri(frame, [(x - 0.9, top_y + 0.2), (x + 0.9, top_y + 0.2), (x, top_y + ln)], tooth)
+        xb = x - 1.4
+        tri(frame, [(xb - 0.8, top_y + hh - 0.2), (xb + 0.8, top_y + hh - 0.2), (xb, top_y + hh - ln * 0.85)], tooth)
+    # Teeth only show inside the open mouth: undo anything drawn outside it
+    outside = ~gap
+    frame[s_][outside] = before[outside]
+
+
 # ------------------------------------------------------------- scenes ----
 TREX_BACK = [(28, 36, 22), (52, 64, 34), (84, 98, 52), (122, 134, 78), (160, 168, 110)]
 TREX_BELLY = [(120, 112, 80), (165, 155, 115), (205, 195, 150), (230, 222, 185)]
@@ -347,19 +377,10 @@ def scene_trex(frame, t, spec, seed):
     bots = [4.5, 7, 10, 11, 10, 15, 21, 20, 13, 7, 3.5, 1.0]
     cys = [c + bob * (1 - u) + sway * u ** 2 for c, u in zip(cys, us)]
     res = body_profile(frame, hx, 172, us, cys, tops, bots, TREX_BACK, TREX_BELLY, seed, stripes=0.25)
-    # Snapping jaws: open a wedge-shaped mouth and line it with teeth
+    # Snapping jaws: the mouth opens as a wedge with the teeth inside it
     snap = max(0.0, math.sin(t * 1.8)) ** 3
     head_y = cys[2]
-    if res is not None and snap > 0.05:
-        s_, m, u, rel = res
-        mouth_top = head_y + 1
-        open_h = 7 * snap * np.clip((0.16 - u) / 0.16, 0, 1)
-        gap = m & (u < 0.16) & (YY[s_] > mouth_top) & (YY[s_] < mouth_top + open_h)
-        frame[s_][gap] = (70, 18, 22)
-    jaw_x0, jaw_x1 = hx - 26, hx - 2
-    teeth(frame, jaw_x0, jaw_x1, head_y + 1.2, True, 2.6 + 2 * snap)
-    if snap > 0.05:
-        teeth(frame, jaw_x0 + 2, jaw_x1 - 2, head_y + 1 + 7 * snap, False, 2.2)
+    mouth_with_teeth(frame, res, hx, 172, 0.16, head_y + 1, 9 * snap, max_tooth=3.4)
     # Eye with a bony brow ridge, nostril, jaw line
     eye(frame, hx - 18, head_y - 6, 1.7)
     limb(frame, hx - 23, head_y - 9, hx - 13, head_y - 9.5, 1.2, 0.8, (60, 70, 40))
@@ -606,15 +627,9 @@ def scene_mosasaur(frame, t, spec, seed):
     tops = [2.2, 4.2, 6.2, 7.5, 7.5, 11, 12.5, 10.5, 6.5, 3.5, 2]
     bots = [2.2, 4, 5.5, 7, 8, 11, 12.5, 9.5, 5.5, 3, 2]
     res = body_profile(frame, hx, L, us, cys, tops, bots, MOSA_BACK, MOSA_BELLY, seed, stripes=0.12)
-    # Jaws open now and then
+    # Jaws open now and then, teeth inside the mouth
     snap = max(0.0, math.sin(t * 1.3)) ** 4
-    if res is not None and res[3] is not None and snap > 0.05:
-        s_, m, u, rel = res
-        gap = m & (u < 0.15) & (YY[s_] > cys[2] - 0.2) & (YY[s_] < cys[2] + 5.5 * snap * np.clip((0.15 - u) / 0.15, 0, 1))
-        frame[s_][gap] = (70, 25, 30)
-    teeth(frame, hx - 23, hx - 2, cys[2] + 0.2, True, 2.0 + 1.2 * snap)
-    if snap > 0.05:
-        teeth(frame, hx - 21, hx - 4, cys[2] + 5 * snap, False, 1.8)
+    mouth_with_teeth(frame, res, hx, L, 0.15, cys[2] - 0.2, 7 * snap, max_tooth=2.6, inside=(70, 25, 30))
     eye(frame, hx - 26, cys[3] - 3.5, 1.4)
     # Shark-like tail fin, bigger lobe pointing down (as fossils show)
     tx, ty = hx - L + 2, cys[-1]
