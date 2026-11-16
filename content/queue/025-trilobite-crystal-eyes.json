@@ -1,0 +1,38 @@
+{
+  "topic": "Trilobites had crystal eyes",
+  "script": "Trilobites had eyes made of calcite, a kind of crystal. They first appeared more than 520 million years ago. They lasted for roughly 270 million years. Many could roll up into a ball, like a pill bug. More than 20,000 species have been described from fossils. They died out in the Great Dying, about 252 million years ago. Follow DinoBytes for more prehistoric facts.",
+  "title": "These Animals Had Eyes Made of Crystal #Trilobites #Fossils #Shorts",
+  "description": "Trilobites had calcite crystal eyes, could roll into balls, and thrived for about 270 million years.\n\nFollow DinoBytes for more prehistoric facts.\n\n#Trilobites #Fossils #Prehistoric #DinoFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "cambrian"
+    },
+    {
+      "scene": "cambrian"
+    },
+    {
+      "scene": "cambrian"
+    },
+    {
+      "scene": "cambrian"
+    },
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "volcano"
+    },
+    {
+      "scene": "sauropod"
+    }
+  ],
+  "music_style": "adventure",
+  "stat": "THEY COULD ROLL INTO A BALL",
+  "gauge": {
+    "label": "SPECIES",
+    "value": 20000,
+    "max": 25000,
+    "unit": ""
+  }
+}

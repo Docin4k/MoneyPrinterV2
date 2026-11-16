@@ -1,0 +1,38 @@
+{
+  "topic": "Mammoths lived when the pyramids were built",
+  "script": "Woolly mammoths were still alive when the Great Pyramid of Giza was built. The last ones lived on Wrangel Island, off the coast of Siberia. They died out there about 4,000 years ago. Woolly mammoths were about the size of African elephants. Their curving tusks could grow to around 4 meters long. Frozen mammoths have been found in Siberia with hair and skin still intact. Follow DinoBytes for more prehistoric facts.",
+  "title": "Mammoths Lived When the Pyramids Were Built #Mammoth #IceAge #Shorts",
+  "description": "The last woolly mammoths lived on Wrangel Island until about 4,000 years ago, after the Great Pyramid was built.\n\nFollow DinoBytes for more prehistoric facts.\n\n#Mammoth #IceAge #Prehistoric #DinoFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "mammoth"
+    },
+    {
+      "scene": "mammoth"
+    },
+    {
+      "scene": "mammoth"
+    },
+    {
+      "scene": "mammoth"
+    },
+    {
+      "scene": "mammoth"
+    },
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "fossil"
+    }
+  ],
+  "music_style": "dino stomp",
+  "stat": "LAST ONES: WRANGEL ISLAND",
+  "gauge": {
+    "label": "YEARS AGO",
+    "value": 4000,
+    "max": 10000,
+    "unit": ""
+  }
+}

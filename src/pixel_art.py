@@ -1035,3 +1035,4 @@ def scenes_for_script(sentences: list[str], topic: str = "") -> list[dict]:
 
 # Underwater scenes (deep_sea, whale, anglerfish, ...) register themselves here
 import pixel_ocean  # noqa: E402,F401
+import pixel_prehistoric  # noqa: E402,F401  (dinosaur scenes)

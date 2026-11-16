@@ -1,25 +1,25 @@
 {
-  "name": "Pixel Abyss",
-  "niche": "strange deep sea and ocean facts",
-  "cta": "Follow Pixel Abyss for more strange facts from the deep.",
-  "tagline": "Weird true facts from the deep",
+  "name": "DinoBytes",
+  "niche": "dinosaurs and prehistoric life",
+  "cta": "Follow DinoBytes for more prehistoric facts.",
+  "tagline": "Prehistoric facts, pixel by pixel",
   "cta_scenes": [
-    "deep_sea",
-    "jellyfish",
-    "kelp_forest",
-    "fish_school"
+    "volcano",
+    "sauropod",
+    "pterosaur",
+    "fossil"
   ],
   "music_styles": [
-    "deep current",
-    "sonar",
-    "bioluminescence",
-    "tide pool",
-    "kelp drift",
+    "adventure",
+    "jungle",
+    "dino stomp",
+    "primeval",
     "explorer",
-    "midnight zone",
-    "sunken treasure"
+    "march",
+    "boss battle",
+    "chill"
   ],
   "video_layout": "hud",
-  "handle": "@PIXELABYSS",
+  "handle": "@DINOBYTES",
   "min_video_seconds": 61
 }

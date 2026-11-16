@@ -1,0 +1,38 @@
+{
+  "topic": "The biggest dinosaurs",
+  "script": "Some sauropods were the largest animals ever to walk on land. Argentinosaurus may have reached about 30 to 35 meters long. Scientists estimate it weighed around 70 tonnes. That is heavier than 10 African elephants. Its size is estimated from just a few giant bones, including huge back vertebrae. Even so, blue whales are heavier than any known dinosaur. Follow DinoBytes for more prehistoric facts.",
+  "title": "The Biggest Dinosaurs Weighed 70 Tonnes #Argentinosaurus #Dinosaurs #Shorts",
+  "description": "Argentinosaurus may have weighed around 70 tonnes, though blue whales are heavier still.\n\nFollow DinoBytes for more prehistoric facts.\n\n#Argentinosaurus #Sauropod #Dinosaurs #DinoFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "sauropod"
+    },
+    {
+      "scene": "sauropod"
+    },
+    {
+      "scene": "sauropod"
+    },
+    {
+      "scene": "sauropod"
+    },
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "sauropod"
+    },
+    {
+      "scene": "fossil"
+    }
+  ],
+  "music_style": "dino stomp",
+  "stat": "HEAVIER THAN 10 ELEPHANTS",
+  "gauge": {
+    "label": "WEIGHT",
+    "value": 70,
+    "max": 100,
+    "unit": "TONNES"
+  }
+}

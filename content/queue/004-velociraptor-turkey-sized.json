@@ -1,0 +1,38 @@
+{
+  "topic": "The real Velociraptor was small and feathered",
+  "script": "The real Velociraptor was about the size of a turkey. It was roughly 2 meters long, mostly tail, and weighed around 15 kilograms. Bumps on its arm bones show where feathers were attached. It had a large curved claw on each foot. Movie raptors are much closer in size to a bigger relative, Deinonychus. A famous 1971 fossil shows a Velociraptor locked in a fight with a Protoceratops. Follow DinoBytes for more prehistoric facts.",
+  "title": "The Real Velociraptor Was Turkey-Sized #Velociraptor #Dinosaurs #Shorts",
+  "description": "The real Velociraptor was a feathered, turkey-sized dinosaur, much smaller than the movie version.\n\nFollow DinoBytes for more prehistoric facts.\n\n#Velociraptor #Dinosaurs #Paleontology #DinoFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "raptor"
+    },
+    {
+      "scene": "raptor"
+    },
+    {
+      "scene": "raptor"
+    },
+    {
+      "scene": "raptor"
+    },
+    {
+      "scene": "raptor"
+    },
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "volcano"
+    }
+  ],
+  "music_style": "primeval",
+  "stat": "IT HAD FEATHERS",
+  "gauge": {
+    "label": "WEIGHT",
+    "value": 15,
+    "max": 20,
+    "unit": "KG"
+  }
+}

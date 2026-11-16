@@ -127,6 +127,20 @@ STYLES = {
                             arp=("triangle", None), arp_rate=2, bass="soft", drums=None, rhythm="waltz",
                             echo=0.3, swing=0.0, key_change=0.0, octave=1, mystic=True, bubbles=0.03),
 }
+# ---- Prehistoric styles (DinoBytes): adventurous and a little wild
+STYLES.update({
+    "jungle": dict(bpm=(100, 116), modes=["dorian", "mixolydian"], meter=4, lead=("pulse", 0.25),
+                   arp=("pulse", 0.125), arp_rate=2, bass="syncopated", drums="rock", rhythm="syncopated",
+                   echo=0.15, swing=0.1, key_change=0.3, bubbles=0.0),
+    "dino stomp": dict(bpm=(84, 96), modes=["mixolydian", "dorian"], meter=4, lead=("saw", None),
+                       arp=("pulse", 0.25), arp_rate=4, bass="octave", drums="march", rhythm="dotted",
+                       echo=0.1, swing=0.0, key_change=0.4),
+    "primeval": dict(bpm=(60, 72), modes=["dorian", "lydian"], meter=4, lead=("triangle", None),
+                     arp=None, arp_rate=4, bass="drone", drums="soft", rhythm="long",
+                     echo=0.5, swing=0.0, key_change=0.0, mystic=True, pad=True),
+})
+PREHISTORIC_STYLES = ["jungle", "dino stomp", "primeval"]
+
 OCEAN_STYLES = ["deep current", "sonar", "bioluminescence", "tide pool", "kelp drift", "explorer",
                 "midnight zone", "sunken treasure"]
 

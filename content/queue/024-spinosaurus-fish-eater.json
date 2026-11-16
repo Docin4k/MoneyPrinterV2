@@ -1,0 +1,38 @@
+{
+  "topic": "Spinosaurus, the fish-eating giant",
+  "script": "The longest meat-eating dinosaur known may have mostly eaten fish. Scientists estimate Spinosaurus grew to about 14 meters long. It had a huge sail on its back, held up by spines over 1.5 meters tall. Its long, narrow jaws were a lot like a crocodile's. It probably spent much of its time in rivers. The first Spinosaurus fossils were destroyed in a bombing raid in 1944. Follow DinoBytes for more prehistoric facts.",
+  "title": "The Longest Meat-Eating Dinosaur Ate Fish #Spinosaurus #Dinosaurs #Shorts",
+  "description": "Spinosaurus, about 14 meters long with a giant back sail, probably spent much of its time catching fish in rivers.\n\nFollow DinoBytes for more prehistoric facts.\n\n#Spinosaurus #Dinosaurs #Paleontology #DinoFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "trex"
+    },
+    {
+      "scene": "trex"
+    },
+    {
+      "scene": "trex"
+    },
+    {
+      "scene": "fish_school"
+    },
+    {
+      "scene": "fish_school"
+    },
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "volcano"
+    }
+  ],
+  "music_style": "chill",
+  "stat": "FIRST FOSSILS LOST IN 1944",
+  "gauge": {
+    "label": "LENGTH",
+    "value": 14,
+    "max": 16,
+    "unit": "M"
+  }
+}

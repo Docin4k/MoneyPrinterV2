@@ -1,0 +1,38 @@
+{
+  "topic": "T. rex lived closer to us than to Stegosaurus",
+  "script": "T. rex lived closer in time to us than to Stegosaurus. Stegosaurus lived about 150 million years ago, in the Late Jurassic. T. rex lived about 68 to 66 million years ago, at the very end of the age of dinosaurs. That is a gap of more than 80 million years between them. Only about 66 million years separate T. rex from us. The age of dinosaurs lasted so long that many famous dinosaurs never met. Follow DinoBytes for more prehistoric facts.",
+  "title": "T. rex Lived Closer to Us Than to Stegosaurus #Dinosaurs #TRex #Shorts",
+  "description": "More than 80 million years separate Stegosaurus and T. rex, more than the time between T. rex and us.\n\nFollow DinoBytes for more prehistoric facts.\n\n#Stegosaurus #TRex #Dinosaurs #DinoFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "stegosaurus"
+    },
+    {
+      "scene": "stegosaurus"
+    },
+    {
+      "scene": "trex"
+    },
+    {
+      "scene": "stegosaurus"
+    },
+    {
+      "scene": "trex"
+    },
+    {
+      "scene": "sauropod"
+    },
+    {
+      "scene": "volcano"
+    }
+  ],
+  "music_style": "chill",
+  "stat": "STEGOSAURUS: ABOUT 150 M YRS AGO",
+  "gauge": {
+    "label": "GAP",
+    "value": 80,
+    "max": 100,
+    "unit": "M YRS"
+  }
+}

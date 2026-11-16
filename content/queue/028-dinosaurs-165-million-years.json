@@ -1,0 +1,38 @@
+{
+  "topic": "Dinosaurs ruled for 165 million years",
+  "script": "Dinosaurs other than birds lived for about 165 million years. The first dinosaurs appeared around 230 million years ago. Many early dinosaurs were small and fast. Their age is split into the Triassic, Jurassic and Cretaceous periods. Modern humans have been around for only about 300,000 years. So far, dinosaurs have lasted over 500 times longer than we have. Follow DinoBytes for more prehistoric facts.",
+  "title": "Dinosaurs Ruled for 165 Million Years #Dinosaurs #Prehistoric #Shorts",
+  "description": "Non-bird dinosaurs lasted about 165 million years, over 500 times longer than modern humans so far.\n\nFollow DinoBytes for more prehistoric facts.\n\n#Dinosaurs #Prehistoric #Paleontology #DinoFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "sauropod"
+    },
+    {
+      "scene": "volcano"
+    },
+    {
+      "scene": "raptor"
+    },
+    {
+      "scene": "stegosaurus"
+    },
+    {
+      "scene": "trex"
+    },
+    {
+      "scene": "sauropod"
+    },
+    {
+      "scene": "volcano"
+    }
+  ],
+  "music_style": "primeval",
+  "stat": "HUMANS: ABOUT 300,000 YEARS",
+  "gauge": {
+    "label": "REIGN",
+    "value": 165,
+    "max": 200,
+    "unit": "M YRS"
+  }
+}

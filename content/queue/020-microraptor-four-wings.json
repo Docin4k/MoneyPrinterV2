@@ -1,0 +1,38 @@
+{
+  "topic": "A dinosaur with four wings",
+  "script": "Microraptor was a small dinosaur with four feathered wings. It had long flight feathers on both its arms and its legs. It was about 80 centimeters long, roughly the size of a crow. In 2012, scientists found its feathers were black with a shiny sheen. It probably glided between trees, and may have been able to flap. It lived in what is now China about 120 million years ago. Follow DinoBytes for more prehistoric facts.",
+  "title": "This Dinosaur Had Four Wings #Microraptor #Dinosaurs #Shorts",
+  "description": "Microraptor had feathered wings on its arms and legs, and shiny black feathers like a crow.\n\nFollow DinoBytes for more prehistoric facts.\n\n#Microraptor #Dinosaurs #Feathers #DinoFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "raptor"
+    },
+    {
+      "scene": "raptor"
+    },
+    {
+      "scene": "raptor"
+    },
+    {
+      "scene": "raptor"
+    },
+    {
+      "scene": "raptor"
+    },
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "volcano"
+    }
+  ],
+  "music_style": "primeval",
+  "stat": "SHINY BLACK FEATHERS",
+  "gauge": {
+    "label": "LENGTH",
+    "value": 80,
+    "max": 100,
+    "unit": "CM"
+  }
+}

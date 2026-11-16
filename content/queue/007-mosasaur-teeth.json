@@ -1,0 +1,38 @@
+{
+  "topic": "Mosasaurs, giant sea lizards",
+  "script": "Mosasaurs were giant sea reptiles, not dinosaurs. The biggest grew to about 12 meters long or more. Their closest living relatives are probably lizards and snakes. They had an extra row of teeth on the roof of their mouth. The first mosasaur fossil was found in the Netherlands in the 1760s. They died out with the dinosaurs 66 million years ago. Follow DinoBytes for more prehistoric facts.",
+  "title": "Mosasaurs Had Teeth on the Roof of Their Mouth #Mosasaur #Prehistoric #Shorts",
+  "description": "Mosasaurs were giant sea reptiles related to lizards and snakes, with extra teeth on the roofs of their mouths.\n\nFollow DinoBytes for more prehistoric facts.\n\n#Mosasaur #Prehistoric #SeaMonsters #DinoFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "mosasaur"
+    },
+    {
+      "scene": "mosasaur"
+    },
+    {
+      "scene": "mosasaur"
+    },
+    {
+      "scene": "mosasaur"
+    },
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "impact"
+    },
+    {
+      "scene": "fossil"
+    }
+  ],
+  "music_style": "boss battle",
+  "stat": "RELATED TO LIZARDS AND SNAKES",
+  "gauge": {
+    "label": "LENGTH",
+    "value": 12,
+    "max": 17,
+    "unit": "M"
+  }
+}

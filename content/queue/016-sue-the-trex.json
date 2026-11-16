@@ -1,0 +1,38 @@
+{
+  "topic": "Sue, the most complete T. rex",
+  "script": "The most complete T. rex ever found is named Sue. It was discovered in South Dakota in 1990 by Sue Hendrickson. About 90 percent of its skeleton by volume was recovered. In 1997, it sold at auction for about 8.4 million dollars. Sue is now on display at the Field Museum in Chicago. It is about 12 meters long. Follow DinoBytes for more prehistoric facts.",
+  "title": "The T. rex That Sold for 8 Million Dollars #TRex #Fossils #Shorts",
+  "description": "Sue, the most complete T. rex ever found, sold for about 8.4 million dollars in 1997.\n\nFollow DinoBytes for more prehistoric facts.\n\n#TRex #Sue #Fossils #DinoFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "trex"
+    },
+    {
+      "scene": "trex"
+    },
+    {
+      "scene": "volcano"
+    }
+  ],
+  "music_style": "chill",
+  "stat": "FOUND IN SOUTH DAKOTA, 1990",
+  "gauge": {
+    "label": "COMPLETE",
+    "value": 90,
+    "max": 100,
+    "unit": "%"
+  }
+}

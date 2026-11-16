@@ -1,0 +1,38 @@
+{
+  "topic": "Brontosaurus came back",
+  "script": "Brontosaurus was famous, then dropped, then brought back by scientists. In 1903, it was decided that Brontosaurus was the same animal as Apatosaurus. Because Apatosaurus was named first, the name Brontosaurus was dropped. In 2015, a big study found Brontosaurus was different enough to be its own kind again. Brontosaurus means thunder lizard. It was a long-necked sauropod over 20 meters long. Follow DinoBytes for more prehistoric facts.",
+  "title": "Brontosaurus Was Cancelled, Then Came Back #Brontosaurus #Dinosaurs #Shorts",
+  "description": "Brontosaurus was merged into Apatosaurus in 1903, then brought back as its own kind in 2015.\n\nFollow DinoBytes for more prehistoric facts.\n\n#Brontosaurus #Sauropod #Dinosaurs #DinoFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "sauropod"
+    },
+    {
+      "scene": "sauropod"
+    },
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "sauropod"
+    },
+    {
+      "scene": "sauropod"
+    },
+    {
+      "scene": "sauropod"
+    },
+    {
+      "scene": "pterosaur"
+    }
+  ],
+  "music_style": "march",
+  "stat": "ITS NAME MEANS THUNDER LIZARD",
+  "gauge": {
+    "label": "LENGTH",
+    "value": 20,
+    "max": 25,
+    "unit": "M"
+  }
+}

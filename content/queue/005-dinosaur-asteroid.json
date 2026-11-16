@@ -1,0 +1,38 @@
+{
+  "topic": "The day the dinosaurs died",
+  "script": "About 66 million years ago, an asteroid around 10 kilometers wide hit Earth. It struck what is now the Yucatan Peninsula in Mexico. The impact left the Chicxulub crater, about 180 kilometers across. Scientists think dust and soot blocked sunlight and cooled the planet for years. About three quarters of all species died out. Small mammals, birds, crocodiles and turtles were among the survivors. Follow DinoBytes for more prehistoric facts.",
+  "title": "The Day the Dinosaurs Died #Dinosaurs #Asteroid #Shorts",
+  "description": "An asteroid about 10 kilometers wide hit Mexico 66 million years ago, wiping out about three quarters of all species.\n\nFollow DinoBytes for more prehistoric facts.\n\n#Dinosaurs #Asteroid #Extinction #DinoFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "impact"
+    },
+    {
+      "scene": "impact"
+    },
+    {
+      "scene": "impact"
+    },
+    {
+      "scene": "volcano"
+    },
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "eggs"
+    },
+    {
+      "scene": "sauropod"
+    }
+  ],
+  "music_style": "explorer",
+  "stat": "3 IN 4 SPECIES DIED OUT",
+  "gauge": {
+    "label": "CRATER",
+    "value": 180,
+    "max": 200,
+    "unit": "KM"
+  }
+}

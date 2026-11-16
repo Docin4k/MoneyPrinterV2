@@ -1,0 +1,38 @@
+{
+  "topic": "Giant insects before the dinosaurs",
+  "script": "Around 300 million years ago, dragonfly-like insects had wings as wide as a hawk's. One, called Meganeura, had a wingspan of about 70 centimeters. This was long before the dinosaurs, in the Carboniferous period. The air then held more oxygen than today, which may have helped insects grow big. A millipede relative called Arthropleura grew over 2 meters long. Much of the coal burned today formed from the swampy forests of that time. Follow DinoBytes for more prehistoric facts.",
+  "title": "Dragonflies Once Had Wings 70 cm Wide #Prehistoric #Insects #Shorts",
+  "description": "About 300 million years ago, Meganeura had a 70 centimeter wingspan, helped perhaps by oxygen-rich air.\n\nFollow DinoBytes for more prehistoric facts.\n\n#Meganeura #Insects #Prehistoric #DinoFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "amber"
+    },
+    {
+      "scene": "amber"
+    },
+    {
+      "scene": "volcano"
+    },
+    {
+      "scene": "volcano"
+    },
+    {
+      "scene": "cambrian"
+    },
+    {
+      "scene": "volcano"
+    },
+    {
+      "scene": "sauropod"
+    }
+  ],
+  "music_style": "adventure",
+  "stat": "BEFORE THE DINOSAURS",
+  "gauge": {
+    "label": "WINGSPAN",
+    "value": 70,
+    "max": 80,
+    "unit": "CM"
+  }
+}

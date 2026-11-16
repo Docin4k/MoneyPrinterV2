@@ -1,0 +1,38 @@
+{
+  "topic": "Triceratops lived alongside T. rex",
+  "script": "Triceratops lived at the very end of the age of dinosaurs, alongside T. rex. Fossils show T. rex bite marks on Triceratops bones. Its frill was made of solid bone. Its two brow horns could be about 1 meter long. Scientists think the frill and horns were used for display and defense. Its skull is one of the largest of any land animal, over 2 meters long. Follow DinoBytes for more prehistoric facts.",
+  "title": "Triceratops Lived Alongside T. rex #Triceratops #Dinosaurs #Shorts",
+  "description": "Triceratops lived alongside T. rex, and its bones even carry T. rex bite marks.\n\nFollow DinoBytes for more prehistoric facts.\n\n#Triceratops #Dinosaurs #Paleontology #DinoFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "triceratops"
+    },
+    {
+      "scene": "trex"
+    },
+    {
+      "scene": "triceratops"
+    },
+    {
+      "scene": "triceratops"
+    },
+    {
+      "scene": "triceratops"
+    },
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "pterosaur"
+    }
+  ],
+  "music_style": "march",
+  "stat": "ITS SKULL: OVER 2 METERS LONG",
+  "gauge": {
+    "label": "BROW HORN",
+    "value": 1,
+    "max": 1.5,
+    "unit": "M"
+  }
+}

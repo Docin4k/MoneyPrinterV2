@@ -1,0 +1,38 @@
+{
+  "topic": "Ichthyosaurs had giant eyes",
+  "script": "Ichthyosaurs had some of the biggest eyes of any animal ever. One kind, Temnodontosaurus, had eyes about 26 centimeters across. They were dolphin-shaped sea reptiles, not dinosaurs. Fossils show mothers giving birth to live babies, tail first. Mary Anning helped uncover one of the first known ichthyosaur skeletons in England around 1811. She was only about 12 years old at the time. Follow DinoBytes for more prehistoric facts.",
+  "title": "This Sea Reptile Had Eyes as Big as Plates #Ichthyosaur #Prehistoric #Shorts",
+  "description": "Ichthyosaurs had enormous eyes, and one of the first skeletons was found by 12-year-old Mary Anning.\n\nFollow DinoBytes for more prehistoric facts.\n\n#Ichthyosaur #MaryAnning #Prehistoric #DinoFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "mosasaur"
+    },
+    {
+      "scene": "mosasaur"
+    },
+    {
+      "scene": "mosasaur"
+    },
+    {
+      "scene": "mosasaur"
+    },
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "sauropod"
+    }
+  ],
+  "music_style": "explorer",
+  "stat": "FOUND BY 12-YEAR-OLD MARY ANNING",
+  "gauge": {
+    "label": "EYE SIZE",
+    "value": 26,
+    "max": 30,
+    "unit": "CM"
+  }
+}

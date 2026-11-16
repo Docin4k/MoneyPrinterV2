@@ -1,0 +1,38 @@
+{
+  "topic": "A feathered dinosaur tail in amber",
+  "script": "In 2016, scientists described a feathered dinosaur tail trapped in amber. The amber is about 99 million years old. The tail likely belonged to a young, small meat-eating dinosaur. Amber is fossilized tree resin that can trap insects, plants and even small animals. It can preserve details too tiny to see without a microscope. But scientists have never recovered dinosaur DNA from amber. Follow DinoBytes for more prehistoric facts.",
+  "title": "A Dinosaur Tail Was Found in Amber #Dinosaurs #Amber #Shorts",
+  "description": "A 99 million year old piece of amber holds a feathered dinosaur tail, preserved in amazing detail.\n\nFollow DinoBytes for more prehistoric facts.\n\n#Amber #Dinosaurs #Feathers #DinoFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "amber"
+    },
+    {
+      "scene": "amber"
+    },
+    {
+      "scene": "raptor"
+    },
+    {
+      "scene": "amber"
+    },
+    {
+      "scene": "amber"
+    },
+    {
+      "scene": "amber"
+    },
+    {
+      "scene": "volcano"
+    }
+  ],
+  "music_style": "primeval",
+  "stat": "NO DINOSAUR DNA, THOUGH",
+  "gauge": {
+    "label": "AGE",
+    "value": 99,
+    "max": 120,
+    "unit": "M YRS"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "topic": "Pterosaurs were not dinosaurs",
+  "script": "Pterosaurs flew over the dinosaurs, but they were not dinosaurs. They were the first animals with backbones to evolve powered flight. Their wings were skin stretched from one very long fourth finger. Quetzalcoatlus may have had a wingspan of about 10 meters. That is about as wide as a small airplane. It may have hunted on the ground, stalking prey like a giant stork. Follow DinoBytes for more prehistoric facts.",
+  "title": "Pterosaurs Were Not Dinosaurs #Pterosaur #Prehistoric #Shorts",
+  "description": "Pterosaurs were flying reptiles, not dinosaurs, and the biggest had wingspans of about 10 meters.\n\nFollow DinoBytes for more prehistoric facts.\n\n#Pterosaur #Quetzalcoatlus #Prehistoric #DinoFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "pterosaur"
+    },
+    {
+      "scene": "pterosaur"
+    },
+    {
+      "scene": "pterosaur"
+    },
+    {
+      "scene": "pterosaur"
+    },
+    {
+      "scene": "pterosaur"
+    },
+    {
+      "scene": "volcano"
+    },
+    {
+      "scene": "pterosaur"
+    }
+  ],
+  "music_style": "jungle",
+  "stat": "WINGS HELD UP BY ONE FINGER",
+  "gauge": {
+    "label": "WINGSPAN",
+    "value": 10,
+    "max": 12,
+    "unit": "M"
+  }
+}

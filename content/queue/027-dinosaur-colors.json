@@ -1,0 +1,32 @@
+{
+  "topic": "We know some dinosaur colors",
+  "script": "Scientists can sometimes tell what color a dinosaur was. They look for melanosomes, tiny pigment structures preserved in fossil feathers. Their shapes hint at colors like black, brown, gray or ginger. Sinosauropteryx had a striped tail with ginger and white bands. It also seems to have had a dark mask across its eyes, like a raccoon. Bright blues and greens from other pigments are much harder to detect. Follow DinoBytes for more prehistoric facts.",
+  "title": "We Know the Color of Some Dinosaurs #Dinosaurs #Paleontology #Shorts",
+  "description": "Tiny pigment structures in fossil feathers reveal some dinosaur colors, like Sinosauropteryx's striped ginger tail.\n\nFollow DinoBytes for more prehistoric facts.\n\n#Dinosaurs #Feathers #Paleontology #DinoFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "raptor"
+    },
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "raptor"
+    },
+    {
+      "scene": "raptor"
+    },
+    {
+      "scene": "raptor"
+    },
+    {
+      "scene": "amber"
+    },
+    {
+      "scene": "fossil"
+    }
+  ],
+  "music_style": "dino stomp",
+  "stat": "A STRIPED TAIL AND A FACE MASK"
+}

@@ -1,0 +1,38 @@
+{
+  "topic": "A sea reptile with 72 neck bones",
+  "script": "Plesiosaurs swam with four big flippers, like underwater wings. Some, like Elasmosaurus, had necks around 7 meters long. Elasmosaurus had about 72 bones in its neck. Humans and giraffes have just 7. A 2011 fossil showed plesiosaurs gave birth to live young instead of laying eggs. They were marine reptiles, not dinosaurs. Follow DinoBytes for more prehistoric facts.",
+  "title": "This Sea Reptile Had 72 Neck Bones #Plesiosaur #Prehistoric #Shorts",
+  "description": "Elasmosaurus had about 72 neck bones, and fossils show plesiosaurs gave birth to live young.\n\nFollow DinoBytes for more prehistoric facts.\n\n#Plesiosaur #Elasmosaurus #Prehistoric #DinoFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "plesiosaur"
+    },
+    {
+      "scene": "plesiosaur"
+    },
+    {
+      "scene": "plesiosaur"
+    },
+    {
+      "scene": "plesiosaur"
+    },
+    {
+      "scene": "plesiosaur"
+    },
+    {
+      "scene": "plesiosaur"
+    },
+    {
+      "scene": "fossil"
+    }
+  ],
+  "music_style": "boss battle",
+  "stat": "THEY GAVE BIRTH TO LIVE YOUNG",
+  "gauge": {
+    "label": "NECK BONES",
+    "value": 72,
+    "max": 80,
+    "unit": ""
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "topic": "The worst extinction ever",
+  "script": "The worst extinction in Earth's history happened about 252 million years ago. It is called the Great Dying, at the end of the Permian period. Scientists estimate around 80 to 90 percent of sea species died out. Huge volcanic eruptions in what is now Siberia are the main suspect. They released enormous amounts of carbon dioxide, heating the planet and its oceans. Among the survivors were the ancestors of the first dinosaurs. Follow DinoBytes for more prehistoric facts.",
+  "title": "The Great Dying Was Worse Than the Dinosaur Asteroid #Extinction #Prehistoric #Shorts",
+  "description": "About 252 million years ago, the Great Dying wiped out most sea species, probably after huge eruptions in Siberia.\n\nFollow DinoBytes for more prehistoric facts.\n\n#GreatDying #Extinction #Prehistoric #DinoFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "volcano"
+    },
+    {
+      "scene": "volcano"
+    },
+    {
+      "scene": "cambrian"
+    },
+    {
+      "scene": "volcano"
+    },
+    {
+      "scene": "volcano"
+    },
+    {
+      "scene": "sauropod"
+    },
+    {
+      "scene": "fossil"
+    }
+  ],
+  "music_style": "dino stomp",
+  "stat": "SIBERIAN VOLCANOES: MAIN SUSPECT",
+  "gauge": {
+    "label": "AGE",
+    "value": 252,
+    "max": 300,
+    "unit": "M YRS"
+  }
+}

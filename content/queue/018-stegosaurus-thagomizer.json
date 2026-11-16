@@ -1,0 +1,38 @@
+{
+  "topic": "Stegosaurus' tail spikes",
+  "script": "Stegosaurus' tail spikes have a nickname: the thagomizer. The name came from a 1982 cartoon, and scientists started using it too. Fossils show a hole in an Allosaurus tail bone that fits a Stegosaurus spike. Its back plates were probably for display, and may have helped control body heat. Stegosaurus grew to about 9 meters long. It lived about 150 million years ago. Follow DinoBytes for more prehistoric facts.",
+  "title": "Stegosaurus Spikes Have a Cartoon Name #Stegosaurus #Dinosaurs #Shorts",
+  "description": "Stegosaurus' tail spikes are nicknamed the thagomizer, from a 1982 cartoon, and fossils show them in action.\n\nFollow DinoBytes for more prehistoric facts.\n\n#Stegosaurus #Dinosaurs #Paleontology #DinoFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "stegosaurus"
+    },
+    {
+      "scene": "stegosaurus"
+    },
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "stegosaurus"
+    },
+    {
+      "scene": "stegosaurus"
+    },
+    {
+      "scene": "stegosaurus"
+    },
+    {
+      "scene": "pterosaur"
+    }
+  ],
+  "music_style": "jungle",
+  "stat": "AN ALLOSAURUS BONE WAS PIERCED",
+  "gauge": {
+    "label": "LENGTH",
+    "value": 9,
+    "max": 12,
+    "unit": "M"
+  }
+}

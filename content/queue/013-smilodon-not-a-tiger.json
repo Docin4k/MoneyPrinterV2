@@ -1,0 +1,38 @@
+{
+  "topic": "Saber-toothed cats were not tigers",
+  "script": "The saber-toothed cat Smilodon was not a tiger. Its fangs could be about 28 centimeters long, including the root. It could open its jaws about 120 degrees, far wider than a lion. It lived in the Americas until about 10,000 years ago. Thousands of Smilodon fossils have been pulled from the La Brea Tar Pits in Los Angeles. It was not a dinosaur; it lived long after them, in the Ice Age. Follow DinoBytes for more prehistoric facts.",
+  "title": "Saber-Toothed Cats Were Not Tigers #Smilodon #IceAge #Shorts",
+  "description": "Smilodon had fangs about 28 centimeters long and could open its jaws about 120 degrees.\n\nFollow DinoBytes for more prehistoric facts.\n\n#Smilodon #SaberTooth #IceAge #DinoFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "mammoth"
+    },
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "mammoth"
+    },
+    {
+      "scene": "mammoth"
+    },
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "mammoth"
+    },
+    {
+      "scene": "sauropod"
+    }
+  ],
+  "music_style": "explorer",
+  "stat": "FOUND IN THE LA BREA TAR PITS",
+  "gauge": {
+    "label": "JAW OPENS",
+    "value": 120,
+    "max": 180,
+    "unit": "DEG"
+  }
+}
