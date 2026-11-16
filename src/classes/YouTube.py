@@ -1016,6 +1016,10 @@ class YouTube:
             if not scenes or len(scenes) != len(self.sentences):
                 scenes = pixel_art.scenes_for_script(self.sentences, self.subject)
             self.scenes = self._vary_scenes(scenes)
+            if self._channel_info().get("video_layout") == "hud":
+                # Camera shots: zoom on body parts the captions mention, vary the rest
+                import pixel_hud
+                self.scenes = pixel_hud.plan_shots(self.scenes, self.sentences)
         elif style == "text_cards":
             for index, sentence in enumerate(self.sentences):
                 path = os.path.join(ROOT_DIR, ".mp", str(uuid4()) + ".png")

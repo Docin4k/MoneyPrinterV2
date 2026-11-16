@@ -162,19 +162,122 @@ def _blur(img, k):
 _VIGNETTE = None
 
 
-def camera(frame, t, seed, focus=0.578, target=0.703):
-    """Zoom in a little and frame the scene so its subject (around focus_y in
-    the drawing) lands in the clear area under the text boxes (target_y),
-    with a slow push-in and gentle drift, so shots feel filmed."""
+# Words in a caption that point the camera at a body part, in priority order
+PART_WORDS = [
+    ("teeth", ("teeth", "tooth", "bite", "bites", "bit", "jaw", "jaws", "fang", "fangs", "chew", "crush", "crushed")),
+    ("claw", ("claw", "claws", "sickle", "talon")),
+    ("horns", ("horn", "horns")),
+    ("frill", ("frill",)),
+    ("plates", ("plate", "plates")),
+    ("spikes", ("spike", "spikes", "thagomizer")),
+    ("tusks", ("tusk", "tusks", "ivory")),
+    ("trunk", ("trunk",)),
+    ("eye", ("eye", "eyes", "see", "saw", "vision", "sight")),
+    ("beak", ("beak",)),
+    ("skull", ("skull",)),
+    ("ribs", ("rib", "ribs")),
+    ("head", ("head", "skull", "brain", "face", "mouth", "snout", "crest")),
+    ("neck", ("neck", "necks")),
+    ("arm", ("arm", "arms", "hand", "hands", "finger", "fingers")),
+    ("arms", ("arm", "arms", "grasping")),
+    ("wings", ("wing", "wings", "wingspan", "fly", "flew", "flight", "soar", "glide", "glided")),
+    ("feathers", ("feather", "feathers", "feathered", "quill")),
+    ("legs", ("leg", "legs", "run", "ran", "running", "walk", "walked", "stride", "speed", "fast")),
+    ("feet", ("foot", "feet", "toe", "toes", "footprint", "footprints")),
+    ("tail", ("tail", "tails")),
+    ("fur", ("fur", "hair", "wool", "shaggy")),
+    ("flippers", ("flipper", "flippers", "swim", "swam", "paddle")),
+    ("insect", ("insect", "insects", "mosquito", "fly")),
+    ("egg", ("egg", "eggs", "hatch", "hatched", "embryo", "embryos")),
+    ("baby", ("baby", "babies", "young", "hatchling")),
+    ("nest", ("nest", "nests")),
+    ("crater", ("crater", "impact", "hit", "struck")),
+    ("lava", ("lava", "eruption", "eruptions", "volcanic")),
+    ("trilobite", ("trilobite", "trilobites")),
+    ("wide", ("weigh", "weighed", "weight", "tonnes", "tons", "size", "big", "giant", "largest", "biggest", "long",
+              "length", "tall", "height", "huge", "whole", "entire")),
+]
+
+
+def focus_parts(spec, t=0.0):
+    """The named points available for a scene at time t."""
+    parts = pa.FOCUS.get(spec.get("scene"))
+    return parts(t) if callable(parts) else (parts or {})
+
+
+def plan_shots(scenes, sentences):
+    """Give every scene a camera shot. A sentence that mentions a body part
+    the scene knows ("its teeth...") zooms in on that part; others cycle
+    through push-in, wide and pan shots so consecutive clips look different.
+    Explicit "focus" or "shot" keys in a script's scene are kept."""
+    import re
+    planned, cycle = [], ["push", "wide", "pan", "push"]
+    for i, scene in enumerate(scenes):
+        scene = dict(scene)
+        words = set(re.findall(r"[a-z]+", (sentences[i] if i < len(sentences) else "").lower()))
+        if "focus" not in scene and "shot" not in scene:
+            parts = focus_parts(scene)
+            recent = [p.get("focus") for p in planned[-2:]]
+            for part, keys in PART_WORDS:
+                if not words & set(keys):
+                    continue
+                if part == "wide" and parts:
+                    scene["shot"] = "wide"          # size facts: show the whole animal
+                    break
+                if part in parts and recent != [part, part]:   # at most two close-ups of one part in a row
+                    scene["focus"] = part
+                    # The same part again: alternate close and closer so it isn't a repeat
+                    if planned and planned[-1].get("focus") == part:
+                        scene["zoom"] = 1.8 if planned[-1].get("zoom", 2.4) >= 2.4 else 2.9
+                    break
+            else:
+                scene["shot"] = "wide" if i == len(scenes) - 1 else cycle[i % len(cycle)]
+            if "focus" not in scene and "shot" not in scene:
+                scene["shot"] = cycle[(i + 1) % len(cycle)]
+            # Never the same kind of wide/pan/push shot twice in a row
+            if "shot" in scene and planned and planned[-1].get("shot") == scene["shot"]:
+                options = [c for c in ("pan", "push", "wide") if c != scene["shot"]]
+                scene["shot"] = options[i % len(options)]
+        planned.append(scene)
+    return planned
+
+
+def _ease(x):
+    x = min(1.0, max(0.0, x))
+    return x * x * (3 - 2 * x)
+
+
+def camera(frame, t, seed, spec=None, focus=0.578, target=0.703):
+    """Frame the scene like a camera, below the text boxes (subject around
+    `target` of the height). Shots: "focus" zooms in on a named body part,
+    "wide" shows the whole scene, "pan" glides sideways, "push" (default)
+    slowly pushes in with a gentle drift."""
+    spec = spec or {}
     rng = np.random.default_rng(seed)
-    zoom = 1.12 + 0.05 * rng.random() + 0.01 * t
     k = pa.PH / 640
-    dx = 5 * k * math.sin(t * 0.35 + seed)
-    dy = 3 * k * math.sin(t * 0.27 + seed * 2)
-    focus_y, target_y = focus * pa.PH, target * pa.PH
+    tx, ty = 0.5 * pa.PW, target * pa.PH
+    point = focus_parts(spec, t).get(spec.get("focus")) if spec.get("focus") else None
+    shot = "focus" if point else spec.get("shot", "push")
+    if shot == "focus":
+        zoom_to = float(spec.get("zoom", 2.4))
+        zoom = 1.3 + (zoom_to - 1.3) * _ease(t / 1.6)
+        fx, fy = point[0] * pa.DETAIL, point[1] * pa.DETAIL
+        fx += 3 * k * math.sin(t * 0.5 + seed)
+    elif shot == "wide":
+        zoom = 1.0 + 0.012 * t
+        fx, fy = pa.PW / 2, focus * pa.PH
+    elif shot == "pan":
+        zoom = 1.55
+        side = 1 if seed % 2 else -1
+        fx = pa.PW * (0.5 - side * 0.18 + side * 0.36 * _ease(t / 6.0))
+        fy = focus * pa.PH + 6 * k
+    else:
+        zoom = 1.12 + 0.05 * rng.random() + 0.01 * t
+        fx = pa.PW / 2 + 5 * k * math.sin(t * 0.35 + seed)
+        fy = focus * pa.PH + 3 * k * math.sin(t * 0.27 + seed * 2)
     h, w = pa.PH / zoom, pa.PW / zoom
-    y0 = min(max(0.0, focus_y + dy - target_y / zoom), pa.PH - h)
-    x0 = min(max(0.0, pa.PW / 2 + dx - w / 2), pa.PW - w)
+    y0 = min(max(0.0, fy - ty / zoom), pa.PH - h)
+    x0 = min(max(0.0, fx - tx / zoom), pa.PW - w)
     ys = np.clip((np.arange(pa.PH) / zoom + y0).astype(int), 0, pa.PH - 1)
     xs = np.clip((np.arange(pa.PW) / zoom + x0).astype(int), 0, pa.PW - 1)
     return frame[ys][:, xs]

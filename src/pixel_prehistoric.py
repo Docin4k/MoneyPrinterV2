@@ -190,156 +190,347 @@ def eye(frame, x, y, r=1.6):
     pa.put(frame, x - 0.4, y - 0.6, (255, 240, 200))
 
 
+# ------------------------------------------------ realistic anatomy ----
+def skin_texture(x, y, seed, scale=1.0):
+    """Small bumpy scales plus larger mottling, as a value around 0 (-1..1)."""
+    bumps = np.sin(x * 2.2 / scale + np.sin(y * 1.7 / scale) * 1.3) * np.sin(y * 2.4 / scale + np.sin(x * 1.4 / scale))
+    mottle = periodic_noise(x / 22, y / 14, seed, 3) - 0.5
+    return bumps * 0.5 + mottle * 1.2
+
+
+def ground_shadow(frame, cx, width, y=GROUND + 1, strength=0.45):
+    """Soft dark ellipse on the ground under an animal."""
+    s = _win(cx, y, width + 2, 6)
+    if s is None:
+        return
+    d = ((XX[s] - cx) / width) ** 2 + ((YY[s] - y) / 4.5) ** 2
+    m = d < 1
+    k = (1 - d[m]) * strength
+    frame[s][m] = (frame[s][m] * (1 - k)[:, None]).astype(np.uint8)
+
+
+def body_profile(frame, hx, length, us, cys, tops, bots, back, belly, seed, stripes=0.0, facing=1):
+    """Side-view body drawn from control points along its length.
+
+    u = 0 at the snout (x = hx) to 1 at the tail tip (length units behind).
+    At each control point `us`, the centre line is at `cys` and the outline
+    is `tops` above and `bots` below it. Shading: lit from above, darker
+    back pigment fading to a pale belly (countershading), scaly texture,
+    optional dark stripes across the back. Returns (slices, mask, u, rel)."""
+    us = np.asarray(us, float)
+    h = max(max(tops), max(bots)) + 2
+    ymin, ymax = min(cys) - h, max(cys) + h
+    s = _win(hx - facing * length / 2, (ymin + ymax) / 2, length / 2 + 2, (ymax - ymin) / 2 + 2)
+    if s is None:
+        return None
+    x, y = XX[s], YY[s]
+    u = (hx - x) * facing / length
+    uc = np.clip(u, 0, 1)
+    cy = np.interp(uc, us, cys)
+    tp, bt = np.interp(uc, us, tops), np.interp(uc, us, bots)
+    m = (u >= 0) & (u <= 1) & (y > cy - tp) & (y < cy + bt)
+    if not m.any():
+        return s, m, u, None
+    rel = (y - (cy - tp)) / np.maximum(tp + bt, 1e-6)          # 0 top edge .. 1 bottom edge
+    light = 1.05 - 0.8 * rel ** 1.3                              # lit from above
+    rim = np.clip(1 - rel / 0.08, 0, 1) * 0.25                   # bright rim along the top
+    tex = skin_texture(x, y, seed)
+    v = np.clip(light * 0.78 + rim + tex * 0.1, 0, 1)
+    if stripes:
+        band = (np.sin(x * 0.55 + seed) > 0.55) & (rel < 0.45)
+        v = np.where(band, v * (1 - stripes), v)
+    is_belly = rel > 0.62
+    cols = np.where(is_belly[m][:, None],
+                    dither_ramp(np.clip(v[m] + 0.15, 0, 1), belly, PY[s][m], PX[s][m]),
+                    dither_ramp(v[m], back, PY[s][m], PX[s][m]))
+    frame[s][m] = cols
+    return s, m, u, rel
+
+
+def limb_shaded(frame, x1, y1, x2, y2, w1, w2, ramp, seed=0, light=0.0):
+    """A tapered limb segment shaded across its width (lit from the upper left)."""
+    pad = max(w1, w2) + 2
+    s = _win((x1 + x2) / 2, (y1 + y2) / 2, abs(x2 - x1) / 2 + pad, abs(y2 - y1) / 2 + pad)
+    if s is None:
+        return
+    x, y = XX[s], YY[s]
+    dx, dy = x2 - x1, y2 - y1
+    ln2 = dx * dx + dy * dy or 1.0
+    f = np.clip(((x - x1) * dx + (y - y1) * dy) / ln2, 0, 1)
+    px_, py_ = x1 + f * dx, y1 + f * dy
+    dist = np.sqrt((x - px_) ** 2 + (y - py_) ** 2)
+    w = w1 + (w2 - w1) * f
+    m = dist <= w
+    side = ((x - px_) * -dy + (y - py_) * dx) / np.sqrt(ln2) / np.maximum(w, 0.5)   # -1..1 across
+    v = np.clip(0.62 - side * 0.32 + light + skin_texture(x, y, seed) * 0.07, 0, 1)
+    frame[s][m] = dither_ramp(v[m], ramp, PY[s][m], PX[s][m])
+
+
+def muscle(frame, cx, cy, rx, ry, ramp, ang=0.0, seed=0):
+    """Rounded muscle mass (thigh, shoulder) with soft shading and texture."""
+    r = max(rx, ry) + 1
+    s = _win(cx, cy, r, r)
+    if s is None:
+        return
+    dx, dy = XX[s] - cx, YY[s] - cy
+    c, si = math.cos(ang), math.sin(ang)
+    uu, vv = (dx * c + dy * si) / rx, (-dx * si + dy * c) / ry
+    d = uu * uu + vv * vv
+    m = d <= 1
+    v = np.clip(0.7 - 0.35 * (uu * 0.45 + vv * 0.85) - 0.2 * d + skin_texture(XX[s], YY[s], seed) * 0.08, 0, 1)
+    frame[s][m] = dither_ramp(v[m], ramp, PY[s][m], PX[s][m])
+
+
+def walking_leg(frame, t, hip_x, hip_y, ramp, phase, thigh=(10, 15), length=44, speed=2.2, stride=9, seed=0,
+                toes=True, claw=None, thigh_ramp=None):
+    """A muscular two-part leg (thigh, shin) with a foot, stepping in a loop."""
+    p = math.sin(t * speed + phase)
+    lift = max(0.0, math.cos(t * speed + phase)) * 3
+    fx = hip_x + p * stride
+    knee_x, knee_y = hip_x + 6 + p * 2, hip_y + length * 0.5
+    ankle_x, ankle_y = fx - 3, GROUND - 7 - lift
+    muscle(frame, hip_x + 2, hip_y + 4, thigh[0], thigh[1], thigh_ramp or ramp, ang=0.3, seed=seed)
+    limb_shaded(frame, knee_x, knee_y, ankle_x, ankle_y, thigh[0] * 0.55, thigh[0] * 0.35, ramp, seed)
+    limb_shaded(frame, ankle_x, ankle_y, fx + 2, GROUND - 1 - lift, thigh[0] * 0.35, thigh[0] * 0.3, ramp, seed)
+    if toes:
+        for k in range(3):
+            limb_shaded(frame, fx + 1, GROUND - 1 - lift, fx + 7 + k * 1.5, GROUND - lift + k * 0.3 - 0.5,
+                        thigh[0] * 0.22, 0.6, ramp, seed)
+    if claw:
+        limb_shaded(frame, fx + 3, GROUND - 3 - lift, fx + 6, GROUND - 8 - lift, 1.0, 0.3, claw, seed)
+
+
+def column_leg(frame, t, x, top_y, ramp, phase, width=8, speed=1.1, stride=4, seed=0, thigh_ramp=None):
+    """A thick, tapering leg for four-legged dinosaurs and mammoths: a big
+    upper muscle that blends into the body, a narrower lower leg and a foot."""
+    p = math.sin(t * speed + phase)
+    lift = max(0.0, math.cos(t * speed + phase)) * 2
+    fx = x + p * stride
+    kx, ky = x + p * stride * 0.45 + 1.5, top_y + (GROUND - top_y) * 0.55
+    muscle(frame, x, top_y - 3, width * 1.35, width * 1.9, thigh_ramp or ramp, ang=0.12, seed=seed)
+    limb_shaded(frame, x + 0.5, top_y + 4, kx, ky, width * 0.95, width * 0.7, ramp, seed)
+    limb_shaded(frame, kx, ky, fx, GROUND - 3 - lift, width * 0.7, width * 0.6, ramp, seed)
+    muscle(frame, fx + width * 0.2, GROUND - 1.5 - lift, width * 0.85, 2.4, ramp, seed=seed)
+    for k in range(3):   # toenails
+        pa.put(frame, fx + width * 0.5 + k * 1.6, GROUND - lift, (200, 190, 165), 2)
+
+
+def neck_tube(frame, pts, widths, ramp, belly, seed):
+    """A smooth tapering neck along a list of points, darker on top and pale underneath."""
+    for (x1, y1), (x2, y2), w1, w2 in zip(pts, pts[1:], widths, widths[1:]):
+        limb_shaded(frame, x1, y1, x2, y2, w1, w2, ramp, seed)
+    for (x1, y1), (x2, y2), w1, w2 in zip(pts, pts[1:], widths, widths[1:]):
+        limb_shaded(frame, x1 + w1 * 0.3, y1 + w1 * 0.45, x2 + w2 * 0.3, y2 + w2 * 0.45, w1 * 0.45, w2 * 0.45, belly, seed)
+
+
 # ------------------------------------------------------------- scenes ----
+TREX_BACK = [(28, 36, 22), (52, 64, 34), (84, 98, 52), (122, 134, 78), (160, 168, 110)]
+TREX_BELLY = [(120, 112, 80), (165, 155, 115), (205, 195, 150), (230, 222, 185)]
+TREX_LEG = [(30, 36, 24), (55, 64, 38), (88, 98, 60), (125, 133, 90)]
+TREX_LEG_FAR = [(20, 24, 16), (38, 44, 28), (60, 68, 42), (85, 92, 62)]
+
+
 def scene_trex(frame, t, spec, seed):
-    """Tyrannosaurus rex striding through a fern forest, jaws snapping."""
+    """A Tyrannosaurus rex striding through a fern forest, jaws snapping:
+    one smooth body outline (snout to tail), scaly countershaded skin,
+    muscular legs and a ground shadow."""
     landscape(frame, t, seed, spec.get("mood", "day"))
-    bob = 1.5 * math.sin(t * 4.4)
-    dark, light = [c for c in GREEN], [(25, 40, 20), (50, 80, 35), (85, 120, 50), (130, 160, 80)]
-    legs(frame, t, [(78, 212 + bob)], 0, 0, 7.5, [(45, 70, 32)], phase=math.pi)
-    # Tail
-    sway = 4 * math.sin(t * 2.2)
-    chain(frame, curve(62, 196 + bob, 4, 204 + sway, -6, 26), 13, 2, light)
-    # Body and neck
-    ellipse(frame, 92, 194 + bob, 40, 22, dark, ang=-0.18)
-    ellipse(frame, 90, 204 + bob, 30, 9, [(110, 140, 70), (150, 175, 100), (190, 200, 140)], ang=-0.15)
-    chain(frame, curve(118, 186 + bob, 136, 168 + bob, 3, 8), 13, 10, dark)
-    legs(frame, t, [(80, 212 + bob)], 0, 0, 8.5, [(70, 105, 45)])
-    ellipse(frame, 84, 210 + bob, 15, 20, dark, ang=0.2)
-    # Head: skull and snapping jaw
-    snap = 0.32 * max(0.0, math.sin(t * 1.8)) ** 3
-    hx, hy = 133, 158 + bob
-    poly(frame, [(hx, hy - 9), (hx + 30, hy - 7), (hx + 40, hy + 1), (hx + 38, hy + 6), (hx, hy + 8)], (75, 110, 48))
-    poly(frame, [(hx + 2, hy - 9), (hx + 30, hy - 7), (hx + 36, hy - 3), (hx + 2, hy - 3)], (105, 140, 65))
-    jaw = [(hx + 2, hy + 6), (hx + 36, hy + 7), (hx + 34, hy + 12), (hx + 4, hy + 13)]
-    c, s = math.cos(snap), math.sin(snap)
-    jaw = [(hx + 2 + (x - hx - 2) * c - (y - hy - 6) * s, hy + 6 + (x - hx - 2) * s + (y - hy - 6) * c) for x, y in jaw]
+    bob = 1.2 * math.sin(t * 4.4)
+    sway = 5 * math.sin(t * 2.2)
+    hx = 166
+    ground_shadow(frame, 90, 62)
+    # Far leg first (darker), then body, then near leg
+    walking_leg(frame, t, 84, 190 + bob, TREX_LEG_FAR, math.pi, thigh=(13, 18), length=46, seed=seed + 1)
+    us =   [0.0, 0.03, 0.10, 0.17, 0.22, 0.28, 0.37, 0.46, 0.56, 0.70, 0.85, 1.0]
+    cys =  [158, 157, 156, 158, 165, 173, 181, 186, 188, 191, 194, 197]
+    tops = [4.5, 9, 14, 15, 10, 13, 19, 22, 18, 10, 5, 1.2]
+    bots = [4.5, 7, 10, 11, 10, 15, 21, 20, 13, 7, 3.5, 1.0]
+    cys = [c + bob * (1 - u) + sway * u ** 2 for c, u in zip(cys, us)]
+    res = body_profile(frame, hx, 172, us, cys, tops, bots, TREX_BACK, TREX_BELLY, seed, stripes=0.25)
+    # Snapping jaws: open a wedge-shaped mouth and line it with teeth
+    snap = max(0.0, math.sin(t * 1.8)) ** 3
+    head_y = cys[2]
+    if res is not None and snap > 0.05:
+        s_, m, u, rel = res
+        mouth_top = head_y + 1
+        open_h = 7 * snap * np.clip((0.16 - u) / 0.16, 0, 1)
+        gap = m & (u < 0.16) & (YY[s_] > mouth_top) & (YY[s_] < mouth_top + open_h)
+        frame[s_][gap] = (70, 18, 22)
+    jaw_x0, jaw_x1 = hx - 26, hx - 2
+    teeth(frame, jaw_x0, jaw_x1, head_y + 1.2, True, 2.6 + 2 * snap)
     if snap > 0.05:
-        poly(frame, [(hx + 4, hy + 6), (hx + 38, hy + 6), jaw[1], jaw[2]], (90, 20, 25))
-    poly(frame, jaw, (65, 95, 42))
-    teeth(frame, hx + 6, hx + 36, hy + 6, True, 3)
-    eye(frame, hx + 14, hy - 3)
-    pa.put(frame, hx + 36, hy - 3, (30, 40, 20), 2)
-    # Tiny arm
-    limb(frame, 120, 200 + bob, 127, 206 + bob, 2.2, 1.2, (60, 90, 40))
-    limb(frame, 127, 206 + bob, 131, 203 + bob, 1.2, 0.6, (60, 90, 40))
+        teeth(frame, jaw_x0 + 2, jaw_x1 - 2, head_y + 1 + 7 * snap, False, 2.2)
+    # Eye with a bony brow ridge, nostril, jaw line
+    eye(frame, hx - 18, head_y - 6, 1.7)
+    limb(frame, hx - 23, head_y - 9, hx - 13, head_y - 9.5, 1.2, 0.8, (60, 70, 40))
+    pa.put(frame, hx - 3, head_y - 5, (25, 25, 18), 2)
+    # Tiny two-fingered arm
+    ax, ay = hx - 44, cys[5] + 9
+    limb_shaded(frame, ax, ay, ax + 5, ay + 6, 2.4, 1.6, TREX_LEG, seed)
+    limb_shaded(frame, ax + 5, ay + 6, ax + 9, ay + 4, 1.6, 0.7, TREX_LEG, seed)
+    walking_leg(frame, t, 88, 190 + bob, TREX_LEG, 0.0, thigh=(15, 21), length=46, seed=seed,
+                thigh_ramp=TREX_BACK[:4])
     foreground_ferns(frame, t, seed)
 
 
+SAURO_BACK = [(48, 50, 46), (78, 80, 70), (112, 112, 96), (150, 146, 124), (190, 184, 160)]
+SAURO_BELLY = [(140, 132, 110), (180, 172, 145), (215, 206, 180)]
+SAURO_FAR = [(38, 40, 36), (60, 62, 54), (88, 88, 76), (115, 112, 96)]
+
+
 def scene_sauropod(frame, t, spec, seed):
-    """A long-necked sauropod browsing treetops, with a smaller one behind."""
+    """A long-necked sauropod browsing a tall tree, a herd member behind."""
     landscape(frame, t, seed, spec.get("mood", "day"))
-    ramp = [(60, 60, 55), (100, 100, 85), (145, 140, 115), (190, 185, 155)]
-    far = [(85, 95, 100), (110, 120, 120), (135, 145, 140)]
-    # A distant herd member
-    ellipse(frame, 30, 214, 16, 9, far)
-    chain(frame, curve(40, 210, 58, 170, -4, 10), 3.5, 2, far)
-    for x in (22, 36):
-        limb(frame, x, 218, x, 236, 2.5, 2.2, far[0])
-    # Main animal
+    haze = [(80, 92, 98), (100, 112, 116), (122, 132, 134), (140, 150, 150)]
+    body_profile(frame, 40, 46, [0, 0.3, 0.6, 1], [214, 212, 218, 228], [5, 9, 6, 1], [5, 7, 4, 1], haze, haze, seed)
+    for x in (16, 30):
+        limb_shaded(frame, x, 218, x, 236, 2.8, 2.4, haze, seed)
+    pts = curve(36, 210, 50, 176, -5, 8)
+    for (x1, y1), (x2, y2) in zip(pts, pts[1:]):
+        limb_shaded(frame, x1, y1, x2, y2, 3, 2.4, haze, seed)
     sway = 3 * math.sin(t * 0.8)
-    for i, x in enumerate((62, 106)):
-        legs(frame, t * 0.5, [(x - 4, 236)], 0, 0, 7, [(80, 80, 70)], phase=i, stride=4, toe=0)
-    chain(frame, curve(52, 222, 2, 246, 5, 20, 2, t), 11, 2, ramp)
-    ellipse(frame, 84, 222, 40, 22, ramp, ang=-0.08)
-    neck = curve(110, 210, 146 + sway, 132, -14, 22)
-    chain(frame, neck, 10, 5, ramp)
-    hx, hy = neck[-1]
-    ellipse(frame, hx + 6, hy - 1, 8, 5, ramp)
-    eye(frame, hx + 6, hy - 3, 1.2)
-    for i, x in enumerate((70, 112)):
-        legs(frame, t * 0.5, [(x, 236)], 0, 0, 8, [(110, 108, 92)], phase=i + 0.5, stride=4, toe=0)
-    # Tree being browsed
+    ground_shadow(frame, 82, 52)
+    for i, x in enumerate((58, 100)):
+        column_leg(frame, t, x, 222, SAURO_FAR, i * 1.7 + 0.8, width=7.5, seed=seed + 2)
+    us =   [0.0, 0.05, 0.18, 0.30, 0.45, 0.62, 0.80, 1.0]
+    cys =  [212, 210, 212, 214, 220, 228, 236, 244]
+    tops = [11, 17, 22, 22, 15, 9, 5, 1.2]
+    bots = [10, 15, 18, 16, 10, 6, 3, 1.0]
+    body_profile(frame, 118, 120, us, cys, tops, bots, SAURO_BACK, SAURO_BELLY, seed)
+    # Neck rising in a long curve to a small head in the treetop
+    pts = curve(112, 204, 148 + sway, 134, -16, 12)
+    widths = [9.5 - 5.5 * i / 11 for i in range(12)]
+    neck_tube(frame, pts, widths, SAURO_BACK[:4], SAURO_BELLY, seed)
+    hx, hy = pts[-1]
+    body_profile(frame, hx + 14, 18, [0, 0.4, 1], [hy + 1, hy, hy + 1], [2.5, 5, 4.5], [2.5, 3.5, 4], SAURO_BACK,
+                 SAURO_BELLY, seed)
+    eye(frame, hx + 6, hy - 2, 1.2)
+    for i, x in enumerate((64, 106)):
+        column_leg(frame, t, x, 224, SAURO_BACK[:4], i * 1.7, width=8.5, seed=seed, thigh_ramp=SAURO_BACK[:4])
     cycad(frame, 166, GROUND + 4, 120, t, 2)
     foreground_ferns(frame, t, seed)
 
 
+TRIKE_BACK = [(60, 32, 22), (100, 56, 34), (145, 86, 52), (185, 120, 76), (215, 160, 110)]
+TRIKE_BELLY = [(160, 130, 100), (200, 170, 135), (225, 205, 170)]
+TRIKE_FAR = [(45, 25, 18), (75, 42, 28), (110, 66, 42), (140, 90, 60)]
+
+
 def scene_triceratops(frame, t, spec, seed):
-    """A Triceratops with its frill and three horns, grazing."""
+    """A Triceratops with a solid bony frill and three horns, grazing."""
     landscape(frame, t, seed, spec.get("mood", "day"))
     nod = 2 * math.sin(t * 1.1)
-    legs(frame, t * 0.6, [(60, 226), (110, 226)], 0, 0, 7, [(110, 70, 40)], stride=4, toe=0)
-    chain(frame, curve(48, 214, 12, 232, 3, 12), 9, 2, RUST)
-    ellipse(frame, 82, 214, 38, 22, RUST, ang=-0.05)
-    legs(frame, t * 0.6, [(66, 226), (116, 226)], 0, 0, 8, [(150, 90, 50)], phase=0.7, stride=4, toe=0)
-    # Frill (fan behind the head) with a pale rim
-    fx, fy = 122, 192 + nod
-    s = _win(fx, fy, 26, 26)
-    d = np.sqrt((XX[s] - fx) ** 2 + (YY[s] - fy) ** 2)
-    a = np.arctan2(YY[s] - fy, XX[s] - fx)
-    fr = (d < 25) & (np.abs(a + 0.9) < 1.5)
-    frame[s][fr] = dither_ramp(np.clip(1 - d[fr] / 25, 0, 1), [(120, 50, 40), (175, 85, 55), (210, 130, 80)], PY[s][fr], PX[s][fr])
-    rim = fr & (d > 22.5)
-    frame[s][rim] = (235, 205, 150)
-    for k in range(6):   # bony knobs on the rim
-        aa = -0.9 - 1.4 + k * 0.56
-        disc(frame, fx + math.cos(aa) * 25, fy + math.sin(aa) * 25, 1.6, (235, 210, 160))
-    # Head and beak
-    ellipse(frame, 140, 206 + nod, 16, 11, RUST, ang=0.25)
-    tri(frame, [(150, 202 + nod), (162, 214 + nod), (150, 214 + nod)], (90, 70, 50))
-    # Horns: two long brow horns, one short nose horn
-    for bx, by, tx, ty in ((136, 198, 162, 178), (142, 200, 166, 184)):
-        limb(frame, bx, by + nod, tx, ty + nod, 2.6, 0.5, (235, 225, 195))
-    limb(frame, 155, 204 + nod, 160, 197 + nod, 1.8, 0.4, (225, 215, 185))
-    eye(frame, 140, 202 + nod)
+    ground_shadow(frame, 86, 58)
+    for i, x in enumerate((62, 112)):
+        column_leg(frame, t, x, 218, TRIKE_FAR, i * 1.7 + 0.8, width=7.5, speed=0.9, seed=seed + 2)
+    us =   [0.0, 0.10, 0.25, 0.45, 0.65, 0.82, 1.0]
+    cys =  [212, 210, 206, 205, 208, 214, 222]
+    tops = [12, 18, 23, 24, 19, 10, 2]
+    bots = [10, 15, 20, 20, 15, 8, 1.5]
+    body_profile(frame, 132, 124, us, cys, tops, bots, TRIKE_BACK, TRIKE_BELLY, seed, stripes=0.15)
+    # Frill: a fan of bone behind the head, with a pale knobbed rim
+    fx, fy = 132, 192 + nod
+    s_ = _win(fx, fy, 28, 28)
+    d = np.sqrt((XX[s_] - fx) ** 2 + (YY[s_] - fy) ** 2)
+    a = np.arctan2(YY[s_] - fy, XX[s_] - fx)
+    fr = (d < 26) & (np.abs(a + 0.85) < 1.45)
+    v = np.clip(0.45 + 0.4 * (1 - d / 26) + skin_texture(XX[s_], YY[s_], seed) * 0.08, 0, 1)
+    frame[s_][fr] = dither_ramp(v[fr], [(110, 45, 35), (160, 75, 50), (205, 115, 75), (230, 160, 110)], PY[s_][fr], PX[s_][fr])
+    rim = fr & (d > 23.5)
+    frame[s_][rim] = (230, 205, 160)
+    for k in range(7):
+        aa = -0.85 - 1.35 + k * 0.45
+        disc(frame, fx + math.cos(aa) * 26, fy + math.sin(aa) * 26, 1.7, (235, 212, 165))
+    # Head with a hooked beak
+    body_profile(frame, 168, 46, [0, 0.12, 0.4, 0.75, 1], [214 + nod, 210 + nod, 206 + nod, 205, 206],
+                 [3, 7, 11, 13, 14], [3, 6, 9, 12, 13], TRIKE_BACK, TRIKE_BELLY, seed)
+    tri(frame, [(162, 206 + nod), (170, 215 + nod), (161, 216 + nod)], (70, 55, 40))
+    # Two long brow horns and a short nose horn, pale with darker tips
+    for bx, by, tx, ty in ((146, 199, 172, 178), (151, 201, 175, 184)):
+        limb_shaded(frame, bx, by + nod, tx, ty + nod, 2.8, 0.5, [(150, 140, 115), (210, 200, 170), (240, 232, 205)], seed)
+    limb_shaded(frame, 163, 205 + nod, 168, 198 + nod, 2.0, 0.4, [(150, 140, 115), (215, 205, 175)], seed)
+    eye(frame, 150, 203 + nod)
+    for i, x in enumerate((68, 118)):
+        column_leg(frame, t, x, 220, TRIKE_BACK[:4], i * 1.7, width=8.5, speed=0.9, seed=seed, thigh_ramp=TRIKE_BACK[:4])
     foreground_ferns(frame, t, seed)
+
+
+STEGO_BACK = [(45, 52, 26), (78, 88, 42), (115, 125, 64), (155, 162, 96), (195, 198, 140)]
+STEGO_BELLY = [(150, 145, 105), (190, 185, 140), (220, 215, 175)]
+STEGO_FAR = [(35, 40, 20), (58, 66, 32), (85, 94, 48), (115, 122, 70)]
 
 
 def scene_stegosaurus(frame, t, spec, seed):
-    """A Stegosaurus with back plates and a spiked tail swinging."""
+    """A Stegosaurus with two rows of back plates and a swinging spiked tail."""
     landscape(frame, t, seed, spec.get("mood", "day"))
-    ramp = OLIVE
-    legs(frame, t * 0.6, [(64, 226), (108, 228)], 0, 0, 7, [(80, 85, 40)], stride=4, toe=0)
     swing = 6 * math.sin(t * 1.4)
-    tail = curve(52, 214, 6, 222 + swing, -8, 18)
-    chain(frame, tail, 9, 2.5, ramp)
-    for k in (0.75, 0.9):   # tail spikes
-        x, y = tail[int(k * 17)]
-        limb(frame, x, y - 2, x - 6, y - 12, 1.8, 0.4, (230, 220, 190))
-        limb(frame, x, y - 1, x - 9, y - 6, 1.6, 0.4, (230, 220, 190))
-    # Plates along the back, tallest over the hips
-    for i in range(9):
-        f = i / 8
-        x = 50 + f * 70
-        y = 200 - 18 * math.sin(f * math.pi) + 2
-        h = 8 + 14 * math.sin(f * math.pi)
-        tri(frame, [(x - 5, y + 4), (x + 5, y + 4), (x + 1, y - h)], (185, 90, 60) if i % 2 else (210, 120, 70))
-    ellipse(frame, 84, 214, 40, 20, ramp, ang=0.05)
-    legs(frame, t * 0.6, [(70, 228), (114, 230)], 0, 0, 8, [(110, 115, 55)], phase=0.7, stride=4, toe=0)
-    ellipse(frame, 132, 226, 11, 6, ramp, ang=0.4)
-    eye(frame, 136, 224, 1.2)
+    ground_shadow(frame, 84, 62)
+    for i, x in enumerate((66, 112)):
+        column_leg(frame, t, x, 222, STEGO_FAR, i * 1.7 + 0.8, width=7, speed=0.9, seed=seed + 2)
+    us =   [0.0, 0.06, 0.15, 0.30, 0.45, 0.60, 0.75, 0.90, 1.0]
+    cys =  [232, 230, 222, 212, 206, 208, 214, 220 + swing * 0.6, 222 + swing]
+    tops = [4, 6, 12, 20, 25, 21, 12, 6, 3]
+    bots = [3, 5, 12, 18, 20, 16, 9, 5, 2.5]
+    # Plates first, so the body overlaps their bases
+    for i in range(11):
+        f = i / 10
+        u = 0.18 + f * 0.62
+        x = 136 - u * 140
+        y = float(np.interp(u, us, cys)) - float(np.interp(u, us, tops)) + 3
+        h = 8 + 16 * math.sin(f * math.pi)
+        for off, col in ((-2.5, (150, 70, 45)), (2.0, (205, 110, 65))):
+            tri(frame, [(x - 5 + off, y + 3), (x + 5 + off, y + 3), (x + 1 + off, y - h)], col)
+            tri(frame, [(x - 2 + off, y + 1), (x + 2 + off, y + 1), (x + 1 + off, y - h * 0.7)],
+                (225, 150, 95) if off > 0 else (175, 90, 55))
+    body_profile(frame, 136, 140, us, cys, tops, bots, STEGO_BACK, STEGO_BELLY, seed, stripes=0.12)
+    # Four tail spikes (the thagomizer)
+    tx, ty = 136 - 0.93 * 140, 220 + swing * 0.8
+    for dx, dy, ex, ey in ((0, -2, -7, -13), (3, -2, -3, -14), (0, 1, -11, -5), (3, 1, -7, -3)):
+        limb_shaded(frame, tx + dx, ty + dy, tx + ex, ty + ey, 1.8, 0.4, [(160, 150, 120), (225, 215, 185), (245, 238, 215)], seed)
+    eye(frame, 130, 229, 1.2)
+    for i, x in enumerate((72, 118)):
+        column_leg(frame, t, x, 224, STEGO_BACK[:4], i * 1.7, width=8, speed=0.9, seed=seed, thigh_ramp=STEGO_BACK[:4])
     foreground_ferns(frame, t, seed)
+
+
+RAPTOR_BACK = [(55, 35, 22), (95, 62, 36), (140, 95, 55), (185, 135, 85), (220, 180, 125)]
+RAPTOR_BELLY = [(170, 150, 120), (210, 192, 160), (235, 222, 195)]
 
 
 def scene_raptor(frame, t, spec, seed):
-    """A feathered Velociraptor-sized dromaeosaur running past, sickle claw up."""
+    """A small feathered dromaeosaur (about turkey-sized) running past, sickle claws up."""
     landscape(frame, t, seed, spec.get("mood", "dusk"))
-    x = 50 + (t * 14) % 90
-    run = t * 8
-    feathers = [(70, 45, 30), (120, 80, 45), (170, 120, 70), (210, 170, 110)]
-    # A small raptor is about turkey-sized, so it gets a big fern for scale
     fern(frame, 150, GROUND + 2, 30, t, 1, (55, 110, 45))
-    for i in range(2):
-        p = math.sin(run + i * math.pi)
-        hx, hy = x, 222
-        kx, ky = x + 4 + p * 4, 234
-        fx = x + p * 9
-        col = (90, 60, 35) if i == 0 else (130, 90, 55)
-        limb(frame, hx, hy, kx, ky, 3, 2, col)
-        limb(frame, kx, ky, fx, GROUND - max(0, math.cos(run + i * math.pi)) * 4, 2, 1.2, col)
-        disc(frame, fx + 2, GROUND - 3, 1.2, (230, 220, 200))   # raised sickle claw
-    chain(frame, curve(x - 6, 216, x - 40, 210 + 2 * math.sin(run / 2), -3, 14), 5, 1.5, feathers)
-    for k in range(6):   # tail feather fan
-        pa.put(frame, x - 40 - k, 208 + k * 0.8, (200, 150, 90), 2)
-    ellipse(frame, x + 4, 214, 13, 8, feathers, ang=-0.2)
-    chain(frame, curve(x + 14, 210, x + 22, 198, -2, 6), 4.5, 3.5, feathers)
-    ellipse(frame, x + 27, 196, 7, 4, feathers, ang=0.15)
-    teeth(frame, x + 24, x + 33, 198, True, 1.5)
-    eye(frame, x + 26, 194, 1.2)
-    # Feathered arm
-    for k in range(5):
-        limb(frame, x + 8, 212, x + 14 - k, 222 + k, 1.4, 0.6, (150 + k * 10, 100 + k * 8, 60))
+    x = raptor_x(t)
+    run = 8.0
+    ground_shadow(frame, x - 4, 20, strength=0.35)
+    walking_leg(frame, t, x - 6, 218, [(45, 30, 20), (75, 50, 32), (110, 75, 48)], math.pi, thigh=(5, 7), length=26,
+                speed=run, stride=8, seed=seed + 1, claw=[(200, 190, 170), (240, 235, 220)])
+    us =   [0.0, 0.05, 0.12, 0.20, 0.30, 0.42, 0.55, 0.75, 1.0]
+    cys =  [197, 196, 196, 200, 207, 212, 213, 211, 208]
+    tops = [2, 4, 6, 5, 8, 11, 10, 6, 3]
+    bots = [2, 3.5, 5, 5, 9, 11, 8, 4, 2.5]
+    res = body_profile(frame, x + 30, 76, us, cys, tops, bots, RAPTOR_BACK, RAPTOR_BELLY, seed, stripes=0.2)
+    if res is not None and res[3] is not None:   # feather texture: fine light streaks
+        s_, m, u, rel = res
+        streak = m & (np.sin(XX[s_] * 1.6 + YY[s_] * 3.1) > 0.85) & (rel < 0.6)
+        frame[s_][streak] = (225, 185, 125)
+    for k in range(7):   # tail-tip feather fan
+        limb(frame, x + 30 - 76 + 2, 208, x + 30 - 76 - 6 - k * 0.8, 203 + k * 1.6, 0.8, 0.5, (205, 160, 100))
+    teeth(frame, x + 22, x + 29, 197.5, True, 1.3)
+    eye(frame, x + 23, 194, 1.1)
+    # Feathered arm with long wing feathers
+    ax, ay = x + 14, 207
+    limb_shaded(frame, ax, ay, ax + 4, ay + 9, 2.0, 1.4, RAPTOR_BACK, seed)
+    for k in range(6):
+        limb(frame, ax + 1, ay + 3 + k * 1.2, ax - 4 + k, ay + 13 + k * 0.6, 0.9, 0.5, (150 + k * 12, 100 + k * 9, 60))
+    walking_leg(frame, t, x - 2, 220, [(60, 40, 25), (100, 68, 42), (145, 100, 62)], 0.0, thigh=(6, 8), length=26,
+                speed=run, stride=8, seed=seed, claw=[(210, 200, 180), (245, 240, 225)], thigh_ramp=RAPTOR_BACK[:4])
     foreground_ferns(frame, t, seed)
+
+
+def raptor_x(t):
+    return 60 + (t * 14) % 80
 
 
 def scene_pterosaur(frame, t, spec, seed):
@@ -686,8 +877,59 @@ PREHISTORIC_KEYWORDS = [
 ]
 
 
+# Named body parts the camera can zoom in on (design units; a function of t
+# for animals that move across the frame). Used by pixel_hud.plan_shots.
+def _raptor_parts(t):
+    x = raptor_x(t)
+    return {"claw": (x + 2, 250), "legs": (x - 2, 234), "head": (x + 24, 197), "teeth": (x + 25, 199),
+            "eye": (x + 23, 195), "feathers": (x + 12, 214), "arm": (x + 14, 214), "tail": (x - 30, 208),
+            "body": (x + 2, 210)}
+
+
+def _mosasaur_parts(t):
+    hx, cy = 120 + t * 5, 196 + 4 * math.sin(t * 0.8)
+    return {"teeth": (hx - 14, cy + 1), "head": (hx - 16, cy), "eye": (hx - 22, cy - 4), "body": (hx - 70, cy),
+            "flippers": (hx - 50, cy + 12), "tail": (hx - 150, cy + 2)}
+
+
+def _plesiosaur_parts(t):
+    cx, cy = 70 + t * 3, 212 + 3 * math.sin(t)
+    return {"neck": (cx + 45, cy - 22), "head": (cx + 76, cy - 40), "teeth": (cx + 79, cy - 39),
+            "flippers": (cx, cy + 14), "body": (cx, cy)}
+
+
+def _cambrian_parts(t):
+    ax, ay = 40 + (t * 10) % 120, 170 + 4 * math.sin(t)
+    return {"arms": (ax + 8, ay + 4), "predator": (ax - 15, ay), "eye": (ax + 2, ay - 4), "trilobite": (90, 246)}
+
+
+FOCUS_POINTS = {
+    "trex": {"teeth": (152, 160), "head": (150, 157), "eye": (148, 151), "arm": (124, 190), "legs": (90, 228),
+             "feet": (96, 250), "tail": (40, 195), "neck": (135, 172), "body": (96, 186)},
+    "sauropod": {"head": (150, 134), "neck": (128, 168), "body": (82, 214), "legs": (86, 240), "tail": (22, 238)},
+    "triceratops": {"horns": (160, 190), "frill": (130, 188), "head": (150, 206), "beak": (166, 212),
+                    "eye": (150, 203), "body": (86, 206), "legs": (90, 240)},
+    "stegosaurus": {"plates": (76, 188), "spikes": (14, 212), "tail": (26, 220), "head": (130, 228),
+                    "body": (80, 212), "legs": (95, 240)},
+    "raptor": _raptor_parts,
+    "pterosaur": {"wings": (100, 150), "head": (115, 148), "beak": (118, 149)},
+    "mosasaur": _mosasaur_parts,
+    "plesiosaur": _plesiosaur_parts,
+    "mammoth": {"tusks": (138, 194), "trunk": (127, 216), "head": (112, 178), "eye": (117, 172),
+                "fur": (80, 192), "legs": (84, 238)},
+    "fossil": {"skull": (142, 168), "teeth": (142, 176), "ribs": (75, 205), "spine": (75, 185), "legs": (52, 232),
+               "brush": (100, 240)},
+    "eggs": {"egg": (100, 236), "nest": (92, 244), "baby": (101, 234)},
+    "amber": {"insect": (90, 198), "amber": (90, 196)},
+    "volcano": {"crater": (92, 150), "lava": (92, 176)},
+    "cambrian": _cambrian_parts,
+    "impact": {"crater": (70, 230)},
+}
+
+
 def register():
     pa.SCENES.update(PREHISTORIC_SCENES)
+    pa.FOCUS.update(FOCUS_POINTS)
     pa._KEYWORD_SCENES[:0] = PREHISTORIC_KEYWORDS
 
 
