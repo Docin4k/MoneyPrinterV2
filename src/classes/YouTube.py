@@ -877,14 +877,20 @@ class YouTube:
 
     def _script_subtitles(self) -> str:
         """Write an SRT straight from the script, timed to reading speed."""
-        entries, start = [], 0.0
+        entries, sentence_start = [], 0.0
         # Bigger caption pieces in the HUD layout's 3-line caption box
-        hud = self._channel_info().get("video_layout") == "hud"
+        info = self._channel_info()
+        hud = info.get("video_layout") == "hud"
+        # Share of each sentence's time its caption is on screen (content/channel.json
+        # "caption_share"). The rest is a short pause before the next sentence, while
+        # the scene keeps playing, so the video length doesn't change.
+        share = float(info.get("caption_share", 0.85 if hud else 1.0))
         for sentence, duration in zip(self.sentences, self.reading_durations):
             chunks = self._balanced_chunks(sentence) if hud else self._caption_chunks(sentence)
             words = [len(c.split()) for c in chunks]
+            start = sentence_start
             for chunk, n in zip(chunks, words):
-                length = duration * n / sum(words)
+                length = duration * share * n / sum(words)
                 entries.append(srt.Subtitle(
                     index=len(entries) + 1,
                     start=timedelta(seconds=start),
@@ -892,6 +898,7 @@ class YouTube:
                     content=chunk,
                 ))
                 start += length
+            sentence_start += duration
         path = os.path.join(ROOT_DIR, ".mp", str(uuid4()) + ".srt")
         with open(path, "w", encoding="utf-8") as file:
             file.write(srt.compose(entries))
