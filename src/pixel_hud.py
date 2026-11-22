@@ -352,7 +352,14 @@ def caption_top(info, tag=True):
     return y
 
 
-def caption_frame(txt, top):
+def draw_caption(layer, txt, top, visible=None, t=0.0):
+    """Draw a caption onto a HUD layer, typed out to `visible` characters."""
+    cap = caption_frame(txt, top, visible, t)
+    m = cap[..., 3] > 0
+    layer[m] = cap[m]
+
+
+def caption_frame(txt, top, visible=None, t=0.0):
     """RGBA caption: white text in a fixed-size bordered box starting at `top`."""
     frame = np.zeros((HH, HW, 3), dtype=np.uint8)
     alpha = np.zeros((HH, HW), dtype=np.uint8)
@@ -370,15 +377,30 @@ def caption_frame(txt, top):
     alpha[top:top + 2, x0:x1] = alpha[top + h - 2:top + h, x0:x1] = 255
     alpha[top:top + h, x0:x0 + 2] = alpha[top:top + h, x1 - 2:x1] = 255
     y = top + 7 + (3 * 27 - len(lines) * step) // 2   # centred in the box
+    remaining = len(txt) if visible is None else visible
+    cursor = None
     for i, line in enumerate(lines):
-        m = _line_mask(line, scale)
-        x = HW // 2 - m.shape[1] // 2
+        full_w = _line_mask(line, scale).shape[1]
+        x = HW // 2 - full_w // 2                 # centred on the full line, so text doesn't shift while typing
         ly = y + i * step
-        sh = np.zeros_like(alpha, dtype=bool)
-        sh[ly + 2:ly + 2 + m.shape[0], x + 2:x + 2 + m.shape[1]] = m
-        frame[sh] = (0, 0, 0)
-        reg = np.zeros_like(sh)
-        reg[ly:ly + m.shape[0], x:x + m.shape[1]] = m
-        frame[reg] = WHITE
-        alpha[reg | sh] = 255
+        shown = line[:max(0, remaining)]
+        remaining -= len(line) + 1
+        if shown.strip():
+            m = _line_mask(shown, scale)
+            sh = np.zeros_like(alpha, dtype=bool)
+            sh[ly + 2:ly + 2 + m.shape[0], x + 2:x + 2 + m.shape[1]] = m
+            frame[sh] = (0, 0, 0)
+            reg = np.zeros_like(sh)
+            reg[ly:ly + m.shape[0], x:x + m.shape[1]] = m
+            frame[reg] = WHITE
+            alpha[reg | sh] = 255
+        if visible is not None and len(shown) < len(line) and cursor is None:
+            cursor = (x + len(shown) * 6 * scale, ly)
+    if visible is not None and cursor is None and int(t * 3) % 2 == 0 and lines:
+        last = lines[-1]
+        cursor = (HW // 2 - _line_mask(last, scale).shape[1] // 2 + len(last) * 6 * scale, y + (len(lines) - 1) * step)
+    if cursor is not None:                          # blinking block cursor
+        cx, cy = cursor
+        frame[cy:cy + 7 * scale, cx:cx + 4 * scale] = CYAN
+        alpha[cy:cy + 7 * scale, cx:cx + 4 * scale] = 255
     return np.concatenate([frame, alpha[..., None]], axis=2)

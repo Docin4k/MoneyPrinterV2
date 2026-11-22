@@ -686,6 +686,7 @@ class YouTube:
         if style == "pixel_art" and getattr(self, "scenes", None):
             print(colored("[+] Animating pixel-art scenes...", "blue"))
             durations = self._segment_durations(max_duration, len(self.scenes))
+            starts = [sum(durations[:i]) for i in range(len(durations))]
             clips = [
                 pixel_art.scene_clip(
                     scene,
@@ -694,6 +695,7 @@ class YouTube:
                     headline=(sentences[index] if voiceover and index < len(sentences) else ""),
                     channel=self._channel_name(),
                     footer=self._card_label(index),
+                    t0=starts[index],
                 )
                 for index, (scene, duration) in enumerate(zip(self.scenes, durations))
             ]
@@ -743,8 +745,15 @@ class YouTube:
                 equalize_subtitles(subtitles_path, 10)
             else:
                 subtitles_path = self._script_subtitles()
-            subtitles = SubtitlesClip(subtitles_path, generator)
-            subtitles.set_pos(("center", "center"))
+            pixel_art.CAPTIONS = None
+            if style == "pixel_art" and pixel_art.OVERLAY and not voiceover:
+                # HUD layout: captions are typed out inside the frames (typewriter effect)
+                with open(subtitles_path, encoding="utf-8") as file:
+                    pixel_art.CAPTIONS = [(c.start.total_seconds(), c.end.total_seconds(), c.content)
+                                          for c in srt.parse(file.read())]
+            else:
+                subtitles = SubtitlesClip(subtitles_path, generator)
+                subtitles.set_pos(("center", "center"))
         except Exception as e:
             warning(f"Failed to generate subtitles, continuing without subtitles: {e}")
 
