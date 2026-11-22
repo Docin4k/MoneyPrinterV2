@@ -877,6 +877,11 @@ SPACE_SCENES = {"planet", "sun", "black_hole", "pulsar", "galaxy", "orbit", "com
 # or {scene: function(t) -> {part: (x, y)}} (filled by the scene modules)
 FOCUS = {}
 
+# Typewriter captions for the HUD layout: [(start, end, text)] in video seconds,
+# drawn straight into the frames (set by YouTube.combine), typed at TYPE_CPS
+CAPTIONS = None
+TYPE_CPS = 35
+
 # HUD layout (pixel_hud.py): when set to a dict (title, stat, handle, gauge),
 # frames get bordered title/stat/handle boxes instead of the plain header and
 # footer, and captions go in a box under them
@@ -884,7 +889,7 @@ OVERLAY = None
 
 
 def render_frame(spec: dict, t: float, seed: int, headline: str = "", channel: str = "",
-                 footer: str = "") -> np.ndarray:
+                 footer: str = "", t_abs: float | None = None) -> np.ndarray:
     """Draw one low-resolution frame of a scene with its text overlay."""
     frame = np.zeros((PH, PW, 3), dtype=np.uint8)
     frame[:] = (4, 4, 16)
@@ -903,6 +908,12 @@ def render_frame(spec: dict, t: float, seed: int, headline: str = "", channel: s
         layer = pixel_hud.new_layer()
         tag = footer.replace(" / ", " OF ") if footer else ""
         pixel_hud.draw_overlay(layer, tq(t), OVERLAY, tag)
+        if CAPTIONS and t_abs is not None:
+            for start, end, text in CAPTIONS:
+                if start <= t_abs < end:
+                    typed = int((t_abs - start) * TYPE_CPS) + 1
+                    pixel_hud.draw_caption(layer, text, pixel_hud.caption_top(OVERLAY), typed, t_abs)
+                    break
         return pixel_hud.composite(upscale(frame), layer)
 
     # Darkened band behind the top text and footer for readability
@@ -926,7 +937,7 @@ def upscale(frame: np.ndarray) -> np.ndarray:
 
 
 def scene_clip(spec: dict, duration: float, seed: int, headline: str = "", channel: str = "",
-               footer: str = "") -> VideoClip:
+               footer: str = "", t0: float = 0.0) -> VideoClip:
     """A 1080x1920 MoviePy clip animating one scene."""
     cache = {}
 
@@ -934,7 +945,7 @@ def scene_clip(spec: dict, duration: float, seed: int, headline: str = "", chann
         key = tq(t)
         if key not in cache:
             cache.clear()
-            f = render_frame(spec, key, seed, headline, channel, footer)
+            f = render_frame(spec, key, seed, headline, channel, footer, t_abs=t0 + key)
             cache[key] = f if f.shape[0] > PH else upscale(f)   # HUD frames come back full size
         return cache[key]
 
