@@ -1,0 +1,39 @@
+{
+  "topic": "The Arecibo message",
+  "script": "In 1974, humans beamed a picture message toward the stars. It was sent from the giant Arecibo radio telescope in Puerto Rico. The message was just 1,679 bits long, forming a simple picture. It showed numbers, DNA, a human figure and our solar system. It was aimed at a star cluster called M13, roughly 25,000 light-years away. The Arecibo telescope itself collapsed in 2020. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "We Sent a Picture Message to the Stars #Arecibo #SpaceFacts #Shorts",
+  "description": "In 1974 the Arecibo telescope beamed a 1,679-bit picture message toward star cluster M13.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Arecibo #SETI #Space #SpaceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "telescope"
+    },
+    {
+      "scene": "telescope"
+    },
+    {
+      "scene": "starfield"
+    },
+    {
+      "scene": "planet",
+      "preset": "earth"
+    },
+    {
+      "scene": "galaxy"
+    },
+    {
+      "scene": "telescope"
+    },
+    {
+      "scene": "starfield"
+    }
+  ],
+  "music_style": "waltz",
+  "stat": "AIMED AT STAR CLUSTER M13",
+  "gauge": {
+    "label": "BITS",
+    "value": 1679,
+    "max": 2000,
+    "unit": ""
+  }
+}

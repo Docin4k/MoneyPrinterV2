@@ -1,0 +1,47 @@
+{
+  "topic": "Earth's core is as hot as the Sun's surface",
+  "script": "Earth's inner core is about as hot as the surface of the Sun. It is a ball of mostly iron and nickel at around 5,200 degrees Celsius. Even so, it is solid, because the pressure there is so enormous. Around it, an outer core of liquid metal swirls and flows. That moving metal creates Earth's magnetic field. The deepest hole ever drilled reached only about 12 kilometers down. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "Earth's Core Is as Hot as the Sun's Surface #Earth #SpaceFacts #Shorts",
+  "description": "Earth's iron inner core is around 5,200 degrees Celsius, yet solid because of enormous pressure.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Earth #Planets #Space #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "planet",
+      "preset": "earth"
+    },
+    {
+      "scene": "planet",
+      "preset": "lava"
+    },
+    {
+      "scene": "planet",
+      "preset": "lava",
+      "radius": 80,
+      "y": 225
+    },
+    {
+      "scene": "planet",
+      "preset": "earth",
+      "radius": 80,
+      "y": 225
+    },
+    {
+      "scene": "aurora"
+    },
+    {
+      "scene": "planet",
+      "preset": "earth"
+    },
+    {
+      "scene": "comet"
+    }
+  ],
+  "music_style": "chill",
+  "stat": "SOLID, THANKS TO PRESSURE",
+  "gauge": {
+    "label": "CORE TEMP",
+    "value": 5200,
+    "max": 6000,
+    "unit": "C"
+  }
+}

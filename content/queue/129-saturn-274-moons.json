@@ -1,0 +1,46 @@
+{
+  "topic": "Saturn has the most known moons",
+  "script": "Saturn has more known moons than any other planet. As of 2025, astronomers count 274 of them. In a single announcement that year, 128 new moons were added. Most are tiny, irregular rocks just a few kilometers across. Many may be pieces of bigger moons that were smashed apart long ago. Its largest moon, Titan, is bigger than the planet Mercury. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "Saturn Has 274 Known Moons #Saturn #SpaceFacts #Shorts",
+  "description": "Saturn has more known moons than any other planet, 274 as of 2025, most of them tiny rocks.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Saturn #Moons #Space #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "planet",
+      "preset": "saturn"
+    },
+    {
+      "scene": "planet",
+      "preset": "saturn",
+      "radius": 80,
+      "y": 225
+    },
+    {
+      "scene": "asteroids"
+    },
+    {
+      "scene": "asteroids"
+    },
+    {
+      "scene": "planet",
+      "preset": "saturn",
+      "radius": 45,
+      "y": 200
+    },
+    {
+      "scene": "planet",
+      "preset": "titan"
+    },
+    {
+      "scene": "nebula"
+    }
+  ],
+  "music_style": "music box",
+  "stat": "128 FOUND IN ONE ANNOUNCEMENT",
+  "gauge": {
+    "label": "MOONS",
+    "value": 274,
+    "max": 300,
+    "unit": ""
+  }
+}

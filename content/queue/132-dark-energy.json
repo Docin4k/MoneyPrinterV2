@@ -1,0 +1,38 @@
+{
+  "topic": "The universe is speeding up",
+  "script": "The expansion of the universe is speeding up. Astronomers discovered this in 1998 by studying distant exploding stars. The discovery won the Nobel Prize in Physics in 2011. Whatever is causing it is called dark energy. It seems to make up about 68 percent of the universe. Nobody yet knows what dark energy actually is. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "The Universe Is Speeding Up #DarkEnergy #SpaceFacts #Shorts",
+  "description": "In 1998 astronomers found the universe's expansion is speeding up, driven by a mystery called dark energy.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#DarkEnergy #Universe #Space #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "galaxy"
+    },
+    {
+      "scene": "supernova"
+    },
+    {
+      "scene": "supernova"
+    },
+    {
+      "scene": "nebula"
+    },
+    {
+      "scene": "galaxy"
+    },
+    {
+      "scene": "starfield"
+    },
+    {
+      "scene": "starfield"
+    }
+  ],
+  "music_style": "adventure",
+  "stat": "DISCOVERED IN 1998",
+  "gauge": {
+    "label": "DARK ENERGY",
+    "value": 68,
+    "max": 100,
+    "unit": "%"
+  }
+}

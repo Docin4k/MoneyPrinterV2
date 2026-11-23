@@ -1,0 +1,41 @@
+{
+  "topic": "Mercury has ice",
+  "script": "Mercury, the closest planet to the Sun, has ice. It hides in craters near its poles that never get sunlight. Mercury is barely tilted, so those crater floors stay in permanent shadow. Temperatures there can fall below minus 170 degrees Celsius. NASA's MESSENGER spacecraft confirmed the ice in 2012. Scientists think it may have been delivered by comets and asteroids. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "The Closest Planet to the Sun Has Ice #Mercury #SpaceFacts #Shorts",
+  "description": "Mercury hides water ice in permanently shadowed polar craters, confirmed by MESSENGER in 2012.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Mercury #Planets #Space #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "planet",
+      "preset": "mercury"
+    },
+    {
+      "scene": "planet",
+      "preset": "mercury",
+      "radius": 80,
+      "y": 225
+    },
+    {
+      "scene": "planet",
+      "preset": "mercury",
+      "radius": 45,
+      "y": 200
+    },
+    {
+      "scene": "planet",
+      "preset": "mercury"
+    },
+    {
+      "scene": "comet"
+    },
+    {
+      "scene": "planet",
+      "preset": "mercury"
+    },
+    {
+      "scene": "galaxy"
+    }
+  ],
+  "music_style": "space ambient",
+  "stat": "CONFIRMED BY MESSENGER IN 2012"
+}

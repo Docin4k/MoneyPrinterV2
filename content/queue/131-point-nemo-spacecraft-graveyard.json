@@ -1,0 +1,45 @@
+{
+  "topic": "The spacecraft graveyard",
+  "script": "There is a spacecraft graveyard at the bottom of the Pacific Ocean. It lies near Point Nemo, the spot in the ocean farthest from any land. The nearest land is about 2,700 kilometers away. Old spacecraft are steered to fall there, where pieces are very unlikely to hurt anyone. Russia's Mir space station came down in that part of the ocean in 2001. NASA plans to bring the International Space Station down in that region too. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "Old Spacecraft Are Buried at Sea #Space #SpaceFacts #Shorts",
+  "description": "Retired spacecraft are steered into the remote South Pacific near Point Nemo, the place farthest from any land.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Space #PointNemo #ISS #SpaceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "planet",
+      "preset": "earth"
+    },
+    {
+      "scene": "planet",
+      "preset": "earth",
+      "radius": 80,
+      "y": 225
+    },
+    {
+      "scene": "orbit"
+    },
+    {
+      "scene": "rocket"
+    },
+    {
+      "scene": "orbit"
+    },
+    {
+      "scene": "planet",
+      "preset": "earth",
+      "radius": 45,
+      "y": 200
+    },
+    {
+      "scene": "comet"
+    }
+  ],
+  "music_style": "funk",
+  "stat": "MIR CAME DOWN THERE IN 2001",
+  "gauge": {
+    "label": "TO LAND",
+    "value": 2700,
+    "max": 3000,
+    "unit": "KM"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "topic": "The first landing on the Moon's far side",
+  "script": "In 2019, China landed the first spacecraft on the far side of the Moon. The mission was called Chang'e 4, and it carried a rover named Yutu-2. Because the far side never faces Earth, it cannot talk to us directly. So a relay satellite called Queqiao passed messages back and forth. In 2024, Chang'e 6 brought the first rock samples from the far side back to Earth. The far side is covered in many more craters than the side we see. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "The First Landing on the Moon's Far Side #Moon #SpaceFacts #Shorts",
+  "description": "In 2019 China's Chang'e 4 made the first landing on the Moon's far side, talking to Earth through a relay satellite.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Moon #Change4 #Space #SpaceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "surface",
+      "preset": "moon"
+    },
+    {
+      "scene": "surface",
+      "preset": "moon",
+      "rover": true
+    },
+    {
+      "scene": "planet",
+      "preset": "moon"
+    },
+    {
+      "scene": "orbit"
+    },
+    {
+      "scene": "rocket"
+    },
+    {
+      "scene": "planet",
+      "preset": "moon",
+      "radius": 80,
+      "y": 225
+    },
+    {
+      "scene": "starfield"
+    }
+  ],
+  "music_style": "adventure",
+  "stat": "A RELAY SATELLITE CARRIED MESSAGES"
+}

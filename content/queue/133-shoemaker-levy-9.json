@@ -1,0 +1,43 @@
+{
+  "topic": "We watched a comet hit Jupiter",
+  "script": "In 1994, people on Earth watched a comet crash into Jupiter. Comet Shoemaker-Levy 9 had been torn apart by Jupiter's gravity two years earlier. It broke into about 21 pieces strung out like a string of pearls. They slammed into Jupiter one after another over about six days. The impacts left dark scars, some bigger than Earth. It was the first time people watched two objects in our solar system collide. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "We Watched a Comet Hit Jupiter #Jupiter #SpaceFacts #Shorts",
+  "description": "In 1994 the pieces of comet Shoemaker-Levy 9 hit Jupiter, leaving scars bigger than Earth.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Jupiter #Comet #Space #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "comet"
+    },
+    {
+      "scene": "planet",
+      "preset": "jupiter"
+    },
+    {
+      "scene": "comet"
+    },
+    {
+      "scene": "asteroids"
+    },
+    {
+      "scene": "planet",
+      "preset": "jupiter",
+      "radius": 80,
+      "y": 225
+    },
+    {
+      "scene": "planet",
+      "preset": "jupiter"
+    },
+    {
+      "scene": "nebula"
+    }
+  ],
+  "music_style": "march",
+  "stat": "21 PIECES OVER ABOUT 6 DAYS",
+  "gauge": {
+    "label": "FRAGMENTS",
+    "value": 21,
+    "max": 25,
+    "unit": ""
+  }
+}

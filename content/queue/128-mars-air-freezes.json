@@ -1,0 +1,42 @@
+{
+  "topic": "On Mars the air freezes in winter",
+  "script": "In winter on Mars, part of the air freezes and falls to the ground. Mars's thin air is mostly carbon dioxide. When the poles get cold enough, that gas turns into dry ice frost. So much freezes that the air pressure across the whole planet changes with the seasons. Underneath, the polar caps also hold large amounts of water ice. Each spring, the dry ice turns straight back into gas. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "On Mars, the Air Freezes in Winter #Mars #SpaceFacts #Shorts",
+  "description": "Mars's carbon dioxide air partly freezes into dry ice at the poles each winter, changing the planet's air pressure.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Mars #Planets #Space #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "planet",
+      "preset": "mars"
+    },
+    {
+      "scene": "planet",
+      "preset": "mars",
+      "radius": 78,
+      "y": 215
+    },
+    {
+      "scene": "planet",
+      "preset": "mars",
+      "radius": 45,
+      "y": 200
+    },
+    {
+      "scene": "surface",
+      "preset": "mars_day"
+    },
+    {
+      "scene": "planet",
+      "preset": "mars"
+    },
+    {
+      "scene": "surface",
+      "preset": "mars_sunset"
+    },
+    {
+      "scene": "starfield"
+    }
+  ],
+  "music_style": "waltz",
+  "stat": "THE AIR IS MOSTLY CARBON DIOXIDE"
+}

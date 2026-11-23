@@ -1,0 +1,38 @@
+{
+  "topic": "The Sun's bubble",
+  "script": "The Sun blows a giant bubble around the whole solar system. It is called the heliosphere, and it is inflated by the solar wind. The solar wind streams away from the Sun at around 400 kilometers per second. Voyager 1 crossed the edge of the bubble in 2012, and Voyager 2 in 2018. Beyond that edge lies interstellar space. The bubble helps shield us from some of the galaxy's harsh radiation. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "The Sun Blows a Bubble Around the Solar System #Sun #SpaceFacts #Shorts",
+  "description": "The solar wind inflates the heliosphere, a bubble around the solar system that both Voyagers have now left.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Sun #Voyager #Space #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "sun"
+    },
+    {
+      "scene": "sun"
+    },
+    {
+      "scene": "sun"
+    },
+    {
+      "scene": "rocket"
+    },
+    {
+      "scene": "starfield"
+    },
+    {
+      "scene": "nebula"
+    },
+    {
+      "scene": "comet"
+    }
+  ],
+  "music_style": "funk",
+  "stat": "VOYAGER 2 LEFT IT IN 2018",
+  "gauge": {
+    "label": "SOLAR WIND",
+    "value": 400,
+    "max": 800,
+    "unit": "KM/S"
+  }
+}

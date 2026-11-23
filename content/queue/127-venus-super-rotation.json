@@ -1,0 +1,50 @@
+{
+  "topic": "Venus's clouds lap the planet in 4 days",
+  "script": "Venus's clouds race around the planet far faster than the planet itself spins. The planet takes about 243 Earth days to turn once. But its cloud tops circle it in only about 4 Earth days. Winds up there blow at roughly 360 kilometers per hour. Scientists call this super-rotation, and they are still working out what drives it. The clouds themselves are made of sulfuric acid droplets. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "Venus's Clouds Lap the Planet in 4 Days #Venus #SpaceFacts #Shorts",
+  "description": "Venus spins once every 243 days, but its clouds race around it in about 4 days.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Venus #Planets #Space #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "planet",
+      "preset": "venus"
+    },
+    {
+      "scene": "planet",
+      "preset": "venus",
+      "radius": 78,
+      "y": 215
+    },
+    {
+      "scene": "planet",
+      "preset": "venus",
+      "radius": 45,
+      "y": 200
+    },
+    {
+      "scene": "surface",
+      "preset": "venus"
+    },
+    {
+      "scene": "planet",
+      "preset": "venus"
+    },
+    {
+      "scene": "planet",
+      "preset": "venus",
+      "radius": 80,
+      "y": 225
+    },
+    {
+      "scene": "comet"
+    }
+  ],
+  "music_style": "chill",
+  "stat": "CLOUDS MADE OF SULFURIC ACID",
+  "gauge": {
+    "label": "CLOUD WINDS",
+    "value": 360,
+    "max": 400,
+    "unit": "KM/H"
+  }
+}

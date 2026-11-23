@@ -1,0 +1,38 @@
+{
+  "topic": "The Sun flips its magnetic field every 11 years",
+  "script": "The Sun's magnetic field flips upside down about every 11 years. Each flip comes near the peak of its sunspot cycle. Sunspots are cooler, darker patches where magnetic fields get tangled. Near the peak, the Sun throws out more flares and storms. Those storms can light up auroras far from the poles. Between 1645 and 1715, almost no sunspots were seen at all. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "The Sun Flips Its Magnetic Field Every 11 Years #Sun #SpaceFacts #Shorts",
+  "description": "Every 11 years or so the Sun's magnetic field flips, near the peak of its sunspot cycle.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Sun #Sunspots #Space #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "sun"
+    },
+    {
+      "scene": "sun"
+    },
+    {
+      "scene": "sun"
+    },
+    {
+      "scene": "sun"
+    },
+    {
+      "scene": "aurora"
+    },
+    {
+      "scene": "sun"
+    },
+    {
+      "scene": "galaxy"
+    }
+  ],
+  "music_style": "space ambient",
+  "stat": "FEWEST SUNSPOTS: 1645 TO 1715",
+  "gauge": {
+    "label": "CYCLE",
+    "value": 11,
+    "max": 15,
+    "unit": "YRS"
+  }
+}

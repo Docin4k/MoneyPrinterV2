@@ -1,0 +1,34 @@
+{
+  "topic": "The first exoplanets orbit a dead star",
+  "script": "The first planets found beyond our solar system orbit a dead star. In 1992, astronomers found them circling a pulsar called PSR B1257+12. A pulsar is the spinning core left behind after a giant star explodes. These planets were found by timing tiny changes in the pulsar's beat. They are bathed in harsh radiation, so life there seems very unlikely. The first planet around a Sun-like star was not found until 1995. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "The First Exoplanets Orbit a Dead Star #Exoplanets #SpaceFacts #Shorts",
+  "description": "In 1992 the first planets beyond our solar system were found orbiting a pulsar, the dead core of a star.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Exoplanets #Pulsar #Space #ScienceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "pulsar"
+    },
+    {
+      "scene": "pulsar"
+    },
+    {
+      "scene": "supernova"
+    },
+    {
+      "scene": "pulsar"
+    },
+    {
+      "scene": "planet",
+      "preset": "lava"
+    },
+    {
+      "scene": "planet",
+      "preset": "ice"
+    },
+    {
+      "scene": "nebula"
+    }
+  ],
+  "music_style": "music box",
+  "stat": "FOUND IN 1992"
+}

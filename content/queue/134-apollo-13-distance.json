@@ -1,0 +1,43 @@
+{
+  "topic": "Apollo 13's record distance",
+  "script": "One of the farthest trips humans have ever made happened on a mission that went wrong. In 1970, an oxygen tank exploded on Apollo 13 on the way to the Moon. The crew used their lunar lander as a lifeboat. They swung around the far side of the Moon to head home. That loop carried them about 400,000 kilometers from Earth, a distance record for people at the time. All three astronauts made it home safely. Follow WonderBytes for more facts that sound fake but are true.",
+  "title": "Apollo 13's Record-Breaking Trip Around the Moon #Apollo13 #SpaceFacts #Shorts",
+  "description": "After an explosion in 1970, Apollo 13 looped around the Moon and set a human distance record for its time before getting home safely.\n\nFollow WonderBytes for more facts that sound fake but are true.\n\n#Apollo13 #NASA #Space #SpaceFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "rocket"
+    },
+    {
+      "scene": "rocket"
+    },
+    {
+      "scene": "orbit"
+    },
+    {
+      "scene": "planet",
+      "preset": "moon"
+    },
+    {
+      "scene": "planet",
+      "preset": "moon",
+      "radius": 80,
+      "y": 225
+    },
+    {
+      "scene": "planet",
+      "preset": "earth"
+    },
+    {
+      "scene": "galaxy"
+    }
+  ],
+  "music_style": "boss battle",
+  "stat": "THE LANDER BECAME A LIFEBOAT",
+  "gauge": {
+    "label": "DISTANCE",
+    "value": 400000,
+    "max": 450000,
+    "unit": "KM"
+  }
+}
