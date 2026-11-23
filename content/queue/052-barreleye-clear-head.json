@@ -1,0 +1,38 @@
+{
+  "topic": "The barreleye's see-through head",
+  "script": "The barreleye fish has a see-through head. Inside the clear dome, you can see its glowing green eyes. The two dots above its mouth that look like eyes are actually its nostrils. Its tube-shaped eyes can rotate to look straight up or forward. It lives in dim water roughly 600 to 800 meters deep. Scientists think the clear shield may protect its eyes from stinging prey. Follow Pixel Abyss for more strange facts from the deep.",
+  "title": "This Fish Has a See-Through Head #Barreleye #DeepSea #Shorts",
+  "description": "The barreleye has a clear dome over its head, with rotating green eyes inside it.\n\nFollow Pixel Abyss for more strange facts from the deep.\n\n#Barreleye #DeepSea #Ocean #OceanFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "deep_sea"
+    },
+    {
+      "scene": "deep_sea"
+    },
+    {
+      "scene": "anglerfish"
+    },
+    {
+      "scene": "deep_sea"
+    },
+    {
+      "scene": "submarine"
+    },
+    {
+      "scene": "jellyfish"
+    },
+    {
+      "scene": "deep_sea"
+    }
+  ],
+  "music_style": "explorer",
+  "stat": "THOSE ARE NOSTRILS, NOT EYES",
+  "gauge": {
+    "label": "DEPTH",
+    "value": 800,
+    "max": 1000,
+    "unit": "M"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "topic": "Why the ocean is salty",
+  "script": "The ocean is salty mostly because of rocks on land. Rain slowly dissolves minerals from rocks, and rivers carry them to the sea. Hydrothermal vents on the sea floor add minerals too. When seawater evaporates, the salt stays behind. Seawater is about 3.5 percent salt. If all the ocean's salt were spread over the land, it could form a layer over 150 meters thick. Follow Pixel Abyss for more strange facts from the deep.",
+  "title": "Why Is the Ocean Salty? #Ocean #Science #Shorts",
+  "description": "Rivers carry minerals from rocks into the sea, and when water evaporates the salt stays behind.\n\nFollow Pixel Abyss for more strange facts from the deep.\n\n#Ocean #Salt #Science #OceanFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "ocean_surface"
+    },
+    {
+      "scene": "ocean_surface"
+    },
+    {
+      "scene": "vent"
+    },
+    {
+      "scene": "ocean_surface"
+    },
+    {
+      "scene": "ocean_surface"
+    },
+    {
+      "scene": "planet",
+      "preset": "earth"
+    },
+    {
+      "scene": "kelp_forest"
+    }
+  ],
+  "music_style": "tide pool",
+  "stat": "ABOUT 3.5 PERCENT SALT",
+  "gauge": {
+    "label": "SALT LAYER",
+    "value": 150,
+    "max": 200,
+    "unit": "M"
+  }
+}

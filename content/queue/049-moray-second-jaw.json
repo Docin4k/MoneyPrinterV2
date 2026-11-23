@@ -1,0 +1,38 @@
+{
+  "topic": "Moray eels have a second set of jaws",
+  "script": "Moray eels have a second set of jaws inside their throat. After the front jaws grab prey, the inner jaws shoot forward. They clamp on and drag the prey down into the throat. Scientists described how this works in 2007. Morays are fish, even though they look like snakes. They often open and close their mouths to pump water over their gills, which is breathing, not a threat. Follow Pixel Abyss for more strange facts from the deep.",
+  "title": "Moray Eels Have a Second Set of Jaws #MorayEel #Ocean #Shorts",
+  "description": "Moray eels have a hidden second set of jaws that shoots forward from the throat to drag prey in.\n\nFollow Pixel Abyss for more strange facts from the deep.\n\n#MorayEel #Eels #Ocean #OceanFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "coral_reef"
+    },
+    {
+      "scene": "coral_reef"
+    },
+    {
+      "scene": "shipwreck"
+    },
+    {
+      "scene": "coral_reef"
+    },
+    {
+      "scene": "fish_school"
+    },
+    {
+      "scene": "coral_reef"
+    },
+    {
+      "scene": "jellyfish"
+    }
+  ],
+  "music_style": "kelp drift",
+  "stat": "DESCRIBED BY SCIENTISTS IN 2007",
+  "gauge": {
+    "label": "JAWS",
+    "value": 2,
+    "max": 3,
+    "unit": ""
+  }
+}

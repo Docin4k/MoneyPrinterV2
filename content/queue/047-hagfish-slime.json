@@ -1,0 +1,38 @@
+{
+  "topic": "Hagfish fight with slime",
+  "script": "A hagfish can turn a bucket of water into slime in seconds. When a predator bites, it releases slime that swells up in seawater. The slime can clog the predator's gills, so it lets go. To clean off its own slime, the hagfish ties its body into a knot and slides through it. Hagfish have no jaws, and they mostly scavenge dead animals on the sea floor. Their family has been around for at least 300 million years. Follow Pixel Abyss for more strange facts from the deep.",
+  "title": "This Fish Fights With Slime #Hagfish #DeepSea #Shorts",
+  "description": "Hagfish defend themselves with slime that swells in seawater and clogs a predator's gills.\n\nFollow Pixel Abyss for more strange facts from the deep.\n\n#Hagfish #DeepSea #Ocean #OceanFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "deep_sea"
+    },
+    {
+      "scene": "deep_sea"
+    },
+    {
+      "scene": "shark"
+    },
+    {
+      "scene": "deep_sea"
+    },
+    {
+      "scene": "whale"
+    },
+    {
+      "scene": "trench"
+    },
+    {
+      "scene": "fish_school"
+    }
+  ],
+  "music_style": "midnight zone",
+  "stat": "IT TIES ITSELF IN KNOTS",
+  "gauge": {
+    "label": "FAMILY AGE",
+    "value": 300,
+    "max": 400,
+    "unit": "M YRS"
+  }
+}

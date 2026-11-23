@@ -1,0 +1,32 @@
+{
+  "topic": "Corals spawn on the same night",
+  "script": "Once a year, corals on the Great Barrier Reef release their eggs and sperm at almost the same time. This mass spawning usually happens a few nights after a full moon in late spring. Water temperature, moonlight and day length help set the timing. The water fills with floating bundles, like an upside-down snowstorm. Spawning all at once helps eggs and sperm meet in the open ocean. The tiny coral larvae drift for days or weeks before settling to start new corals. Follow Pixel Abyss for more strange facts from the deep.",
+  "title": "Corals All Spawn on the Same Night #CoralReef #Ocean #Shorts",
+  "description": "Each year, corals on the Great Barrier Reef spawn together a few nights after a full moon.\n\nFollow Pixel Abyss for more strange facts from the deep.\n\n#CoralReef #Coral #Ocean #OceanFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "coral_reef"
+    },
+    {
+      "scene": "ocean_surface"
+    },
+    {
+      "scene": "coral_reef"
+    },
+    {
+      "scene": "coral_reef"
+    },
+    {
+      "scene": "coral_reef"
+    },
+    {
+      "scene": "coral_reef"
+    },
+    {
+      "scene": "deep_sea"
+    }
+  ],
+  "music_style": "sonar",
+  "stat": "A FEW NIGHTS AFTER A FULL MOON"
+}

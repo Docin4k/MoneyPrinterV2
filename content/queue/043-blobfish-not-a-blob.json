@@ -1,0 +1,38 @@
+{
+  "topic": "The blobfish only looks like a blob out of water",
+  "script": "The blobfish only looks like a blob after it is pulled out of the deep sea. It lives roughly 600 to 1,200 meters down, off Australia and New Zealand. Down there, the pressure holds its body in a normal fish shape. Its jelly-like flesh is a little lighter than water, so it floats without a swim bladder. When it is brought up quickly, its body sags and puffs out. In 2013, it was voted the world's ugliest animal in an online poll. Follow Pixel Abyss for more strange facts from the deep.",
+  "title": "The Blobfish Isn't Really a Blob #Blobfish #DeepSea #Shorts",
+  "description": "In the deep sea the blobfish looks like a normal fish; it only turns into a blob when pulled up to the surface.\n\nFollow Pixel Abyss for more strange facts from the deep.\n\n#Blobfish #DeepSea #Ocean #OceanFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "deep_sea"
+    },
+    {
+      "scene": "trench"
+    },
+    {
+      "scene": "deep_sea"
+    },
+    {
+      "scene": "deep_sea"
+    },
+    {
+      "scene": "submarine"
+    },
+    {
+      "scene": "deep_sea"
+    },
+    {
+      "scene": "fish_school"
+    }
+  ],
+  "music_style": "bioluminescence",
+  "stat": "VOTED UGLIEST ANIMAL IN 2013",
+  "gauge": {
+    "label": "MAX DEPTH",
+    "value": 1200,
+    "max": 1500,
+    "unit": "M"
+  }
+}

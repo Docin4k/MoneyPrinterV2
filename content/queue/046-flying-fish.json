@@ -1,0 +1,38 @@
+{
+  "topic": "Flying fish glide over the waves",
+  "script": "Some fish can fly through the air to escape hungry predators. Flying fish leap out of the water and spread their long fins like wings. They glide rather than flap. By beating their tails on the surface, they can stretch a glide to over 200 meters. They often flee tuna, dolphins and other fast hunters. In 2008, a film crew in Japan recorded one gliding for about 45 seconds. Follow Pixel Abyss for more strange facts from the deep.",
+  "title": "These Fish Can Fly for 45 Seconds #FlyingFish #Ocean #Shorts",
+  "description": "Flying fish glide on wing-like fins to escape predators, sometimes for over 200 meters.\n\nFollow Pixel Abyss for more strange facts from the deep.\n\n#FlyingFish #Fish #Ocean #OceanFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "ocean_surface"
+    },
+    {
+      "scene": "ocean_surface"
+    },
+    {
+      "scene": "ocean_surface"
+    },
+    {
+      "scene": "ocean_surface"
+    },
+    {
+      "scene": "fish_school"
+    },
+    {
+      "scene": "ocean_surface"
+    },
+    {
+      "scene": "kelp_forest"
+    }
+  ],
+  "music_style": "tide pool",
+  "stat": "THEY GLIDE, NOT FLAP",
+  "gauge": {
+    "label": "GLIDE",
+    "value": 200,
+    "max": 400,
+    "unit": "M"
+  }
+}

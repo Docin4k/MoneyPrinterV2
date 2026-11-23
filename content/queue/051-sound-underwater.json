@@ -1,0 +1,38 @@
+{
+  "topic": "Sound travels faster underwater",
+  "script": "Sound travels about four times faster in water than in air. In seawater, it moves at roughly 1,500 meters per second. Deep in the ocean, a layer called the SOFAR channel traps sound. Sound in that layer can travel thousands of kilometers. Some whale calls may be heard by other whales very far away. Scientists use underwater microphones to listen for earthquakes, ships and whales. Follow Pixel Abyss for more strange facts from the deep.",
+  "title": "Sound Travels 4 Times Faster Underwater #Ocean #Science #Shorts",
+  "description": "Sound moves about 1,500 meters per second in seawater, and a deep layer called the SOFAR channel carries it thousands of kilometers.\n\nFollow Pixel Abyss for more strange facts from the deep.\n\n#Ocean #Sound #Whales #OceanFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "ocean_surface"
+    },
+    {
+      "scene": "whale"
+    },
+    {
+      "scene": "deep_sea"
+    },
+    {
+      "scene": "whale"
+    },
+    {
+      "scene": "whale"
+    },
+    {
+      "scene": "submarine"
+    },
+    {
+      "scene": "fish_school"
+    }
+  ],
+  "music_style": "bioluminescence",
+  "stat": "THE SOFAR CHANNEL TRAPS SOUND",
+  "gauge": {
+    "label": "SPEED",
+    "value": 1500,
+    "max": 2000,
+    "unit": "M/S"
+  }
+}

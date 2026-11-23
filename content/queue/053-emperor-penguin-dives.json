@@ -1,0 +1,38 @@
+{
+  "topic": "Emperor penguins are deep divers",
+  "script": "Emperor penguins can dive deeper than 500 meters. They can hold their breath for over 20 minutes. They slow their heart rate to save oxygen on long dives. On land, they huddle in huge groups to survive the Antarctic winter. The fathers keep the egg warm on their feet for about two months. They are the largest penguins, standing over a meter tall. Follow Pixel Abyss for more strange facts from the deep.",
+  "title": "Emperor Penguins Dive Over 500 Meters #Penguin #Ocean #Shorts",
+  "description": "Emperor penguins dive deeper than 500 meters and hold their breath for over 20 minutes.\n\nFollow Pixel Abyss for more strange facts from the deep.\n\n#EmperorPenguin #Penguins #Ocean #OceanFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "ocean_surface"
+    },
+    {
+      "scene": "deep_sea"
+    },
+    {
+      "scene": "fish_school"
+    },
+    {
+      "scene": "ocean_surface"
+    },
+    {
+      "scene": "ocean_surface"
+    },
+    {
+      "scene": "fish_school"
+    },
+    {
+      "scene": "jellyfish"
+    }
+  ],
+  "music_style": "deep current",
+  "stat": "DADS KEEP THE EGG ON THEIR FEET",
+  "gauge": {
+    "label": "DIVE",
+    "value": 500,
+    "max": 600,
+    "unit": "M"
+  }
+}

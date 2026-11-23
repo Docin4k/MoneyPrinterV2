@@ -1,0 +1,32 @@
+{
+  "topic": "The sea with no shore",
+  "script": "There is a sea with no coastline. The Sargasso Sea sits in the middle of the Atlantic, bounded by ocean currents instead of land. It is named after sargassum, the floating seaweed that covers parts of it. Its water is famously clear and deep blue. American and European eels travel thousands of kilometers to breed there. Young sea turtles often shelter in its floating seaweed mats. Follow Pixel Abyss for more strange facts from the deep.",
+  "title": "This Sea Has No Shore #SargassoSea #Ocean #Shorts",
+  "description": "The Sargasso Sea is bounded by currents instead of land, and eels cross the Atlantic to breed there.\n\nFollow Pixel Abyss for more strange facts from the deep.\n\n#SargassoSea #Atlantic #Ocean #OceanFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "ocean_surface"
+    },
+    {
+      "scene": "ocean_surface"
+    },
+    {
+      "scene": "kelp_forest"
+    },
+    {
+      "scene": "ocean_surface"
+    },
+    {
+      "scene": "fish_school"
+    },
+    {
+      "scene": "sea_turtle"
+    },
+    {
+      "scene": "deep_sea"
+    }
+  ],
+  "music_style": "sonar",
+  "stat": "EELS TRAVEL THERE TO BREED"
+}

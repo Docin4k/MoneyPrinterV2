@@ -1,0 +1,38 @@
+{
+  "topic": "Electric rays zap their prey",
+  "script": "Some rays can zap their prey with electricity. Electric rays make shocks with special organs that work like batteries. The Atlantic torpedo ray can produce around 200 volts. That is enough to stun a fish, and painful for a person. Ancient Roman doctors wrote about using these rays to treat headaches. The word torpedo comes from the Latin name for this fish, meaning numbness. Follow Pixel Abyss for more strange facts from the deep.",
+  "title": "This Ray Can Zap 200 Volts #ElectricRay #Ocean #Shorts",
+  "description": "Electric rays stun prey with shocks of up to around 200 volts, and torpedoes are named after them.\n\nFollow Pixel Abyss for more strange facts from the deep.\n\n#ElectricRay #Rays #Ocean #OceanFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "shark"
+    },
+    {
+      "scene": "shark"
+    },
+    {
+      "scene": "shark"
+    },
+    {
+      "scene": "fish_school"
+    },
+    {
+      "scene": "ocean_surface"
+    },
+    {
+      "scene": "submarine"
+    },
+    {
+      "scene": "jellyfish"
+    }
+  ],
+  "music_style": "deep current",
+  "stat": "TORPEDOES ARE NAMED AFTER IT",
+  "gauge": {
+    "label": "VOLTS",
+    "value": 200,
+    "max": 250,
+    "unit": ""
+  }
+}

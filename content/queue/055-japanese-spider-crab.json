@@ -1,0 +1,38 @@
+{
+  "topic": "The Japanese spider crab",
+  "script": "The Japanese spider crab can measure about 3.7 meters from claw to claw. That gives it the longest legs of any known crab. Its body, though, is only about 40 centimeters wide. It lives off the coast of Japan, often 150 to 300 meters deep. Some may live for as long as 100 years. Like all crabs, it must shed its hard shell to grow. Follow Pixel Abyss for more strange facts from the deep.",
+  "title": "This Crab Is 3.7 Meters Wide #SpiderCrab #Ocean #Shorts",
+  "description": "The Japanese spider crab can span about 3.7 meters from claw to claw, though its body is only about 40 centimeters wide.\n\nFollow Pixel Abyss for more strange facts from the deep.\n\n#SpiderCrab #Crabs #Ocean #OceanFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "deep_sea"
+    },
+    {
+      "scene": "octopus"
+    },
+    {
+      "scene": "shipwreck"
+    },
+    {
+      "scene": "octopus"
+    },
+    {
+      "scene": "deep_sea"
+    },
+    {
+      "scene": "octopus"
+    },
+    {
+      "scene": "fish_school"
+    }
+  ],
+  "music_style": "midnight zone",
+  "stat": "ITS BODY IS ONLY ABOUT 40 CM",
+  "gauge": {
+    "label": "LEG SPAN",
+    "value": 3.7,
+    "max": 4,
+    "unit": "M"
+  }
+}
