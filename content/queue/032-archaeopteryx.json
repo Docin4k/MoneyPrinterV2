@@ -1,0 +1,38 @@
+{
+  "topic": "Archaeopteryx, the bird with teeth",
+  "script": "Archaeopteryx blurred the line between dinosaurs and birds. It had feathered wings, but also teeth, clawed fingers and a long bony tail. It lived about 150 million years ago in what is now Germany. The first skeleton was found in 1861. That was just two years after Darwin published his book on evolution. It became a famous clue that birds evolved from reptile-like ancestors. Follow DinoBytes for more prehistoric facts.",
+  "title": "The Bird With Teeth and Claws #Archaeopteryx #Dinosaurs #Shorts",
+  "description": "Archaeopteryx had feathered wings plus teeth, claws and a bony tail, and was found in 1861.\n\nFollow DinoBytes for more prehistoric facts.\n\n#Archaeopteryx #Dinosaurs #Birds #DinoFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "raptor"
+    },
+    {
+      "scene": "raptor"
+    },
+    {
+      "scene": "volcano"
+    },
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "raptor"
+    },
+    {
+      "scene": "volcano"
+    }
+  ],
+  "music_style": "march",
+  "stat": "FIRST SKELETON FOUND IN 1861",
+  "gauge": {
+    "label": "AGE",
+    "value": 150,
+    "max": 200,
+    "unit": "M YRS"
+  }
+}

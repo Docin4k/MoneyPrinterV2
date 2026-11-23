@@ -1,0 +1,38 @@
+{
+  "topic": "Some dinosaurs swallowed stones",
+  "script": "Some dinosaurs swallowed stones to help grind up their food. These stomach stones are called gastroliths. Psittacosaurus fossils have been found with piles of small stones inside their ribs. Birds like chickens still do the same thing today, using grit in their gizzards. Psittacosaurus means parrot lizard, because of its parrot-like beak. It was a small plant-eater, about 2 meters long, related to Triceratops. Follow DinoBytes for more prehistoric facts.",
+  "title": "Some Dinosaurs Swallowed Rocks #Psittacosaurus #Dinosaurs #Shorts",
+  "description": "Psittacosaurus and other dinosaurs swallowed stones to grind food, just as chickens use grit today.\n\nFollow DinoBytes for more prehistoric facts.\n\n#Psittacosaurus #Dinosaurs #Paleontology #DinoFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "triceratops"
+    },
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "raptor"
+    },
+    {
+      "scene": "triceratops"
+    },
+    {
+      "scene": "triceratops"
+    },
+    {
+      "scene": "pterosaur"
+    }
+  ],
+  "music_style": "primeval",
+  "stat": "CHICKENS STILL DO IT TODAY",
+  "gauge": {
+    "label": "LENGTH",
+    "value": 2,
+    "max": 3,
+    "unit": "M"
+  }
+}

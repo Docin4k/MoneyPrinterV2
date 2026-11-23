@@ -1,0 +1,38 @@
+{
+  "topic": "Parasaurolophus could trumpet",
+  "script": "Parasaurolophus may have made sounds like a deep trumpet. It had a long, hollow crest curving back from its head. Air passages ran up and down inside the crest. Computer models of its skull suggest it could make low, booming notes. The crest may also have helped members of a herd recognize each other. It was a duck-billed plant-eater about 9 meters long. Follow DinoBytes for more prehistoric facts.",
+  "title": "This Dinosaur Could Trumpet #Parasaurolophus #Dinosaurs #Shorts",
+  "description": "Parasaurolophus had a long hollow crest that may have let it make deep, trumpet-like calls.\n\nFollow DinoBytes for more prehistoric facts.\n\n#Parasaurolophus #Dinosaurs #Paleontology #DinoFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "sauropod"
+    },
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "volcano"
+    },
+    {
+      "scene": "sauropod"
+    },
+    {
+      "scene": "sauropod"
+    },
+    {
+      "scene": "fossil"
+    }
+  ],
+  "music_style": "dino stomp",
+  "stat": "ITS CREST WAS HOLLOW",
+  "gauge": {
+    "label": "LENGTH",
+    "value": 9,
+    "max": 12,
+    "unit": "M"
+  }
+}

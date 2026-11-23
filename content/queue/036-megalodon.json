@@ -1,0 +1,38 @@
+{
+  "topic": "Megalodon, the giant shark",
+  "script": "Megalodon was one of the largest sharks that ever lived. Scientists estimate it reached around 15 meters long, and possibly more. Its biggest teeth were up to about 18 centimeters long. It was not a dinosaur, and it lived long after they died out. It died out about 3.6 million years ago. Most of what we know comes from teeth, because shark skeletons are cartilage and rarely fossilize. Follow DinoBytes for more prehistoric facts.",
+  "title": "Megalodon Teeth Were 18 cm Long #Megalodon #Prehistoric #Shorts",
+  "description": "Megalodon may have reached around 15 meters long, and we know it mostly from teeth up to about 18 centimeters long.\n\nFollow DinoBytes for more prehistoric facts.\n\n#Megalodon #Sharks #Prehistoric #DinoFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "shark"
+    },
+    {
+      "scene": "shark"
+    },
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "shark"
+    },
+    {
+      "scene": "shark"
+    },
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "volcano"
+    }
+  ],
+  "music_style": "jungle",
+  "stat": "KNOWN MOSTLY FROM ITS TEETH",
+  "gauge": {
+    "label": "LENGTH",
+    "value": 15,
+    "max": 20,
+    "unit": "M"
+  }
+}

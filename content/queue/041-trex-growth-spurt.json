@@ -1,0 +1,38 @@
+{
+  "topic": "T. rex's teenage growth spurt",
+  "script": "T. rex went through a huge growth spurt as a teenager. Like trees, its bones have growth rings that show its age. Scientists estimate it gained up to about 2 kilograms a day at its fastest. Most adults seem to have reached full size by around 20 years old. Sue, the most complete T. rex, was about 28 years old when it died. Young tyrannosaurs were slimmer and faster than the adults. Follow DinoBytes for more prehistoric facts.",
+  "title": "T. rex Gained 2 kg a Day as a Teen #TRex #Dinosaurs #Shorts",
+  "description": "Growth rings in T. rex bones show a teenage growth spurt of up to about 2 kilograms a day.\n\nFollow DinoBytes for more prehistoric facts.\n\n#TRex #Dinosaurs #Paleontology #DinoFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "trex"
+    },
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "trex"
+    },
+    {
+      "scene": "trex"
+    },
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "trex"
+    },
+    {
+      "scene": "sauropod"
+    }
+  ],
+  "music_style": "adventure",
+  "stat": "ITS BONES HAVE GROWTH RINGS",
+  "gauge": {
+    "label": "PER DAY",
+    "value": 2,
+    "max": 3,
+    "unit": "KG"
+  }
+}

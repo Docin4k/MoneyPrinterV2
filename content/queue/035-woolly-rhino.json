@@ -1,0 +1,38 @@
+{
+  "topic": "Woolly rhinos of the Ice Age",
+  "script": "Woolly rhinos roamed Ice Age Europe and Asia alongside mammoths. Their front horn could grow over 1 meter long. Thick fur and a layer of fat kept them warm on frozen grasslands. Early humans painted them on cave walls more than 30,000 years ago. Frozen woolly rhinos have been found in the Siberian permafrost. They died out around 14,000 years ago. Follow DinoBytes for more prehistoric facts.",
+  "title": "Ice Age Rhinos Had Meter-Long Horns #WoollyRhino #IceAge #Shorts",
+  "description": "Woolly rhinos lived alongside mammoths, with horns over a meter long, and early humans painted them in caves.\n\nFollow DinoBytes for more prehistoric facts.\n\n#WoollyRhino #IceAge #Prehistoric #DinoFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "mammoth"
+    },
+    {
+      "scene": "mammoth"
+    },
+    {
+      "scene": "mammoth"
+    },
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "mammoth"
+    },
+    {
+      "scene": "mammoth"
+    },
+    {
+      "scene": "fossil"
+    }
+  ],
+  "music_style": "boss battle",
+  "stat": "PAINTED IN CAVES BY EARLY HUMANS",
+  "gauge": {
+    "label": "HORN",
+    "value": 1,
+    "max": 1.5,
+    "unit": "M"
+  }
+}

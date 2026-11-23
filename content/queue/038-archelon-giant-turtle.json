@@ -1,0 +1,38 @@
+{
+  "topic": "Archelon, the giant sea turtle",
+  "script": "One of the biggest turtles that ever lived was Archelon. It grew to about 4 meters long. It swam in a shallow sea that once covered the middle of North America. That was about 75 million years ago, while dinosaurs walked on land. Its shell was not solid, but a framework of bone covered by tough skin. Today's leatherback sea turtle is one of its living relatives. Follow DinoBytes for more prehistoric facts.",
+  "title": "This Turtle Was 4 Meters Long #Archelon #Prehistoric #Shorts",
+  "description": "Archelon, a sea turtle about 4 meters long, swam over North America about 75 million years ago.\n\nFollow DinoBytes for more prehistoric facts.\n\n#Archelon #SeaTurtle #Prehistoric #DinoFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "sea_turtle"
+    },
+    {
+      "scene": "sea_turtle"
+    },
+    {
+      "scene": "sea_turtle"
+    },
+    {
+      "scene": "sea_turtle"
+    },
+    {
+      "scene": "sea_turtle"
+    },
+    {
+      "scene": "mosasaur"
+    },
+    {
+      "scene": "pterosaur"
+    }
+  ],
+  "music_style": "chill",
+  "stat": "IT SWAM OVER NORTH AMERICA",
+  "gauge": {
+    "label": "LENGTH",
+    "value": 4,
+    "max": 5,
+    "unit": "M"
+  }
+}

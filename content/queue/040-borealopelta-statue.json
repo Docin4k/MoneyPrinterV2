@@ -1,0 +1,38 @@
+{
+  "topic": "Borealopelta, the dinosaur statue",
+  "script": "One of the best-preserved dinosaurs ever found looks like a statue. It is an armored dinosaur called Borealopelta, found in a Canadian mine in 2011. Scientists described it in 2017, with its armor and skin still in place. It lived about 110 million years ago. Its body probably washed out to sea and sank, which helped preserve it. Traces of pigment show it was reddish-brown, darker on top than underneath. Follow DinoBytes for more prehistoric facts.",
+  "title": "This Dinosaur Fossil Looks Like a Statue #Borealopelta #Fossils #Shorts",
+  "description": "Borealopelta, found in a Canadian mine, is so well preserved that its armor, skin and even color can be studied.\n\nFollow DinoBytes for more prehistoric facts.\n\n#Borealopelta #Fossils #Dinosaurs #DinoFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "stegosaurus"
+    },
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "volcano"
+    },
+    {
+      "scene": "mosasaur"
+    },
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "volcano"
+    }
+  ],
+  "music_style": "march",
+  "stat": "FOUND IN A CANADIAN MINE",
+  "gauge": {
+    "label": "AGE",
+    "value": 110,
+    "max": 150,
+    "unit": "M YRS"
+  }
+}

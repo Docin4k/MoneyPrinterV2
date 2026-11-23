@@ -1,0 +1,38 @@
+{
+  "topic": "Dimetrodon is not a dinosaur",
+  "script": "Dimetrodon looks like a dinosaur, but it is not one. It lived about 295 to 272 million years ago, before the first dinosaurs. It is more closely related to mammals than to dinosaurs. The tall sail on its back was held up by long spines from its backbone. Scientists still debate what the sail was for, from display to warming up. Its name means two sizes of teeth. Follow DinoBytes for more prehistoric facts.",
+  "title": "Dimetrodon Is Not a Dinosaur #Dimetrodon #Prehistoric #Shorts",
+  "description": "Sail-backed Dimetrodon lived before the dinosaurs and is more closely related to mammals.\n\nFollow DinoBytes for more prehistoric facts.\n\n#Dimetrodon #Prehistoric #Paleontology #DinoFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "volcano"
+    },
+    {
+      "scene": "volcano"
+    },
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "volcano"
+    },
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "sauropod"
+    }
+  ],
+  "music_style": "explorer",
+  "stat": "CLOSER TO MAMMALS THAN DINOSAURS",
+  "gauge": {
+    "label": "AGE",
+    "value": 295,
+    "max": 350,
+    "unit": "M YRS"
+  }
+}

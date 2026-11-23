@@ -1,0 +1,38 @@
+{
+  "topic": "Pachycephalosaurus's thick skull",
+  "script": "Pachycephalosaurus had a dome of solid bone on top of its head. The dome could be up to about 25 centimeters thick. Its name means thick-headed lizard. Scientists debate whether rivals butted heads like rams or shoved from the side. Some fossil domes show healed injuries, hinting they really were used in fights. It walked on two legs and lived near the end of the age of dinosaurs. Follow DinoBytes for more prehistoric facts.",
+  "title": "This Dinosaur Had a 25 cm Thick Skull #Pachycephalosaurus #Dinosaurs #Shorts",
+  "description": "Pachycephalosaurus had a dome of solid bone up to about 25 centimeters thick, and some domes show healed injuries.\n\nFollow DinoBytes for more prehistoric facts.\n\n#Pachycephalosaurus #Dinosaurs #Paleontology #DinoFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "raptor"
+    },
+    {
+      "scene": "raptor"
+    },
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "raptor"
+    },
+    {
+      "scene": "pterosaur"
+    }
+  ],
+  "music_style": "chill",
+  "stat": "ITS NAME: THICK-HEADED LIZARD",
+  "gauge": {
+    "label": "SKULL DOME",
+    "value": 25,
+    "max": 30,
+    "unit": "CM"
+  }
+}

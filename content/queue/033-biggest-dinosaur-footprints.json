@@ -1,0 +1,38 @@
+{
+  "topic": "The biggest dinosaur footprints",
+  "script": "The largest known dinosaur footprints are about 1.7 meters long. They were found near Broome, in Western Australia, and described in 2017. They were probably left by giant long-necked sauropods. Footprints can show how dinosaurs walked, how fast they moved and whether they traveled in groups. Scientists estimate speed from the length of each stride. Some trackways show many dinosaurs walking side by side. Follow DinoBytes for more prehistoric facts.",
+  "title": "Dinosaur Footprints 1.7 Meters Long #Dinosaurs #Fossils #Shorts",
+  "description": "The largest known dinosaur footprints, about 1.7 meters long, were found near Broome in Western Australia.\n\nFollow DinoBytes for more prehistoric facts.\n\n#DinosaurFootprints #Dinosaurs #Fossils #DinoFacts #Shorts",
+  "last_sentence_is_cta": true,
+  "scenes": [
+    {
+      "scene": "sauropod"
+    },
+    {
+      "scene": "fossil"
+    },
+    {
+      "scene": "sauropod"
+    },
+    {
+      "scene": "raptor"
+    },
+    {
+      "scene": "raptor"
+    },
+    {
+      "scene": "sauropod"
+    },
+    {
+      "scene": "sauropod"
+    }
+  ],
+  "music_style": "adventure",
+  "stat": "FOUND NEAR BROOME, AUSTRALIA",
+  "gauge": {
+    "label": "FOOTPRINT",
+    "value": 1.7,
+    "max": 2,
+    "unit": "M"
+  }
+}
